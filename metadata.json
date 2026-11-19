@@ -1,0 +1,6 @@
+{
+  "name": "NSDA CBT&A Level-4 Assessment Portal",
+  "description": "Interactive CBT&A Level-4 exam preparation and competency assessment platform with 135 questions, instant/exam feedback modes, and NSDA CARS scorecard reporting.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

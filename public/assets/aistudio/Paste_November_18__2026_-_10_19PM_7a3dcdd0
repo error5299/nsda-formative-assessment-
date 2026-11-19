@@ -1,0 +1,332 @@
+Build a complete, single-file, responsive web-based interactive quiz and assessment platform (`index.html`) using HTML5, Tailwind CSS (via CDN), and Vanilla JavaScript for **NSDA CBT&A Level-4 (Competency-Based Training and Assessment Methodology)** exam preparation.
+
+### 1. Design System & Typography
+- **Fonts:** Load `Google Sans` (for English text) and `Hind Siliguri` (for Bengali text/explanations) via Google Fonts.
+- **Color Palette:** Cyan Blue (`#00B8E6`) primary accent, Dark Slate/Charcoal (`#1E293B` / `#3B4652`) headers, Emerald Green (`#10B981`) for "Competent (C)", Amber/Gold (`#F4B51F`) for flagged items, and Rose Red (`#EF4444`) for "Not Yet Competent (NYC)".
+- **Views:** Smooth SPA transitions across three views: **Pre-Exam Setup**, **Active Assessment Interface**, and **NSDA CARS Scorecard & Full Review**.
+
+### 2. Pre-Exam Setup Screen
+Include the following configurable options before starting the exam:
+1. **Candidate Name Input:** Text input (default: `MD Belayet Hossain`).
+2. **Question Bank Scope Filter:**
+   - Full Mega Bank (All 135 Items: 60 MCQs + 7 Matching Sets [35 Pairs] + 40 Short Answers)
+   - Set-01 Only (20 MCQs + 3 Matching Sets + 20 Short Answers)
+   - Set-02 Only (40 MCQs + 4 Matching Sets + 20 Short Answers)
+   - Part A: Multiple Choice Questions Only (60 MCQs)
+   - Part B: Matching Questions Only (7 Sets / 35 Pairs)
+   - Part C: Short Answer & PC-to-Skill Questions Only (40 Questions)
+3. **Shuffle Toggle:** Checkbox to randomize question order within each part.
+4. **Custom Time Limit:** Preset buttons (`No Limit`, `15 Mins`, `30 Mins`, `60 Mins - NSDA Standard`, `90 Mins`) + custom numeric input in minutes.
+5. **Answer Feedback Mode Toggle:**
+   - **Instant Feedback Mode:** Immediately reveals the correct answer, explanation, or model answer right after answering each question.
+   - **Real Exam Mode:** Hides all answers and explanations until the exam is submitted.
+
+### 3. Assessment Mechanics & NSDA CARS Reporting
+- **Part A (MCQs):** Radio options (A–D) with keyboard shortcuts (`A/B/C/D` or `1-4` to select, `Left/Right` arrows to navigate).
+- **Part B (Matching):** Column A items paired with dropdown menus populated from Column B options (including distractors). Score 1 point per correct match.
+- **Part C (Short Answers):** Textarea input + "Reveal Model Answer & Self-Assess" button allowing self-grading as **Competent (1 pt)** or **Not Yet Competent (0 pts)**.
+- **Workspace Features:** Sticky top bar with live countdown timer (auto-submits at `00:00`), Flag for Review toggle, Section Jump tabs, and Color-Coded Question Navigator grid.
+- **NSDA CARS Scorecard:** Awards **COMPETENT (C)** if score >= 80%, or **NOT YET COMPETENT (NYC)** if < 80%, with section-wise breakdown, review filters (`All`, `Incorrect/NYC`, `Flagged`), and A4 Print/PDF styling.
+
+---
+
+### 4. COMPLETE EMBEDDED QUESTION BANK (ALL 135 ITEMS MUST BE INCLUDED)
+
+#### PART A: MULTIPLE CHOICE QUESTIONS (60 MCQs)
+
+##### Set-01 MCQs (Q1–Q20)
+1. **In a Competency Standard (CS), what do the bold and underlined words within the Performance Criteria represent?**
+   - A) Critical Aspects of Competency | B) Range of Variables / Range Statement | C) Underpinning Knowledge | D) Accreditation Requirements
+   - **Answer:** B
+2. **Which term in Competency-Based Curriculum (CBC) corresponds to "Elements of Competency" in a Competency Standard (CS)?**
+   - A) Module Descriptor | B) Assessment Criteria | C) Learning Outcome | D) Nominal Duration
+   - **Answer:** C
+3. **A trainee fails to meet the required industry standard during an assessment. What is the correct CBT&A terminology for their result?**
+   - A) Fail | B) Incomplete | C) Not Yet Competent (NYC) | D) Pending Re-exam
+   - **Answer:** C
+4. **Which tier of Competency Standard is applicable across all occupations regardless of the specific industry sector?**
+   - A) Sector Specific Competency | B) Occupation Specific Competency | C) Generic Specific Competency | D) Technical Specific Competency
+   - **Answer:** C
+5. **Under the Bangladesh National Qualifications Framework (BNQF), Level-4 represents which level of workforce?**
+   - A) Skilled Worker | B) Supervisor | C) Highly Skilled Worker | D) Mid-Level Manager
+   - **Answer:** C
+6. **Which dimension of competency involves handling unexpected problems, breakdowns, or irregularities during work?**
+   - A) Task Skills | B) Task Management Skills | C) Contingency Management Skills | D) Job/Role Environment Skills
+   - **Answer:** C
+7. **What is the primary role of Industry Skills Councils (ISCs) under the National Skills Development Policy (NSDP)?**
+   - A) Issuing certificates directly to trainees | B) Identifying skills demand and priority occupations | C) Conducting daily classroom sessions | D) Supplying PPE to training institutes
+   - **Answer:** B
+8. **Which principle of assessment ensures that the assessment measures exactly what it claims to measure?**
+   - A) Reliability | B) Fairness | C) Flexibility | D) Validity
+   - **Answer:** D
+9. **In a CBT workshop layout, what is the specific function of "Station C"?**
+   - A) Storing tools and heavy equipment | B) Reading learning materials and doing written self-checks | C) Conducting live engine performance tests | D) Storing media equipment and software
+   - **Answer:** B
+10. **Which of the following is NOT an example of a "Conflict of Interest" for an assessor?**
+    - A) Assessing a candidate who is a close relative or friend | B) Receiving gifts or future benefit promises from an STP | C) Assessing trainees whom the assessor personally trained | D) Declining to assess when a personal relationship exists with a candidate
+    - **Answer:** D
+11. **When applying a "Reasonable Adjustment" for a candidate with special needs, which element is an assessor permitted to modify?**
+    - A) The industry benchmark | B) The assessment methods and resources | C) The core Performance Criteria | D) The required Critical Aspects of Competency
+    - **Answer:** B
+12. **At which stage of the 4-step demonstration method does the trainer actively involve learners and talk through the steps together?**
+    - A) Do it normal | B) Do it slow | C) Do it together | D) Off you go
+    - **Answer:** C
+13. **Which PowerPoint feature is used to control how one slide moves to the next during a presentation?**
+    - A) Custom Animation | B) Slide Transition | C) Slide Master | D) Design Themes
+    - **Answer:** B
+14. **Prolonged exposure to excessive noise, extreme heat, or cold in a workplace falls under which category of hazard?**
+    - A) Chemical Hazard | B) Biological Hazard | C) Ergonomic Hazard | D) Physical Hazard
+    - **Answer:** D
+15. **Which of the following best describes "Self-paced learning" in the context of CBLM?**
+    - A) Trainees must finish all modules within a strict teacher-led schedule | B) Trainees learn and progress at their own speed with minimal trainer intervention | C) Learning occurs only through group lectures | D) Assessment is conducted without any Evidence Guide
+    - **Answer:** B
+16. **Which action verbs in a Performance Criterion strongly indicate the Psychomotor Domain of learning?**
+    - A) Define, State, List | B) Appreciate, Value, Cooperate | C) Assemble, Cut, Operate | D) Analyze, Evaluate, Compare
+    - **Answer:** C
+17. **What is the primary purpose of "Lockout/Tagout (LOTO)" procedures in workplace safety?**
+    - A) To record trainee attendance | B) To ensure machinery cannot be started accidentally during maintenance | C) To lock the toolroom after training hours | D) To restrict unauthorized visitors from entering the office
+    - **Answer:** B
+18. **In MS Word, which option allows text to flow smoothly around an inserted graphic or image while developing a CBLM?**
+    - A) Bring to Front | B) Align Center | C) Wrap Text | D) Hanging Indent
+    - **Answer:** C
+19. **What does "Sufficiency" as a Rule of Evidence require?**
+    - A) Evidence must be collected within the last 5 years | B) Evidence must be the candidate's own original work | C) Enough evidence must be gathered to prove competence across all Performance Criteria | D) Assessment tools must be approved by SCVC
+    - **Answer:** C
+20. **What is the main purpose of a "Registration Card" in the NSDA assessment system?**
+    - A) To register new training institutes with BTCL | B) To record a candidate's personal details and assessment information | C) To track daily toolroom inventory | D) To list workplace hazards
+    - **Answer:** B
+
+##### Set-02 MCQs (Q21–Q60)
+21. **What is the full form of SCVC in the context of NSDA curriculum and standard development?**
+    - A) Skills and Competency Verification Council | B) Standard and Curriculum Validation Committee | C) Sector Competency Validation Commission | D) Systemic Curriculum Verification Committee
+    - **Answer:** B
+22. **Under the Bangladesh National Qualifications Framework (BNQF), which two foundational levels exist below Level-1?**
+    - A) Basic-1 and Basic-2 | B) Entry-1 and Entry-2 | C) Pre-Voc 1 and Pre-Voc 2 | D) Foundation-1 and Foundation-2
+    - **Answer:** C
+23. **What does Level-6 of the BNQF correspond to in terms of job role?**
+    - A) Highly Skilled Worker | B) Supervisor | C) Mid-Level Manager / Sub-Assistant Engineer | D) Master Craftsperson
+    - **Answer:** C
+24. **Which of the following is NOT listed as a core feature/function of the National Skills Development Policy (NSDP)?**
+    - A) Bangladesh National Qualifications Framework (BNQF) | B) Quality Assurance System (QAS) | C) Recognition of Prior Learning (RPL) | D) Centralized University Admission System
+    - **Answer:** D
+25. **In a Competency Standard (CS), what is the term used for the total estimated time required to complete a unit of competency?**
+    - A) Session Duration | B) Nominal Hours | C) Contact Period | D) Assessment Timeframe
+    - **Answer:** B
+26. **Which component of a Competency Standard provides a brief summary of the purpose and scope of the unit?**
+    - A) Range Statement | B) Unit Descriptor | C) Evidence Guide | D) Performance Criteria
+    - **Answer:** B
+27. **When all Performance Criteria under a specific heading are achieved, what is considered completed?**
+    - A) The entire Qualification | B) An Element of Competency | C) The Accreditation Requirement | D) The Range of Variables
+    - **Answer:** B
+28. **Which document serves as the actual implementation guide for a training institution to deliver a Unit of Competency?**
+    - A) Industry Competency Standard (CS) | B) Competency-Based Curriculum (CBC) | C) Registration Card | D) Hazard Inspection Checklist
+    - **Answer:** B
+29. **In the comparison between CS and CBC, "Performance Criteria" in CS translates to which term in CBC?**
+    - A) Learning Outcome | B) Module Descriptor | C) Assessment Criteria | D) Assessment Guideline
+    - **Answer:** C
+30. **What does the acronym "CBLM" stand for in Competency-Based Training?**
+    - A) Curriculum-Based Learning Module | B) Competency-Based Learning Material | C) Criterion-Based Lesson Manual | D) Competency-Based Lesson Management
+    - **Answer:** B
+31. **Which of the following is the primary purpose of "Assessment Moderation"?**
+    - A) To punish assessors who make mistakes | B) To ensure consistency and alignment of assessment decisions across different assessors | C) To reduce the number of candidates in a batch | D) To design new CBLM cover pages
+    - **Answer:** B
+32. **If an assessment tool consistently produces the same results when applied to the same candidate under similar conditions, which principle of assessment is satisfied?**
+    - A) Validity | B) Flexibility | C) Reliability | D) Authenticity
+    - **Answer:** C
+33. **A candidate submits a portfolio of graphic design work created 8 years ago using outdated software. Which Rule of Evidence is violated?**
+    - A) Sufficiency | B) Authenticity | C) Currency (Current Evidence) | D) Reliability
+    - **Answer:** C
+34. **Ensuring that the work submitted in a portfolio genuinely belongs to the candidate without plagiarism satisfies which Rule of Evidence?**
+    - A) Validity | B) Authenticity | C) Sufficiency | D) Flexibility
+    - **Answer:** B
+35. **Which of the following is an example of "Indirect Evidence"?**
+    - A) Direct observation of a candidate wiring a circuit | B) A finished wooden chair inspected by the assessor | C) A Third-Party Report from a workplace supervisor | D) Oral questioning conducted during a practical task
+    - **Answer:** C
+36. **Which component of the Evidence Guide specifies the physical tools, equipment, and facility conditions required to conduct the assessment?**
+    - A) Critical Aspects of Competency | B) Resource Implications | C) Underpinning Knowledge | D) Method of Assessment
+    - **Answer:** B
+37. **Which component of the Evidence Guide identifies the essential skills and knowledge that MUST be demonstrated for a candidate to be deemed competent?**
+    - A) Range Statement | B) Critical Aspects of Competency | C) Unit Application | D) Nominal Hours
+    - **Answer:** B
+38. **In an RPL (Recognition of Prior Learning) pathway, what is the specific test used to verify a candidate's existing practical skills?**
+    - A) Formative Quiz | B) Challenge Test | C) Entrance Exam | D) Placement Interview
+    - **Answer:** B
+39. **What is the "Horn Effect" in competency-based assessment?**
+    - A) Allowing one strong positive impression to favorably bias the entire assessment | B) Allowing one single negative trait or mistake to unfairly bias the assessor's overall judgment | C) Using loud warning horns during emergency evacuation drills | D) Giving extra time to candidates with hearing impairments
+    - **Answer:** B
+40. **Which of the following is a valid reason for an assessor to immediately stop an ongoing assessment?**
+    - A) The candidate is working slightly slower than expected | B) An immediate safety hazard or unsafe work practice threatens injury | C) The assessor wants to take a tea break | D) Another candidate finishes early
+    - **Answer:** B
+41. **What does "Free Consent" mean before starting a competency assessment?**
+    - A) Candidates do not have to pay any registration fee | B) Candidates voluntarily agree to be assessed after understanding the process, purpose, and appeal rights | C) Assessors can change the competency standard freely | D) Trainees can choose their own pass marks
+    - **Answer:** B
+42. **How many CBLMs are required to be studied under the CBA (Competency-Based Assessment) module compared to the full CBT&A Level-4 program?**
+    - A) 3 CBLMs for CBA; 10 CBLMs for CBT&A | B) 5 CBLMs for CBA; 12 CBLMs for CBT&A | C) 6 CBLMs for CBA; 15 CBLMs for CBT&A | D) 4 CBLMs for CBA; 8 CBLMs for CBT&A
+    - **Answer:** B
+43. **What is the correct order of steps when providing constructive feedback to a candidate after assessment?**
+    - A) Point out all errors first -> Ask candidate to leave -> Record NYC | B) Ask candidate to self-evaluate first -> Reinforce positives specifically -> Discuss gaps and next steps | C) Give a general "Nice job" -> Hand over the certificate immediately | D) Compare the candidate's score with other trainees in front of everyone
+    - **Answer:** B
+44. **Which document consolidates and summarizes the final outcomes of all units assessed for an individual candidate?**
+    - A) Observation Checklist | B) Competency Assessment Result Summary (CARS) | C) Training Needs Analysis (TNA) | D) Session Plan
+    - **Answer:** B
+45. **Which of the following describes "Clustering" in assessment design?**
+    - A) Grouping candidates by age | B) Combining multiple related units or elements of competency into a single holistic assessment event | C) Placing all tools in one corner of the workshop | D) Dividing a written test into ten separate days
+    - **Answer:** B
+46. **According to Knowles' principles of Adult Learning (Andragogy), why do adults learn best when topics have immediate relevance to their job or personal life?**
+    - A) Pedagogical dependency | B) Readiness to Learn and Orientation to Learning | C) External punishment | D) Rote memorization
+    - **Answer:** B
+47. **Which category of questions in CBT&A represents essential safety and core functional knowledge that every candidate MUST answer correctly?**
+    - A) Could Know | B) Should Know | C) Must Know | D) Nice to Know
+    - **Answer:** C
+48. **In a CBT Workshop Layout, what is the designated purpose of "Station A"?**
+    - A) Storage for Media Equipment and Software | B) Time Card Rack and Time Clock for recording attendance and work hours | C) Practice Station for "Wet" Work | D) Station for Written Tests
+    - **Answer:** B
+49. **Where are Reference Manuals and equipment operation instructions stored in the standard CBT workshop diagram?**
+    - A) Station B (Toolroom) | B) Station D (Manuals) | C) Station F (Practice Station) | D) Station H (Written Test Station)
+    - **Answer:** B
+50. **Why are "Plywood Partitions Between Tables" used in a CBT learning environment?**
+    - A) To block emergency exits | B) To create separate, distraction-free individual learning stations | C) To store heavy mechanical engines | D) To display fire extinguishers
+    - **Answer:** B
+51. **Which learning domain focuses on values, attitudes, motivation, and adherence to workplace safety culture?**
+    - A) Cognitive Domain | B) Psychomotor Domain | C) Affective Domain | D) Analytical Domain
+    - **Answer:** C
+52. **A trainer notices that a trainee learns best through diagrams, flowcharts, color-coded notes, and video demonstrations. Which VAK learning style does this trainee prefer?**
+    - A) Auditory | B) Kinesthetic | C) Visual | D) Tactile
+    - **Answer:** C
+53. **Which of the following is an example of an "Ergonomic Hazard" in an IT or Graphic Design training lab?**
+    - A) Exposed electrical wires on the floor | B) Poorly adjusted chair height and monitor glare causing neck/back strain | C) Toxic toner dust from a laser printer | D) Wet floor near the entrance
+    - **Answer:** B
+54. **What is the difference between a "Hazard" and a "Risk" in OSH?**
+    - A) Hazard is the likelihood of harm; Risk is the source of danger | B) Hazard is anything with the potential to cause harm; Risk is the likelihood and severity of that harm occurring | C) Both terms mean exact accidents that have already happened | D) Hazard applies only to machines; Risk applies only to chemicals
+    - **Answer:** B
+55. **Which type of safety sign is characterized by a blue circle with a white symbol (e.g., "Wear Eye Protection")?**
+    - A) Prohibition Sign | B) Warning Sign | C) Mandatory Sign | D) Emergency Exit Sign
+    - **Answer:** C
+56. **In MS Excel, what is the difference between a "Workbook" and a "Worksheet"?**
+    - A) A Worksheet contains multiple Workbooks | B) A Workbook is the entire Excel file, while a Worksheet is a single tab/page of rows and columns inside it | C) Both are identical terms for a database | D) A Workbook is only for charts, and a Worksheet is only for text
+    - **Answer:** B
+57. **Which of the following is NOT one of the four animation categories in Microsoft PowerPoint?**
+    - A) Entrance | B) Emphasis | C) Exit | D) Transition
+    - **Answer:** D
+58. **In MS Word, which paragraph alignment option aligns text evenly along both the left and right margins?**
+    - A) Align Left | B) Center | C) Justify | D) Align Top
+    - **Answer:** C
+59. **What is the primary purpose of conducting a Training Needs Analysis (TNA)?**
+    - A) To calculate the institute's annual electricity bill | B) To identify the gap between employees' existing competencies and required workplace standards | C) To issue final NSDA certificates | D) To replace all practical sessions with lectures
+    - **Answer:** B
+60. **Which action should be taken first when a trainee appeals against a "Not Yet Competent (NYC)" decision?**
+    - A) Immediately change the result to Competent | B) Follow the organization's formal, transparent Appeals Process to review the assessment evidence | C) Ban the trainee from future assessments | D) Destroy the original assessment checklist
+    - **Answer:** B
+
+---
+
+#### PART B: MATCHING QUESTIONS (7 SETS — 35 PAIRS)
+
+- **Set 1 (Assessment & Inclusivity Concepts):**
+  - Options: A) Holistic Assessment | B) Third Party Report | C) Reasonable Adjustment | D) Oral Questioning | E) Assessment Review | F) RPL Challenge Test
+  - 1. Tailoring assessment methods or resources to address specific candidate needs without lowering standards. -> **C**
+  - 2. Combining knowledge, practical skills, problem-solving, and ethics into an integrated assessment task. -> **A**
+  - 3. Evidence of a candidate's workplace performance supplied by a supervisor or authority figure. -> **B**
+  - 4. Evaluating the entire assessment process after completion to identify areas for future improvement. -> **E**
+  - 5. Used to verify underpinning knowledge and explore contingency management skills. -> **D**
+
+- **Set 2 (Traditional System vs. CBT&A Terminology):**
+  - Options: A) Demonstration | B) Summative Assessment | C) Occupation | D) Unit of Competency | E) Formative Assessment | F) CBLM
+  - 1. Trade -> **C**
+  - 2. Practical Work -> **A**
+  - 3. Class Test -> **E**
+  - 4. Final Examination -> **B**
+  - 5. Subject / Course Book -> **F**
+
+- **Set 3 (Gagne's Events of Instruction & Learning):**
+  - Options: A) Inform Learners of Objectives | B) Present the Material | C) Gain Attention | D) Stimulate Recall of Prior Knowledge | E) Elicit Performance (Practice) | F) Provide Feedback
+  - 1. Using a story, video, or question to hook learners at the start of a session. -> **C**
+  - 2. Encouraging trainees to connect new concepts with their prior work experience. -> **D**
+  - 3. Breaking content into small chunks to suit visual, auditory, and kinesthetic learners. -> **B**
+  - 4. Giving trainees hands-on opportunities to apply newly learned skills. -> **E**
+  - 5. Sharing clear, measurable learning outcomes before starting the lesson. -> **A**
+
+- **Set 4 (Evidence Guide Components — Unit 11):**
+  - Options: A) Context of Assessment | B) Critical Aspects of Competency | C) Underpinning Knowledge | D) Resource Implications | E) Underpinning Skills | F) Unit Descriptor
+  - 1. Minimum theoretical concepts a candidate must know to perform the task safely. -> **C**
+  - 2. Minimum practical abilities required to execute the job steps. -> **E**
+  - 3. Specific conditions, accredited venue, and simulated workplace needed for testing. -> **A**
+  - 4. Core tasks or safety behaviors that must be achieved without fail. -> **B**
+  - 5. Tools, materials, and equipment required to conduct the assessment. -> **D**
+
+- **Set 5 (CBT Workshop Stations):**
+  - Options: A) Station E | B) Station G | C) Station B (Toolroom) | D) Station F | E) Live Work Performance Station | F) Station A
+  - 1. Storing and issuing hand tools and practical equipment. -> **C**
+  - 2. Training using videos, audio, and multimedia presentations. -> **A**
+  - 3. Practicing basic or introductory units of competency. -> **D**
+  - 4. Storing digital learning resources, media gear, and software. -> **B**
+  - 5. Observing and assessing candidate performance on actual/live tasks. -> **E**
+
+- **Set 6 (Dimensions of Competency & Workplace Skills):**
+  - Options: A) Contingency Management Skills | B) Task Skills | C) Generic Competency | D) Task Management Skills | E) Job/Role Environment Skills | F) Accreditation Requirement
+  - 1. Planning and sequencing five different tasks to meet a strict client deadline. -> **D**
+  - 2. Troubleshooting an unexpected software crash or power failure mid-task. -> **A**
+  - 3. Following workplace OSH rules and collaborating effectively with team members. -> **E**
+  - 4. Operating a specific machine accurately according to SOP. -> **B**
+  - 5. Foundational communication and numeracy skills required across all jobs. -> **C**
+
+- **Set 7 (OSH, Safety & Quality Assurance Terms):**
+  - Options: A) Preventive Action | B) Housekeeping | C) Corrective Action | D) Validation | E) PPE | F) Evacuation
+  - 1. Action taken to eliminate the root cause of a detected non-conformity. -> **C**
+  - 2. Proactive measure taken to stop a potential hazard or fault before it occurs. -> **A**
+  - 3. Keeping the workshop floor clean, organized, and free of trip hazards. -> **B**
+  - 4. Personal gear such as safety goggles, gloves, and insulated boots. -> **E**
+  - 5. Systematic review of assessment tools to verify they meet CS benchmarks. -> **D**
+
+---
+
+#### PART C: SHORT ANSWER & PC-TO-SKILL QUESTIONS (40 QUESTIONS)
+
+##### Set-01 Short Answers (Q1–Q20)
+1. **Define Competency.** What is the difference between *Competency* and *Skills*?
+2. List the **9 components** of an Industry Competency Standard (CS) under the NSDA/NTVQF framework.
+3. How does a **Curriculum Document (CBC)** differ from an **Industry Competency Standard (CS)**?
+4. What are the **5 components of a CBLM**, and why is CBLM essential in Competency-Based Training?
+5. State the **4 Dimensions of Competency** with a brief example or explanation of each.
+6. **PC-to-Skill Conversion:** Convert the following Performance Criterion (PC) into a Skill statement for Task Analysis: *"AI and human workflows are summarized and presented to the supervisor for checking the standard of the product."*
+7. What is an **Evidence Guide**? List its **7 components**.
+8. State the **4 Principles of Assessment** and the **5 Rules of Evidence**.
+9. Distinguish between **Direct Evidence** and **Indirect Evidence** with examples.
+10. When is **Observation** NOT an appropriate assessment method, and when should an assessor prepare **Oral Questioning**?
+11. What does **"Free Consent"** mean in CBA, and what are the **confidentiality responsibilities** of an assessor?
+12. How can an assessor create a **supportive environment** before commencing an assessment?
+13. Explain the **Halo Effect** and **Horn Effect** as assessor errors. Why must they be avoided?
+14. Under what circumstances must an assessor **stop an assessment** immediately?
+15. What are the **effective ways of providing feedback** to a candidate, and why should it be given immediately?
+16. Define **Competency Assessment Result Summary (CARS)** and list the characteristics of a **good assessment record**.
+17. State **4 key principles of Adult Learning** and explain how a trainer should consider them in a delivery plan.
+18. Describe the learning preferences of **Visual** and **Kinesthetic** learners.
+19. List **4 factors** to consider when designing a **CBT Workshop/Shop Layout** (mentioning key stations like Toolroom, Self-check, and Live Work stations).
+20. What is the importance of the **"Right to Refuse"** in Occupational Safety and Health (OSH), and what should a **Workplace Emergency Response Plan** include?
+
+##### Set-02 Short Answers (Q21–Q40)
+21. **Define Assessment** in the context of CBT&A and state its **three main features**.
+22. What are the **two main Assessment Pathways** in Bangladesh's TVET system? Briefly explain each.
+23. What is **Holistic Assessment**, and why is it preferred over assessing every Performance Criterion in isolation?
+24. List **four legal and ethical responsibilities** of an NSDA-certified Assessor during an assessment event.
+25. What is a **Conflict of Interest** in assessment? Give two practical examples and state how an assessor should resolve it.
+26. What is included in a comprehensive **Assessment Plan**, and what are the characteristics of an effective assessment plan?
+27. Differentiate between an **Assessment Method** and an **Evidence Gathering Tool** with two examples of each.
+28. What specific evidence must an assessor observe whilst a candidate is performing a **live work activity**?
+29. Outline the **10 sequential steps of conducting a Competency-Based Assessment (CBA)** (from pre-assessment preparation to post-assessment reporting).
+30. What are the **categories of Reasonable Adjustment**, and give three examples of how an assessor can apply them without compromising standards?
+31. Describe the **Assessment Review Cycle** and explain why reviewing assessment processes is vital for continuous quality improvement.
+32. List **five essential elements** that must be recorded in a **good assessment record**.
+33. **PC-to-Skill Conversion (3 Items):** Convert these three PCs into active Skill statements:
+    - PC-1: *"Personal Protective Equipment (PPE) is selected and worn according to job requirements."*
+    - PC-2: *"Client design specifications are interpreted and documented prior to layout creation."*
+    - PC-3: *"Faulty electrical connections are identified, isolated, and reported to the supervisor."*
+34. What are the **key characteristics of a well-written Information Sheet** in a CBLM?
+35. Explain the relationship between **Information Sheet, Self-Check, and Answer Key** in supporting self-paced learning.
+36. What are the **key principles to consider when developing CBLM** for diverse adult learners?
+37. What does **Active Listening** involve during training delivery, and how does it improve trainer-trainee interaction?
+38. State **four essential criteria** for the proper selection, use, and maintenance of **PPE**.
+39. How can a TVET trainer identify **skills gaps** among trainees, and what components should be included in a **Personal Professional Skill Development Plan**?
+40. Explain how **effective time management** relates to **Task Management Skills** in a competency-based workplace.
+
+*(Include comprehensive, accurate NSDA model answers for all 40 Short Answer questions in the `QUESTION_BANK` object so the Self-Assess & Model Answer viewer works completely for every single item.)*

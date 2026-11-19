@@ -1,0 +1,1979 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NSDA CBT&A Level-4 Assessment & Quiz Platform</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;600;700&family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        nsda: {
+                            cyan: '#00B8E6',
+                            cyanDark: '#0092B8',
+                            cyanLight: '#E6F8FD',
+                            charcoal: '#3B4652',
+                            charcoalDark: '#232A32',
+                            surface: '#F4F7F9'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['"Google Sans"', '"Hind Siliguri"', 'sans-serif'],
+                        bengali: ['"Hind Siliguri"', '"Google Sans"', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Google Sans', 'Hind Siliguri', sans-serif;
+            background-color: #F4F7F9;
+            color: #1E293B;
+        }
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: #E2E8F0; }
+        ::-webkit-scrollbar-thumb { background: #94A3B8; border-radius: 9999px; }
+        ::-webkit-scrollbar-thumb:hover { background: #64748B; }
+        @media print {
+            .no-print { display: none !important; }
+            body { background-color: #FFFFFF !important; }
+            .print-card { box-shadow: none !important; border: 1px solid #CBD5E1 !important; break-inside: avoid; }
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col selection:bg-nsda-cyan selection:text-nsda-charcoalDark">
+
+    <!-- Sticky Top Header -->
+    <header class="bg-nsda-charcoal text-white shadow-md sticky top-0 z-40 no-print">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-3">
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 rounded-xl bg-nsda-cyan flex items-center justify-center font-bold text-nsda-charcoalDark text-sm tracking-tight shadow-inner shrink-0">
+                    NSDA
+                </div>
+                <div>
+                    <h1 class="text-sm sm:text-lg font-bold tracking-tight leading-tight">CBT&A Level-4 Assessment Portal</h1>
+                    <p class="text-[11px] sm:text-xs text-slate-300 font-bengali">জাতীয় দক্ষতা উন্নয়ন কর্তৃপক্ষ • মেগা অনুশীলন ও মূল্যায়ন প্ল্যাটফর্ম</p>
+                </div>
+            </div>
+
+            <!-- Live Exam Controls (Visible during test) -->
+            <div id="examHeaderBar" class="hidden flex items-center space-x-2 sm:space-x-4">
+                <div class="hidden md:flex flex-col text-right">
+                    <span class="text-[10px] uppercase tracking-wider text-slate-300">Feedback Mode</span>
+                    <span id="headerFeedbackLabel" class="text-xs font-semibold text-nsda-cyan">Instant Feedback</span>
+                </div>
+
+                <div id="timerContainer" class="bg-nsda-charcoalDark border border-slate-600 px-3 py-1.5 rounded-xl flex items-center space-x-2">
+                    <svg class="w-4 h-4 text-nsda-cyan shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    <span id="timerText" class="font-mono font-bold text-xs sm:text-sm text-white">60:00</span>
+                </div>
+
+                <button type="button" onclick="toggleDrawerMobile()" class="lg:hidden bg-slate-700 hover:bg-slate-600 text-white px-2.5 py-2 rounded-xl text-xs font-semibold">
+                    Grid
+                </button>
+
+                <button type="button" onclick="openSubmitModal()" class="bg-nsda-cyan hover:bg-nsda-cyanDark text-nsda-charcoalDark font-bold text-xs sm:text-sm px-3.5 py-2 rounded-xl transition shadow">
+                    Submit Exam
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
+
+        <!-- ==================== 1. PRE-EXAM CONFIGURATION SCREEN ==================== -->
+        <section id="setupScreen" class="max-w-4xl mx-auto">
+            <div class="bg-white rounded-2xl shadow-lg border border-slate-200 overflow-hidden">
+                <!-- Banner -->
+                <div class="bg-gradient-to-r from-nsda-charcoal to-nsda-charcoalDark p-6 sm:p-8 text-white">
+                    <div class="flex flex-wrap items-center gap-2 mb-3">
+                        <span class="px-3 py-1 rounded-full bg-nsda-cyan/20 text-nsda-cyan text-xs font-bold tracking-wide uppercase">
+                            Full Mega Question Bank • 135 Items
+                        </span>
+                        <span class="px-3 py-1 rounded-full bg-white/10 text-slate-200 text-xs font-medium">
+                            60 MCQs • 7 Matching Sets (35 Pairs) • 40 Short Answers
+                        </span>
+                    </div>
+                    <h2 class="text-2xl sm:text-3xl font-bold mb-2">Assessment Configuration & Setup</h2>
+                    <p class="text-slate-300 text-sm sm:text-base font-bengali">
+                        পরীক্ষা শুরু করার আগে পরীক্ষার্থীর নাম, প্রশ্ন সেট, সময়সীমা এবং প্রতি প্রশ্নের পর উত্তর দেখার মোড নির্বাচন করুন।
+                    </p>
+                </div>
+
+                <div class="p-6 sm:p-8 space-y-6">
+                    <!-- Row 1: Candidate Name & Question Scope -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label for="candidateNameInput" class="block text-sm font-bold text-slate-700 mb-2">
+                                Candidate Name (পরীক্ষার্থীর নাম)
+                            </label>
+                            <input type="text" id="candidateNameInput" value="Belayet" placeholder="Enter candidate name"
+                                class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-nsda-cyan focus:border-nsda-cyan outline-none transition text-slate-800 font-medium">
+                        </div>
+
+                        <div>
+                            <label for="scopeSelector" class="block text-sm font-bold text-slate-700 mb-2">
+                                Question Scope / Set Filter (প্রশ্ন সেট নির্বাচন)
+                            </label>
+                            <select id="scopeSelector"
+                                class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-nsda-cyan focus:border-nsda-cyan outline-none transition text-slate-800 font-medium bg-white">
+                                <option value="all">All Questions (Full Mega Bank - 135 Items)</option>
+                                <option value="set1">Mock Test Set-01 Only (55 Items: 20 MCQ + 3 Match + 20 Short)</option>
+                                <option value="set2">Mega Practice Set-02 Only (80 Items: 40 MCQ + 4 Match + 20 Short)</option>
+                                <option value="mcq">Part A: MCQs Only (60 Questions)</option>
+                                <option value="matching">Part B: Matching Only (7 Sets / 35 Items)</option>
+                                <option value="short">Part C: Short Answer & PC-to-Skill Only (40 Questions)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Shuffle Option -->
+                    <div class="flex items-center justify-between bg-slate-50 border border-slate-200 rounded-xl px-4 py-3">
+                        <div>
+                            <span class="text-sm font-bold text-slate-800">Shuffle Questions Order (প্রশ্ন এলোমেলো করুন)</span>
+                            <p class="text-xs text-slate-500 font-bengali">প্রতিবার অনুশীলনের সময় প্রশ্নের ক্রম পরিবর্তন করতে এটি চালু করুন।</p>
+                        </div>
+                        <label class="relative inline-flex items-center cursor-pointer">
+                            <input type="checkbox" id="shuffleToggle" class="sr-only peer">
+                            <div class="w-11 h-6 bg-slate-300 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-nsda-cyan"></div>
+                        </label>
+                    </div>
+
+                    <!-- Row 2: Custom Time Limit Selector -->
+                    <div>
+                        <label class="block text-sm font-bold text-slate-700 mb-2">
+                            Time Limit (সময়সীমা নির্বাচন করুন)
+                        </label>
+                        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2.5" id="timePresetGrid">
+                            <button type="button" data-mins="0" onclick="handleTimePreset(0, this)"
+                                class="time-preset-btn py-2.5 px-3 rounded-xl border-2 border-slate-200 text-xs sm:text-sm font-semibold text-slate-700 hover:border-nsda-cyan transition text-center">
+                                No Time Limit<br><span class="text-[11px] font-normal text-slate-500">সময়সীমাহীন</span>
+                            </button>
+                            <button type="button" data-mins="15" onclick="handleTimePreset(15, this)"
+                                class="time-preset-btn py-2.5 px-3 rounded-xl border-2 border-slate-200 text-xs sm:text-sm font-semibold text-slate-700 hover:border-nsda-cyan transition text-center">
+                                15 Minutes<br><span class="text-[11px] font-normal text-slate-500">দ্রুত কুইজ</span>
+                            </button>
+                            <button type="button" data-mins="30" onclick="handleTimePreset(30, this)"
+                                class="time-preset-btn py-2.5 px-3 rounded-xl border-2 border-slate-200 text-xs sm:text-sm font-semibold text-slate-700 hover:border-nsda-cyan transition text-center">
+                                30 Minutes<br><span class="text-[11px] font-normal text-slate-500">মাঝারি টেস্ট</span>
+                            </button>
+                            <button type="button" data-mins="60" onclick="handleTimePreset(60, this)"
+                                class="time-preset-btn py-2.5 px-3 rounded-xl border-2 border-nsda-cyan bg-nsda-cyanLight text-nsda-charcoalDark text-xs sm:text-sm font-bold transition text-center">
+                                60 Minutes<br><span class="text-[11px] font-medium text-nsda-cyanDark">NSDA Standard</span>
+                            </button>
+                            <button type="button" data-mins="90" onclick="handleTimePreset(90, this)"
+                                class="time-preset-btn py-2.5 px-3 rounded-xl border-2 border-slate-200 text-xs sm:text-sm font-semibold text-slate-700 hover:border-nsda-cyan transition text-center">
+                                90 Minutes<br><span class="text-[11px] font-normal text-slate-500">ফুল ব্যাংক</span>
+                            </button>
+                            <div class="rounded-xl border-2 border-slate-200 px-2.5 py-1.5 flex flex-col justify-center bg-white focus-within:border-nsda-cyan">
+                                <label for="customMinutesInput" class="text-[10px] font-bold uppercase text-slate-500">Custom Mins</label>
+                                <input type="number" id="customMinutesInput" min="1" max="300" placeholder="e.g. 45"
+                                    oninput="handleCustomMinutes(this.value)"
+                                    class="w-full text-sm font-bold text-slate-800 outline-none bg-transparent">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Row 3: Answer Feedback Mode Toggle (Prominently Placed) -->
+                    <div>
+                        <label class="block text-sm font-bold text-slate-700 mb-2">
+                            Answer & Feedback Mode (প্রতি প্রশ্নের পর উত্তর দেখবেন কি না তা নির্বাচন করুন)
+                        </label>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <!-- Instant Feedback Mode -->
+                            <div id="cardInstantMode" onclick="setFeedbackMode('instant')"
+                                class="cursor-pointer p-4 rounded-2xl border-2 border-nsda-cyan bg-nsda-cyanLight/70 transition flex items-start space-x-3.5">
+                                <div class="mt-1 shrink-0">
+                                    <div id="dotInstant" class="w-5 h-5 rounded-full border-2 border-nsda-cyan flex items-center justify-center bg-white">
+                                        <div class="w-2.5 h-2.5 rounded-full bg-nsda-cyan"></div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="flex items-center flex-wrap gap-2">
+                                        <span class="font-bold text-slate-900 text-base">Instant Feedback Mode</span>
+                                        <span class="text-[11px] font-bold px-2 py-0.5 rounded bg-nsda-cyan text-nsda-charcoalDark">প্রতি প্রশ্নে উত্তর</span>
+                                    </div>
+                                    <p class="text-xs sm:text-sm text-slate-700 font-bengali mt-1 leading-relaxed">
+                                        প্রতিটি প্রশ্ন উত্তর করার সাথে সাথেই সঠিক উত্তর ও ব্যাখ্যা (এবং Short Answer-এর মডেল উত্তর) দেখতে পাবেন।
+                                    </p>
+                                </div>
+                            </div>
+
+                            <!-- Real Exam Mode -->
+                            <div id="cardExamMode" onclick="setFeedbackMode('exam')"
+                                class="cursor-pointer p-4 rounded-2xl border-2 border-slate-200 hover:border-slate-300 bg-white transition flex items-start space-x-3.5">
+                                <div class="mt-1 shrink-0">
+                                    <div id="dotExam" class="w-5 h-5 rounded-full border-2 border-slate-400 flex items-center justify-center bg-white">
+                                        <div class="w-2.5 h-2.5 rounded-full bg-transparent"></div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="flex items-center flex-wrap gap-2">
+                                        <span class="font-bold text-slate-900 text-base">Real Exam Mode</span>
+                                        <span class="text-[11px] font-bold px-2 py-0.5 rounded bg-slate-200 text-slate-700">পরীক্ষা শেষে উত্তর</span>
+                                    </div>
+                                    <p class="text-xs sm:text-sm text-slate-600 font-bengali mt-1 leading-relaxed">
+                                        পরীক্ষা চলাকালীন সব উত্তর গোপন থাকবে; পরীক্ষা সাবমিট করার পর একসাথে ফলাফল ও সমাধান দেখতে পাবেন।
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Footer Start Action -->
+                    <div class="bg-slate-50 border border-slate-200 rounded-2xl p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                        <div class="text-xs sm:text-sm text-slate-600 space-y-1">
+                            <p>• <strong>NSDA Passing Standard:</strong> <span class="text-emerald-700 font-bold">80% or above = Competent (C)</span> | Below 80% = Not Yet Competent (NYC).</p>
+                            <p>• <strong>Keyboard Shortcuts:</strong> Press <kbd class="px-1.5 py-0.5 bg-white border rounded text-xs font-mono">A/B/C/D</kbd> or <kbd class="px-1.5 py-0.5 bg-white border rounded text-xs font-mono">1-4</kbd> for MCQs, <kbd class="px-1.5 py-0.5 bg-white border rounded text-xs font-mono">← / →</kbd> to navigate.</p>
+                        </div>
+                        <button type="button" onclick="startAssessment()"
+                            class="w-full sm:w-auto bg-nsda-cyan hover:bg-nsda-cyanDark text-nsda-charcoalDark font-extrabold text-base px-8 py-3.5 rounded-xl shadow-md hover:shadow-lg transition transform active:scale-95 whitespace-nowrap">
+                            Start Assessment →
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== 2. ACTIVE ASSESSMENT INTERFACE ==================== -->
+        <section id="examScreen" class="hidden">
+            <!-- Section Jump Tabs & Progress Bar -->
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-4 mb-6">
+                <div class="flex flex-wrap items-center justify-between gap-3 mb-3">
+                    <div class="flex flex-wrap gap-2" id="sectionTabsContainer"></div>
+                    <div class="text-xs sm:text-sm font-bold text-slate-700">
+                        Progress: <span id="progressStatsText" class="text-nsda-cyanDark">0 / 0</span>
+                    </div>
+                </div>
+                <div class="w-full bg-slate-200 rounded-full h-2.5 overflow-hidden">
+                    <div id="progressBar" class="bg-nsda-cyan h-2.5 rounded-full transition-all duration-300" style="width: 0%"></div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+                <!-- Question Workspace (8 columns) -->
+                <div class="lg:col-span-8 space-y-4">
+                    <div id="questionCard" class="bg-white rounded-2xl shadow-md border border-slate-200 p-5 sm:p-7 min-h-[400px] flex flex-col justify-between">
+                        <!-- Rendered dynamically -->
+                    </div>
+
+                    <!-- Bottom Navigation Bar -->
+                    <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-4 flex items-center justify-between gap-2">
+                        <button type="button" id="btnPrev" onclick="moveQuestion(-1)"
+                            class="px-4 py-2.5 rounded-xl border border-slate-300 text-slate-700 font-bold text-xs sm:text-sm hover:bg-slate-50 disabled:opacity-40 disabled:cursor-not-allowed transition">
+                            ← Previous
+                        </button>
+
+                        <button type="button" id="btnFlag" onclick="toggleFlag()"
+                            class="px-4 py-2.5 rounded-xl border border-amber-300 bg-amber-50 text-amber-800 font-bold text-xs sm:text-sm hover:bg-amber-100 transition flex items-center space-x-1.5">
+                            <span>⚑</span>
+                            <span id="btnFlagLabel">Mark for Review</span>
+                        </button>
+
+                        <button type="button" id="btnNext" onclick="moveQuestion(1)"
+                            class="px-5 py-2.5 rounded-xl bg-nsda-charcoal hover:bg-nsda-charcoalDark text-white font-bold text-xs sm:text-sm transition">
+                            Next →
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Right Question Navigator Drawer / Panel (4 columns) -->
+                <aside id="navigatorDrawer" class="hidden lg:block lg:col-span-4 bg-white rounded-2xl shadow-md border border-slate-200 p-5 sticky top-20">
+                    <div class="flex items-center justify-between mb-3">
+                        <h3 class="font-bold text-slate-800 text-xs uppercase tracking-wider">Question Navigator</h3>
+                        <span id="scopeBadgeLabel" class="text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-600">Full Bank</span>
+                    </div>
+
+                    <!-- Status Legend -->
+                    <div class="grid grid-cols-2 gap-2 text-xs text-slate-600 mb-4 pb-3 border-b border-slate-100">
+                        <div class="flex items-center space-x-1.5"><span class="w-3 h-3 rounded bg-nsda-cyan inline-block"></span><span>Current</span></div>
+                        <div class="flex items-center space-x-1.5"><span class="w-3 h-3 rounded bg-emerald-500 inline-block"></span><span>Answered</span></div>
+                        <div class="flex items-center space-x-1.5"><span class="w-3 h-3 rounded bg-amber-400 inline-block"></span><span>Marked Review</span></div>
+                        <div class="flex items-center space-x-1.5"><span class="w-3 h-3 rounded bg-slate-200 inline-block"></span><span>Unanswered</span></div>
+                    </div>
+
+                    <!-- Number Grid -->
+                    <div id="navigatorGrid" class="grid grid-cols-6 sm:grid-cols-8 lg:grid-cols-6 gap-2 max-h-[380px] overflow-y-auto pr-1"></div>
+
+                    <div class="mt-5 pt-4 border-t border-slate-200">
+                        <button type="button" onclick="openSubmitModal()"
+                            class="w-full py-3 rounded-xl bg-nsda-cyan hover:bg-nsda-cyanDark text-nsda-charcoalDark font-extrabold text-sm shadow transition">
+                            Finish & Submit Assessment
+                        </button>
+                    </div>
+                </aside>
+            </div>
+        </section>
+
+        <!-- ==================== 3. NSDA CARS RESULT DASHBOARD ==================== -->
+        <section id="resultScreen" class="hidden space-y-6">
+            <!-- Summary Card -->
+            <div class="bg-white rounded-2xl shadow-lg border border-slate-200 overflow-hidden print-card">
+                <div class="bg-nsda-charcoal text-white p-6 sm:p-8 flex flex-col md:flex-row md:items-center justify-between gap-6">
+                    <div>
+                        <p class="text-xs uppercase tracking-widest text-nsda-cyan font-bold mb-1">Competency Assessment Result Summary (CARS)</p>
+                        <h2 id="carsCandidateName" class="text-2xl sm:text-3xl font-extrabold">Belayet</h2>
+                        <p id="carsMetaInfo" class="text-sm text-slate-300 mt-1">Qualification: CBT&A Methodology Level-4 • Time Taken: 0m 0s</p>
+                    </div>
+
+                    <div id="carsDecisionBox" class="px-6 py-4 rounded-2xl text-center border-2">
+                        <span class="block text-[11px] uppercase tracking-wider font-bold opacity-85">Official NSDA Decision</span>
+                        <span id="carsDecisionText" class="text-xl sm:text-2xl font-extrabold">COMPETENT (C)</span>
+                    </div>
+                </div>
+
+                <!-- Breakdown Metrics -->
+                <div class="grid grid-cols-2 lg:grid-cols-4 divide-y lg:divide-y-0 lg:divide-x divide-slate-200 bg-slate-50">
+                    <div class="p-5 text-center">
+                        <span class="text-xs font-bold uppercase text-slate-500">Overall Score</span>
+                        <p id="carsOverallScore" class="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-1">0 / 0</p>
+                        <p id="carsOverallPercent" class="text-sm font-bold text-nsda-cyanDark mt-0.5">0%</p>
+                    </div>
+                    <div class="p-5 text-center">
+                        <span class="text-xs font-bold uppercase text-slate-500">Part A: MCQ Score</span>
+                        <p id="carsMcqScore" class="text-2xl font-extrabold text-slate-800 mt-1">0 / 0</p>
+                        <p class="text-xs text-slate-500 mt-0.5">Auto-graded</p>
+                    </div>
+                    <div class="p-5 text-center">
+                        <span class="text-xs font-bold uppercase text-slate-500">Part B: Matching Score</span>
+                        <p id="carsMatchScore" class="text-2xl font-extrabold text-slate-800 mt-1">0 / 0</p>
+                        <p class="text-xs text-slate-500 mt-0.5">Pair-by-pair graded</p>
+                    </div>
+                    <div class="p-5 text-center">
+                        <span class="text-xs font-bold uppercase text-slate-500">Part C: Short Answer</span>
+                        <p id="carsShortScore" class="text-2xl font-extrabold text-slate-800 mt-1">0 / 0</p>
+                        <p class="text-xs text-slate-500 mt-0.5">Self-assessed C / NYC</p>
+                    </div>
+                </div>
+
+                <!-- Review Filter & Print Controls -->
+                <div class="p-4 sm:px-8 bg-white border-t border-slate-200 flex flex-wrap items-center justify-between gap-3 no-print">
+                    <div class="flex flex-wrap gap-2">
+                        <button type="button" onclick="applyReviewFilter('all', this)" class="rev-filter-btn px-3.5 py-2 rounded-xl text-xs font-bold bg-nsda-charcoal text-white">
+                            All Questions
+                        </button>
+                        <button type="button" onclick="applyReviewFilter('incorrect', this)" class="rev-filter-btn px-3.5 py-2 rounded-xl text-xs font-bold bg-slate-100 text-slate-700 hover:bg-slate-200">
+                            Incorrect / NYC Only
+                        </button>
+                        <button type="button" onclick="applyReviewFilter('correct', this)" class="rev-filter-btn px-3.5 py-2 rounded-xl text-xs font-bold bg-slate-100 text-slate-700 hover:bg-slate-200">
+                            Correct / Competent Only
+                        </button>
+                    </div>
+
+                    <div class="flex items-center space-x-3">
+                        <button type="button" onclick="window.print()" class="px-4 py-2 rounded-xl border border-slate-300 text-slate-700 font-bold text-xs sm:text-sm hover:bg-slate-50">
+                            🖨 Print / Save CARS Report
+                        </button>
+                        <button type="button" onclick="returnToSetup()" class="px-4 py-2 rounded-xl bg-nsda-cyan hover:bg-nsda-cyanDark text-nsda-charcoalDark font-bold text-xs sm:text-sm shadow">
+                            ↻ Start New Test
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Detailed Question-by-Question Review Container -->
+            <div id="reviewContainer" class="space-y-4"></div>
+        </section>
+    </main>
+
+    <!-- Custom Submit Confirmation Modal -->
+    <div id="submitModal" class="hidden fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl border border-slate-200">
+            <h3 class="text-xl font-bold text-slate-900 mb-2">Finish & Submit Exam?</h3>
+            <p id="submitModalText" class="text-sm text-slate-600 mb-6"></p>
+            <div class="flex justify-end space-x-3">
+                <button type="button" onclick="closeSubmitModal()" class="px-4 py-2.5 rounded-xl border border-slate-300 text-slate-700 font-bold text-sm hover:bg-slate-50">
+                    Continue Test
+                </button>
+                <button type="button" onclick="submitAssessment()" class="px-5 py-2.5 rounded-xl bg-nsda-cyan hover:bg-nsda-cyanDark text-nsda-charcoalDark font-extrabold text-sm shadow">
+                    Yes, Submit Now
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Custom Notification Toast -->
+    <div id="toastBox" class="hidden fixed bottom-5 right-5 bg-nsda-charcoalDark text-white px-5 py-3 rounded-xl shadow-xl border border-slate-600 text-sm font-semibold z-50"></div>
+
+    <script>
+        // =========================================================================
+        // COMPLETE QUESTION BANK (60 MCQs + 7 MATCHING SETS + 40 SHORT QUESTIONS)
+        // =========================================================================
+
+        const MCQ_BANK = [
+            // --- SET-01 MCQs (1 to 20) ---
+            {
+                id: "s1_mcq_1", set: "set1", type: "mcq",
+                question: "In a Competency Standard (CS), what do the bold and underlined words within the Performance Criteria represent?",
+                options: ["Critical Aspects of Competency", "Range of Variables / Range Statement", "Underpinning Knowledge", "Accreditation Requirements"],
+                answer: 1,
+                explanation: "Bold and underlined terms inside Performance Criteria indicate the Range of Variables (Range Statement), defining the scope and conditions of performance."
+            },
+            {
+                id: "s1_mcq_2", set: "set1", type: "mcq",
+                question: "Which term in Competency-Based Curriculum (CBC) corresponds to 'Elements of Competency' in a Competency Standard (CS)?",
+                options: ["Module Descriptor", "Assessment Criteria", "Learning Outcome", "Nominal Duration"],
+                answer: 2,
+                explanation: "In CBC, 'Elements of Competency' from the CS are translated into 'Learning Outcomes'."
+            },
+            {
+                id: "s1_mcq_3", set: "set1", type: "mcq",
+                question: "A trainee fails to meet the required industry standard during an assessment. What is the correct CBT&A terminology for their result?",
+                options: ["Fail", "Incomplete", "Not Yet Competent (NYC)", "Pending Re-exam"],
+                answer: 2,
+                explanation: "CBT&A avoids the term 'Fail'; candidates who have not yet demonstrated all required competencies are recorded as 'Not Yet Competent (NYC)'."
+            },
+            {
+                id: "s1_mcq_4", set: "set1", type: "mcq",
+                question: "Which tier of Competency Standard is applicable across all occupations regardless of the specific industry sector?",
+                options: ["Sector Specific Competency", "Occupation Specific Competency", "Generic Specific Competency", "Technical Specific Competency"],
+                answer: 2,
+                explanation: "Generic Specific Competencies apply universally across all sectors and occupations."
+            },
+            {
+                id: "s1_mcq_5", set: "set1", type: "mcq",
+                question: "Under the Bangladesh National Qualifications Framework (BNQF), Level-4 represents which level of workforce?",
+                options: ["Skilled Worker", "Supervisor", "Highly Skilled Worker", "Mid-Level Manager"],
+                answer: 2,
+                explanation: "BNQF Level-1: Basic Skill, Level-2: Semi-Skilled, Level-3: Skilled, Level-4: Highly Skilled Worker, Level-5: Supervisor, Level-6: Mid-Level Manager."
+            },
+            {
+                id: "s1_mcq_6", set: "set1", type: "mcq",
+                question: "Which dimension of competency involves handling unexpected problems, breakdowns, or irregularities during work?",
+                options: ["Task Skills", "Task Management Skills", "Contingency Management Skills", "Job/Role Environment Skills"],
+                answer: 2,
+                explanation: "Contingency Management Skills refer to responding effectively to unexpected problems, irregularities, and equipment breakdowns."
+            },
+            {
+                id: "s1_mcq_7", set: "set1", type: "mcq",
+                question: "What is the primary role of Industry Skills Councils (ISCs) under the National Skills Development Policy (NSDP)?",
+                options: ["Issuing certificates directly to trainees", "Identifying skills demand and priority occupations", "Conducting daily classroom sessions", "Supplying PPE to training institutes"],
+                answer: 1,
+                explanation: "ISCs advise on industry skills demand, priority occupations, and competency standard validation."
+            },
+            {
+                id: "s1_mcq_8", set: "set1", type: "mcq",
+                question: "Which principle of assessment ensures that the assessment measures exactly what it claims to measure?",
+                options: ["Reliability", "Fairness", "Flexibility", "Validity"],
+                answer: 3,
+                explanation: "Validity ensures the assessment accurately measures the specific competencies defined in the Competency Standard."
+            },
+            {
+                id: "s1_mcq_9", set: "set1", type: "mcq",
+                question: "In a CBT workshop layout, what is the specific function of 'Station C'?",
+                options: ["Storing tools and heavy equipment", "Reading learning materials and doing written self-checks", "Conducting live engine performance tests", "Storing media equipment and software"],
+                answer: 1,
+                explanation: "Station C is the Learning Station designated for reading CBLMs and completing written Self-Checks."
+            },
+            {
+                id: "s1_mcq_10", set: "set1", type: "mcq",
+                question: "Which of the following is NOT an example of a 'Conflict of Interest' for an assessor?",
+                options: ["Assessing a candidate who is a close relative or friend", "Receiving gifts or future benefit promises from an STP", "Assessing trainees whom the assessor personally trained", "Declining to assess when a personal relationship exists with a candidate"],
+                answer: 3,
+                explanation: "Declining to assess when a conflict of interest exists is the ethical and compliant action, not a conflict of interest."
+            },
+            {
+                id: "s1_mcq_11", set: "set1", type: "mcq",
+                question: "When applying a 'Reasonable Adjustment' for a candidate with special needs, which element is an assessor permitted to modify?",
+                options: ["The industry benchmark", "The assessment methods and resources", "The core Performance Criteria", "The required Critical Aspects of Competency"],
+                answer: 1,
+                explanation: "Reasonable adjustments modify assessment methods, timing, or resources to ensure equity without lowering the required competency standards."
+            },
+            {
+                id: "s1_mcq_12", set: "set1", type: "mcq",
+                question: "At which stage of the 4-step demonstration method does the trainer actively involve learners and talk through the steps together?",
+                options: ["Do it normal", "Do it slow", "Do it together", "Off you go"],
+                answer: 2,
+                explanation: "During 'Do it together', the trainer and trainees perform the task collaboratively while discussing each step."
+            },
+            {
+                id: "s1_mcq_13", set: "set1", type: "mcq",
+                question: "Which PowerPoint feature is used to control how one slide moves to the next during a presentation?",
+                options: ["Custom Animation", "Slide Transition", "Slide Master", "Design Themes"],
+                answer: 1,
+                explanation: "Slide Transitions control the visual movement from one slide to the next."
+            },
+            {
+                id: "s1_mcq_14", set: "set1", type: "mcq",
+                question: "Prolonged exposure to excessive noise, extreme heat, or cold in a workplace falls under which category of hazard?",
+                options: ["Chemical Hazard", "Biological Hazard", "Ergonomic Hazard", "Physical Hazard"],
+                answer: 3,
+                explanation: "Environmental factors like extreme temperatures, radiation, and loud noise are classified as Physical Hazards."
+            },
+            {
+                id: "s1_mcq_15", set: "set1", type: "mcq",
+                question: "Which of the following best describes 'Self-paced learning' in the context of CBLM?",
+                options: ["Trainees must finish all modules within a strict teacher-led schedule", "Trainees learn and progress at their own speed with minimal trainer intervention", "Learning occurs only through group lectures", "Assessment is conducted without any Evidence Guide"],
+                answer: 1,
+                explanation: "Self-paced learning allows individual learners to progress through CBLMs at their own speed."
+            },
+            {
+                id: "s1_mcq_16", set: "set1", type: "mcq",
+                question: "Which action verbs in a Performance Criterion strongly indicate the Psychomotor Domain of learning?",
+                options: ["Define, State, List", "Appreciate, Value, Cooperate", "Assemble, Cut, Operate", "Analyze, Evaluate, Compare"],
+                answer: 2,
+                explanation: "Assemble, Cut, and Operate involve physical manipulation and motor skills (Psychomotor Domain)."
+            },
+            {
+                id: "s1_mcq_17", set: "set1", type: "mcq",
+                question: "What is the primary purpose of 'Lockout/Tagout (LOTO)' procedures in workplace safety?",
+                options: ["To record trainee attendance", "To ensure machinery cannot be started accidentally during maintenance", "To lock the toolroom after training hours", "To restrict unauthorized visitors from entering the office"],
+                answer: 1,
+                explanation: "Lockout/Tagout isolates energy sources so machinery cannot accidentally start while being serviced."
+            },
+            {
+                id: "s1_mcq_18", set: "set1", type: "mcq",
+                question: "In MS Word, which option allows text to flow smoothly around an inserted graphic or image while developing a CBLM?",
+                options: ["Bring to Front", "Align Center", "Wrap Text", "Hanging Indent"],
+                answer: 2,
+                explanation: "Wrap Text controls how text flows around inserted images or shapes in MS Word."
+            },
+            {
+                id: "s1_mcq_19", set: "set1", type: "mcq",
+                question: "What does 'Sufficiency' as a Rule of Evidence require?",
+                options: ["Evidence must be collected within the last 5 years", "Evidence must be the candidate's own original work", "Enough evidence must be gathered to prove competence across all Performance Criteria", "Assessment tools must be approved by SCVC"],
+                answer: 2,
+                explanation: "Sufficiency requires collecting enough quality evidence to cover all Performance Criteria and dimensions of competency."
+            },
+            {
+                id: "s1_mcq_20", set: "set1", type: "mcq",
+                question: "What is the main purpose of a 'Registration Card' in the NSDA assessment system?",
+                options: ["To register new training institutes with BTCL", "To record a candidate's personal details and assessment information", "To track daily toolroom inventory", "To list workplace hazards"],
+                answer: 1,
+                explanation: "A Registration Card documents the candidate's personal identification and official assessment details."
+            },
+
+            // --- SET-02 MCQs (21 to 60) ---
+            {
+                id: "s2_mcq_1", set: "set2", type: "mcq",
+                question: "What is the full form of SCVC in the context of NSDA curriculum and standard development?",
+                options: ["Skills and Competency Verification Council", "Standard and Curriculum Validation Committee", "Sector Competency Validation Commission", "Systemic Curriculum Verification Committee"],
+                answer: 1,
+                explanation: "SCVC stands for Standard and Curriculum Validation Committee."
+            },
+            {
+                id: "s2_mcq_2", set: "set2", type: "mcq",
+                question: "Under the Bangladesh National Qualifications Framework (BNQF), which two foundational levels exist below Level-1?",
+                options: ["Basic-1 and Basic-2", "Entry-1 and Entry-2", "Pre-Voc 1 and Pre-Voc 2", "Foundation-1 and Foundation-2"],
+                answer: 2,
+                explanation: "Pre-Voc 1 and Pre-Voc 2 sit below Level-1 in the national TVET qualifications framework."
+            },
+            {
+                id: "s2_mcq_3", set: "set2", type: "mcq",
+                question: "What does Level-6 of the BNQF correspond to in terms of job role?",
+                options: ["Highly Skilled Worker", "Supervisor", "Mid-Level Manager / Sub-Assistant Engineer", "Master Craftsperson"],
+                answer: 2,
+                explanation: "Level-6 corresponds to Mid-Level Manager / Sub-Assistant Engineer."
+            },
+            {
+                id: "s2_mcq_4", set: "set2", type: "mcq",
+                question: "Which of the following is NOT listed as a core feature/function of the National Skills Development Policy (NSDP)?",
+                options: ["Bangladesh National Qualifications Framework (BNQF)", "Quality Assurance System (QAS)", "Recognition of Prior Learning (RPL)", "Centralized University Admission System"],
+                answer: 3,
+                explanation: "NSDP covers BNQF, CBT&A, QAS, RPL, and Accurate Labour Market Data—not university admissions."
+            },
+            {
+                id: "s2_mcq_5", set: "set2", type: "mcq",
+                question: "In a Competency Standard (CS), what is the term used for the total estimated time required to complete a unit of competency?",
+                options: ["Session Duration", "Nominal Hours", "Contact Period", "Assessment Timeframe"],
+                answer: 1,
+                explanation: "Nominal Hours represent the notional/estimated hours required to achieve a Unit of Competency."
+            },
+            {
+                id: "s2_mcq_6", set: "set2", type: "mcq",
+                question: "Which component of a Competency Standard provides a brief summary of the purpose and scope of the unit?",
+                options: ["Range Statement", "Unit Descriptor", "Evidence Guide", "Performance Criteria"],
+                answer: 1,
+                explanation: "The Unit Descriptor gives a concise summary of what the Unit of Competency covers."
+            },
+            {
+                id: "s2_mcq_7", set: "set2", type: "mcq",
+                question: "When all Performance Criteria under a specific heading are achieved, what is considered completed?",
+                options: ["The entire Qualification", "An Element of Competency", "The Accreditation Requirement", "The Range of Variables"],
+                answer: 1,
+                explanation: "Completing all Performance Criteria under an element completes that Element of Competency."
+            },
+            {
+                id: "s2_mcq_8", set: "set2", type: "mcq",
+                question: "Which document serves as the actual implementation guide for a training institution to deliver a Unit of Competency?",
+                options: ["Industry Competency Standard (CS)", "Competency-Based Curriculum (CBC)", "Registration Card", "Hazard Inspection Checklist"],
+                answer: 1,
+                explanation: "The Competency-Based Curriculum (CBC) acts as the implementation guide for delivering a unit or module."
+            },
+            {
+                id: "s2_mcq_9", set: "set2", type: "mcq",
+                question: "In the comparison between CS and CBC, 'Performance Criteria' in CS translates to which term in CBC?",
+                options: ["Learning Outcome", "Module Descriptor", "Assessment Criteria", "Assessment Guideline"],
+                answer: 2,
+                explanation: "Performance Criteria in CS correspond to Assessment Criteria in CBC."
+            },
+            {
+                id: "s2_mcq_10", set: "set2", type: "mcq",
+                question: "What does the acronym 'CBLM' stand for in Competency-Based Training?",
+                options: ["Curriculum-Based Learning Module", "Competency-Based Learning Material", "Criterion-Based Lesson Manual", "Competency-Based Lesson Management"],
+                answer: 1,
+                explanation: "CBLM stands for Competency-Based Learning Material."
+            },
+            {
+                id: "s2_mcq_11", set: "set2", type: "mcq",
+                question: "Which of the following is the primary purpose of 'Assessment Moderation'?",
+                options: ["To punish assessors who make mistakes", "To ensure consistency and alignment of assessment decisions across different assessors", "To reduce the number of candidates in a batch", "To design new CBLM cover pages"],
+                answer: 1,
+                explanation: "Assessment Moderation ensures different assessors apply standards consistently and reach comparable decisions."
+            },
+            {
+                id: "s2_mcq_12", set: "set2", type: "mcq",
+                question: "If an assessment tool consistently produces the same results when applied to the same candidate under similar conditions, which principle of assessment is satisfied?",
+                options: ["Validity", "Flexibility", "Reliability", "Authenticity"],
+                answer: 2,
+                explanation: "Reliability refers to consistency of assessment outcomes across different times, contexts, and assessors."
+            },
+            {
+                id: "s2_mcq_13", set: "set2", type: "mcq",
+                question: "A candidate submits a portfolio of graphic design work created 8 years ago using outdated software. Which Rule of Evidence is violated?",
+                options: ["Sufficiency", "Authenticity", "Currency (Current Evidence)", "Reliability"],
+                answer: 2,
+                explanation: "Currency requires evidence to be recent and reflect current industry standards and technologies."
+            },
+            {
+                id: "s2_mcq_14", set: "set2", type: "mcq",
+                question: "Ensuring that the work submitted in a portfolio genuinely belongs to the candidate without plagiarism satisfies which Rule of Evidence?",
+                options: ["Validity", "Authenticity", "Sufficiency", "Flexibility"],
+                answer: 1,
+                explanation: "Authenticity verifies that the evidence is the candidate's own genuine work."
+            },
+            {
+                id: "s2_mcq_15", set: "set2", type: "mcq",
+                question: "Which of the following is an example of 'Indirect Evidence'?",
+                options: ["Direct observation of a candidate wiring a circuit", "A finished wooden chair inspected by the assessor", "A Third-Party Report from a workplace supervisor", "Oral questioning conducted during a practical task"],
+                answer: 2,
+                explanation: "A Third-Party Report is Indirect Evidence because the assessor did not directly witness the performance."
+            },
+            {
+                id: "s2_mcq_16", set: "set2", type: "mcq",
+                question: "Which component of the Evidence Guide specifies the physical tools, equipment, and facility conditions required to conduct the assessment?",
+                options: ["Critical Aspects of Competency", "Resource Implications", "Underpinning Knowledge", "Method of Assessment"],
+                answer: 1,
+                explanation: "Resource Implications specify the tools, equipment, materials, and facilities needed for assessment."
+            },
+            {
+                id: "s2_mcq_17", set: "set2", type: "mcq",
+                question: "Which component of the Evidence Guide identifies the essential skills and knowledge that MUST be demonstrated for a candidate to be deemed competent?",
+                options: ["Range Statement", "Critical Aspects of Competency", "Unit Application", "Nominal Hours"],
+                answer: 1,
+                explanation: "Critical Aspects of Competency highlight non-negotiable skills/safety behaviors required for competence."
+            },
+            {
+                id: "s2_mcq_18", set: "set2", type: "mcq",
+                question: "In an RPL (Recognition of Prior Learning) pathway, what is the specific test used to verify a candidate's existing practical skills?",
+                options: ["Formative Quiz", "Challenge Test", "Entrance Exam", "Placement Interview"],
+                answer: 1,
+                explanation: "A Challenge Test is used in RPL to practically verify prior skills and knowledge."
+            },
+            {
+                id: "s2_mcq_19", set: "set2", type: "mcq",
+                question: "What is the 'Horn Effect' in competency-based assessment?",
+                options: ["Allowing one strong positive impression to favorably bias the entire assessment", "Allowing one single negative trait or mistake to unfairly bias the assessor's overall judgment", "Using loud warning horns during emergency evacuation drills", "Giving extra time to candidates with hearing impairments"],
+                answer: 1,
+                explanation: "The Horn Effect occurs when a single negative impression unfairly biases an assessor's overall evaluation."
+            },
+            {
+                id: "s2_mcq_20", set: "set2", type: "mcq",
+                question: "Which of the following is a valid reason for an assessor to immediately stop an ongoing assessment?",
+                options: ["The candidate is working slightly slower than expected", "An immediate safety hazard or unsafe work practice threatens injury", "The assessor wants to take a tea break", "Another candidate finishes early"],
+                answer: 1,
+                explanation: "Assessors must stop an assessment immediately if an unsafe practice or hazard poses a risk of injury."
+            },
+            {
+                id: "s2_mcq_21", set: "set2", type: "mcq",
+                question: "What does 'Free Consent' mean before starting a competency assessment?",
+                options: ["Candidates do not have to pay any registration fee", "Candidates voluntarily agree to be assessed after understanding the process, purpose, and appeal rights", "Assessors can change the competency standard freely", "Trainees can choose their own pass marks"],
+                answer: 1,
+                explanation: "Free consent means the candidate voluntarily agrees to assessment with full understanding of rules and rights."
+            },
+            {
+                id: "s2_mcq_22", set: "set2", type: "mcq",
+                question: "How many CBLMs are required to be studied under the CBA (Competency-Based Assessment) module compared to the full CBT&A Level-4 program?",
+                options: ["3 CBLMs for CBA; 10 CBLMs for CBT&A", "5 CBLMs for CBA; 12 CBLMs for CBT&A", "6 CBLMs for CBA; 15 CBLMs for CBT&A", "4 CBLMs for CBA; 8 CBLMs for CBT&A"],
+                answer: 1,
+                explanation: "Full CBT&A Level-4 comprises 12 CBLMs, whereas the CBA-only track covers 5 CBLMs."
+            },
+            {
+                id: "s2_mcq_23", set: "set2", type: "mcq",
+                question: "What is the correct order of steps when providing constructive feedback to a candidate after assessment?",
+                options: ["Point out all errors first → Ask candidate to leave → Record NYC", "Ask candidate to self-evaluate first → Reinforce positives specifically → Discuss gaps and next steps", "Give a general 'Nice job' → Hand over the certificate immediately", "Compare the candidate's score with other trainees in front of everyone"],
+                answer: 1,
+                explanation: "Effective feedback begins with candidate self-reflection, followed by specific positive reinforcement and constructive gap guidance."
+            },
+            {
+                id: "s2_mcq_24", set: "set2", type: "mcq",
+                question: "Which document consolidates and summarizes the final outcomes of all units assessed for an individual candidate?",
+                options: ["Observation Checklist", "Competency Assessment Result Summary (CARS)", "Training Needs Analysis (TNA)", "Session Plan"],
+                answer: 1,
+                explanation: "CARS consolidates the candidate's overall assessment outcomes across all assessed units."
+            },
+            {
+                id: "s2_mcq_25", set: "set2", type: "mcq",
+                question: "Which of the following describes 'Clustering' in assessment design?",
+                options: ["Grouping candidates by age", "Combining multiple related units or elements of competency into a single holistic assessment event", "Placing all tools in one corner of the workshop", "Dividing a written test into ten separate days"],
+                answer: 1,
+                explanation: "Clustering groups related units/elements together into an integrated, efficient assessment activity."
+            },
+            {
+                id: "s2_mcq_26", set: "set2", type: "mcq",
+                question: "According to Knowles' principles of Adult Learning (Andragogy), why do adults learn best when topics have immediate relevance to their job or personal life?",
+                options: ["Pedagogical dependency", "Readiness to Learn and Orientation to Learning", "External punishment", "Rote memorization"],
+                answer: 1,
+                explanation: "Adults are problem-centered and motivated when learning directly applies to their work or life roles."
+            },
+            {
+                id: "s2_mcq_27", set: "set2", type: "mcq",
+                question: "Which category of questions in CBT&A represents essential safety and core functional knowledge that every candidate MUST answer correctly?",
+                options: ["Could Know", "Should Know", "Must Know", "Nice to Know"],
+                answer: 2,
+                explanation: "'Must Know' questions cover critical safety and essential underpinning knowledge required for competence."
+            },
+            {
+                id: "s2_mcq_28", set: "set2", type: "mcq",
+                question: "In a CBT Workshop Layout, what is the designated purpose of 'Station A'?",
+                options: ["Storage for Media Equipment and Software", "Time Card Rack and Time Clock for recording attendance and work hours", "Practice Station for 'Wet' Work", "Station for Written Tests"],
+                answer: 1,
+                explanation: "Station A houses the Time Card Rack and Time Clock to log trainee attendance and work hours."
+            },
+            {
+                id: "s2_mcq_29", set: "set2", type: "mcq",
+                question: "Where are Reference Manuals and equipment operation instructions stored in the standard CBT workshop diagram?",
+                options: ["Station B (Toolroom)", "Station D (Manuals)", "Station F (Practice Station)", "Station H (Written Test Station)"],
+                answer: 1,
+                explanation: "Station D is dedicated to reference Manuals and equipment operating instructions."
+            },
+            {
+                id: "s2_mcq_30", set: "set2", type: "mcq",
+                question: "Why are 'Plywood Partitions Between Tables' used in a CBT learning environment?",
+                options: ["To block emergency exits", "To create separate, distraction-free individual learning stations", "To store heavy mechanical engines", "To display fire extinguishers"],
+                answer: 1,
+                explanation: "Plywood partitions create individual, distraction-free study carrels/stations for self-paced learning."
+            },
+            {
+                id: "s2_mcq_31", set: "set2", type: "mcq",
+                question: "Which learning domain focuses on values, attitudes, motivation, and adherence to workplace safety culture?",
+                options: ["Cognitive Domain", "Psychomotor Domain", "Affective Domain", "Analytical Domain"],
+                answer: 2,
+                explanation: "The Affective Domain addresses attitudes, values, feelings, and workplace professionalism."
+            },
+            {
+                id: "s2_mcq_32", set: "set2", type: "mcq",
+                question: "A trainer notices that a trainee learns best through diagrams, flowcharts, color-coded notes, and video demonstrations. Which VAK learning style does this trainee prefer?",
+                options: ["Auditory", "Kinesthetic", "Visual", "Tactile"],
+                answer: 2,
+                explanation: "Visual learners absorb information best through charts, diagrams, videos, and visual aids."
+            },
+            {
+                id: "s2_mcq_33", set: "set2", type: "mcq",
+                question: "Which of the following is an example of an 'Ergonomic Hazard' in an IT or Graphic Design training lab?",
+                options: ["Exposed electrical wires on the floor", "Poorly adjusted chair height and monitor glare causing neck/back strain", "Toxic toner dust from a laser printer", "Wet floor near the entrance"],
+                answer: 1,
+                explanation: "Poor workstation posture, chair height, and monitor strain are classic Ergonomic Hazards."
+            },
+            {
+                id: "s2_mcq_34", set: "set2", type: "mcq",
+                question: "What is the difference between a 'Hazard' and a 'Risk' in OSH?",
+                options: ["Hazard is the likelihood of harm; Risk is the source of danger", "Hazard is anything with the potential to cause harm; Risk is the likelihood and severity of that harm occurring", "Both terms mean exact accidents that have already happened", "Hazard applies only to machines; Risk applies only to chemicals"],
+                answer: 1,
+                explanation: "A Hazard is a source of potential harm, whereas Risk is the probability and severity of harm resulting from exposure."
+            },
+            {
+                id: "s2_mcq_35", set: "set2", type: "mcq",
+                question: "Which type of safety sign is characterized by a blue circle with a white symbol (e.g., 'Wear Eye Protection')?",
+                options: ["Prohibition Sign", "Warning Sign", "Mandatory Sign", "Emergency Exit Sign"],
+                answer: 2,
+                explanation: "Blue circular signs with white pictograms indicate Mandatory safety actions."
+            },
+            {
+                id: "s2_mcq_36", set: "set2", type: "mcq",
+                question: "In MS Excel, what is the difference between a 'Workbook' and a 'Worksheet'?",
+                options: ["A Worksheet contains multiple Workbooks", "A Workbook is the entire Excel file, while a Worksheet is a single tab/page of rows and columns inside it", "Both are identical terms for a database", "A Workbook is only for charts, and a Worksheet is only for text"],
+                answer: 1,
+                explanation: "An Excel Workbook is the complete file containing one or more individual Worksheet tabs."
+            },
+            {
+                id: "s2_mcq_37", set: "set2", type: "mcq",
+                question: "Which of the following is NOT one of the four animation categories in Microsoft PowerPoint?",
+                options: ["Entrance", "Emphasis", "Exit", "Transition"],
+                answer: 3,
+                explanation: "The four PowerPoint animation types are Entrance, Emphasis, Exit, and Motion Paths; Transition applies between slides."
+            },
+            {
+                id: "s2_mcq_38", set: "set2", type: "mcq",
+                question: "In MS Word, which paragraph alignment option aligns text evenly along both the left and right margins?",
+                options: ["Align Left", "Center", "Justify", "Align Top"],
+                answer: 2,
+                explanation: "Justify distributes text evenly between both left and right page margins."
+            },
+            {
+                id: "s2_mcq_39", set: "set2", type: "mcq",
+                question: "What is the primary purpose of conducting a Training Needs Analysis (TNA)?",
+                options: ["To calculate the institute's annual electricity bill", "To identify the gap between employees' existing competencies and required workplace standards", "To issue final NSDA certificates", "To replace all practical sessions with lectures"],
+                answer: 1,
+                explanation: "TNA identifies skill gaps between current performance and required occupational standards."
+            },
+            {
+                id: "s2_mcq_40", set: "set2", type: "mcq",
+                question: "Which action should be taken first when a trainee appeals against a 'Not Yet Competent (NYC)' decision?",
+                options: ["Immediately change the result to Competent", "Follow the organization's formal, transparent Appeals Process to review the assessment evidence", "Ban the trainee from future assessments", "Destroy the original assessment checklist"],
+                answer: 1,
+                explanation: "Appeals must be handled through the organization's formal, fair, and transparent Appeals Process."
+            }
+        ];
+
+        const MATCHING_BANK = [
+            // --- SET-01 MATCHING SETS (1 to 3) ---
+            {
+                id: "s1_match_1", set: "set1", type: "matching",
+                title: "Matching Set 1: Assessment & Inclusivity Concepts",
+                options: [
+                    { key: "A", text: "Holistic Assessment" },
+                    { key: "B", text: "Third Party Report" },
+                    { key: "C", text: "Reasonable Adjustment" },
+                    { key: "D", text: "Oral Questioning" },
+                    { key: "E", text: "Assessment Review" },
+                    { key: "F", text: "RPL Challenge Test" }
+                ],
+                pairs: [
+                    { prompt: "Tailoring assessment methods or resources to address specific candidate needs without lowering standards.", answer: "C" },
+                    { prompt: "Combining knowledge, practical skills, problem-solving, and ethics into an integrated assessment task.", answer: "A" },
+                    { prompt: "Evidence of a candidate's workplace performance supplied by a supervisor or authority figure.", answer: "B" },
+                    { prompt: "Evaluating the entire assessment process after completion to identify areas for future improvement.", answer: "E" },
+                    { prompt: "Used to verify underpinning knowledge and explore contingency management skills.", answer: "D" }
+                ]
+            },
+            {
+                id: "s1_match_2", set: "set1", type: "matching",
+                title: "Matching Set 2: Traditional System vs. CBT&A Terminology",
+                options: [
+                    { key: "A", text: "Demonstration" },
+                    { key: "B", text: "Summative Assessment" },
+                    { key: "C", text: "Occupation" },
+                    { key: "D", text: "Unit of Competency" },
+                    { key: "E", text: "Formative Assessment" },
+                    { key: "F", text: "CBLM" }
+                ],
+                pairs: [
+                    { prompt: "Traditional System Term: Trade", answer: "C" },
+                    { prompt: "Traditional System Term: Practical Work", answer: "A" },
+                    { prompt: "Traditional System Term: Class Test", answer: "E" },
+                    { prompt: "Traditional System Term: Final Examination", answer: "B" },
+                    { prompt: "Traditional System Term: Subject / Course Book", answer: "F" }
+                ]
+            },
+            {
+                id: "s1_match_3", set: "set1", type: "matching",
+                title: "Matching Set 3: Gagne’s Events of Instruction & Learning",
+                options: [
+                    { key: "A", text: "Inform Learners of Objectives" },
+                    { key: "B", text: "Present the Material" },
+                    { key: "C", text: "Gain Attention" },
+                    { key: "D", text: "Stimulate Recall of Prior Knowledge" },
+                    { key: "E", text: "Elicit Performance (Practice)" },
+                    { key: "F", text: "Provide Feedback" }
+                ],
+                pairs: [
+                    { prompt: "Using a story, video, or question to hook learners at the start of a session.", answer: "C" },
+                    { prompt: "Encouraging trainees to connect new concepts with their prior work experience.", answer: "D" },
+                    { prompt: "Breaking content into small chunks to suit visual, auditory, and kinesthetic learners.", answer: "B" },
+                    { prompt: "Giving trainees hands-on opportunities to apply newly learned skills.", answer: "E" },
+                    { prompt: "Sharing clear, measurable learning outcomes before starting the lesson.", answer: "A" }
+                ]
+            },
+
+            // --- SET-02 MATCHING SETS (4 to 7) ---
+            {
+                id: "s2_match_4", set: "set2", type: "matching",
+                title: "Matching Set 4: Evidence Guide Components (Unit 11)",
+                options: [
+                    { key: "A", text: "Context of Assessment" },
+                    { key: "B", text: "Critical Aspects of Competency" },
+                    { key: "C", text: "Underpinning Knowledge" },
+                    { key: "D", text: "Resource Implications" },
+                    { key: "E", text: "Underpinning Skills" },
+                    { key: "F", text: "Unit Descriptor" }
+                ],
+                pairs: [
+                    { prompt: "Minimum theoretical concepts a candidate must know to perform the task safely.", answer: "C" },
+                    { prompt: "Minimum practical abilities required to execute the job steps.", answer: "E" },
+                    { prompt: "Specific conditions, accredited venue, and simulated workplace needed for testing.", answer: "A" },
+                    { prompt: "Core tasks or safety behaviors that must be achieved without fail.", answer: "B" },
+                    { prompt: "Tools, materials, and equipment required to conduct the assessment.", answer: "D" }
+                ]
+            },
+            {
+                id: "s2_match_5", set: "set2", type: "matching",
+                title: "Matching Set 5: CBT Workshop Stations (From Workshop Diagram)",
+                options: [
+                    { key: "A", text: "Station E (Audio-visual Station)" },
+                    { key: "B", text: "Station G (Media Storage)" },
+                    { key: "C", text: "Station B (Toolroom)" },
+                    { key: "D", text: "Station F (Practice Station)" },
+                    { key: "E", text: "Live Work Performance Station" },
+                    { key: "F", text: "Station A (Time Card Rack)" }
+                ],
+                pairs: [
+                    { prompt: "Storing and issuing hand tools and practical equipment.", answer: "C" },
+                    { prompt: "Training using videos, audio, and multimedia presentations.", answer: "A" },
+                    { prompt: "Practicing basic or introductory units of competency.", answer: "D" },
+                    { prompt: "Storing digital learning resources, media gear, and software.", answer: "B" },
+                    { prompt: "Observing and assessing candidate performance on actual/live tasks.", answer: "E" }
+                ]
+            },
+            {
+                id: "s2_match_6", set: "set2", type: "matching",
+                title: "Matching Set 6: Dimensions of Competency & Workplace Skills",
+                options: [
+                    { key: "A", text: "Contingency Management Skills" },
+                    { key: "B", text: "Task Skills" },
+                    { key: "C", text: "Generic Competency" },
+                    { key: "D", text: "Task Management Skills" },
+                    { key: "E", text: "Job/Role Environment Skills" },
+                    { key: "F", text: "Accreditation Requirement" }
+                ],
+                pairs: [
+                    { prompt: "Planning and sequencing five different tasks to meet a strict client deadline.", answer: "D" },
+                    { prompt: "Troubleshooting an unexpected software crash or power failure mid-task.", answer: "A" },
+                    { prompt: "Following workplace OSH rules and collaborating effectively with team members.", answer: "E" },
+                    { prompt: "Operating a specific machine accurately according to SOP.", answer: "B" },
+                    { prompt: "Foundational communication and numeracy skills required across all jobs.", answer: "C" }
+                ]
+            },
+            {
+                id: "s2_match_7", set: "set2", type: "matching",
+                title: "Matching Set 7: OSH, Safety & Quality Assurance Terms",
+                options: [
+                    { key: "A", text: "Preventive Action" },
+                    { key: "B", text: "Housekeeping" },
+                    { key: "C", text: "Corrective Action" },
+                    { key: "D", text: "Validation" },
+                    { key: "E", text: "PPE" },
+                    { key: "F", text: "Evacuation" }
+                ],
+                pairs: [
+                    { prompt: "Action taken to eliminate the root cause of a detected non-conformity.", answer: "C" },
+                    { prompt: "Proactive measure taken to stop a potential hazard or fault before it occurs.", answer: "A" },
+                    { prompt: "Keeping the workshop floor clean, organized, and free of trip hazards.", answer: "B" },
+                    { prompt: "Personal gear such as safety goggles, gloves, and insulated boots.", answer: "E" },
+                    { prompt: "Systematic review of assessment tools to verify they meet CS benchmarks.", answer: "D" }
+                ]
+            }
+        ];
+
+        const SHORT_BANK = [
+            // --- SET-01 SHORT QUESTIONS (1 to 20) ---
+            {
+                id: "s1_short_1", set: "set1", type: "short",
+                question: "1. Define Competency. What is the difference between Competency and Skills?",
+                modelAnswer: "• Competency: The ability to perform a job or task as per industry standards by applying Knowledge, Skills, and Attitude (KSA).\n• Difference: Competency consists of three integrated parameters (Knowledge + Skills + Attitude), whereas Skill is only one component of competency—specifically the practical or physical capacity to perform an act."
+            },
+            {
+                id: "s1_short_2", set: "set1", type: "short",
+                question: "2. List the 9 components of an Industry Competency Standard (CS) under the NSDA/NTVQF framework.",
+                modelAnswer: "1. Unit Code\n2. Unit Title\n3. Nominal Hours\n4. Unit Descriptor\n5. Elements of Competency\n6. Performance Criteria (PC)\n7. Range of Variables / Range Statement\n8. Evidence Guide\n9. Accreditation Requirements"
+            },
+            {
+                id: "s1_short_3", set: "set1", type: "short",
+                question: "3. How does a Curriculum Document (CBC) differ from an Industry Competency Standard (CS)?",
+                modelAnswer: "• Industry Competency Standard (CS): Industry-determined specifications of performance required to operate effectively in employment (defines WHAT must be achieved).\n• Curriculum Document (CBC): Serves as an implementation guide for training providers detailing HOW to deliver and assess a unit or module (converts Elements into Learning Outcomes and PCs into Assessment Criteria)."
+            },
+            {
+                id: "s1_short_4", set: "set1", type: "short",
+                question: "4. What are the 5 components of a CBLM, and why is CBLM essential in Competency-Based Training?",
+                modelAnswer: "• 5 Components of CBLM: 1. Information Sheet, 2. Self-Check, 3. Answer Key, 4. Job Sheet, 5. Specification Sheet.\n• Importance: Enables self-paced, learner-centered instruction, standardizes training quality, provides step-by-step practical procedures, and lets trainees self-assess their progress."
+            },
+            {
+                id: "s1_short_5", set: "set1", type: "short",
+                question: "5. State the 4 Dimensions of Competency with a brief example or explanation of each.",
+                modelAnswer: "1. Task Skills: Ability to perform individual tasks to required industry standards.\n2. Task Management Skills: Planning and coordinating multiple tasks simultaneously to complete a job step by step.\n3. Contingency Management Skills: Handling unexpected problems, irregularities, or equipment breakdowns.\n4. Job/Role Environment Skills: Working safely with others and adapting to workplace policies, OSH, and environment."
+            },
+            {
+                id: "s1_short_6", set: "set1", type: "short",
+                question: "6. Convert the following Performance Criterion (PC) into a Skill statement for Task Analysis:\nPC: 'AI and human workflows are summarized and presented to the supervisor for checking the standard of the product.'",
+                modelAnswer: "• Skill Statement: Summarize and present AI and human workflows to the supervisor for checking the standard of the product.\n• Key Rule: Begin with an active verb in simple present tense and remove passive auxiliary verbs ('are')."
+            },
+            {
+                id: "s1_short_7", set: "set1", type: "short",
+                question: "7. What is an Evidence Guide? List its 7 components.",
+                modelAnswer: "• Definition: The Evidence Guide advises the assessor on how and under what conditions evidence of competency will be collected.\n• 7 Components: 1. Critical Aspects of Competency, 2. Underpinning Knowledge, 3. Underpinning Skills, 4. Required Attitude, 5. Resource Implications, 6. Method of Assessment, 7. Context of Assessment."
+            },
+            {
+                id: "s1_short_8", set: "set1", type: "short",
+                question: "8. State the 4 Principles of Assessment and the 5 Rules of Evidence.",
+                modelAnswer: "• 4 Principles of Assessment: 1. Validity, 2. Reliability, 3. Fairness, 4. Flexibility.\n• 5 Rules of Evidence: 1. Valid, 2. Sufficient, 3. Authentic, 4. Current, 5. Reliable."
+            },
+            {
+                id: "s1_short_9", set: "set1", type: "short",
+                question: "9. Distinguish between Direct Evidence and Indirect Evidence with examples.",
+                modelAnswer: "• Direct Evidence: Evidence observed or collected firsthand by the assessor while the candidate performs work (e.g., direct observation of practical demonstration, oral questioning).\n• Indirect Evidence: Evidence of a candidate's work not directly witnessed by the assessor (e.g., Third-Party Reports from supervisors, historical portfolios, workplace logs)."
+            },
+            {
+                id: "s1_short_10", set: "set1", type: "short",
+                question: "10. When is Observation NOT an appropriate assessment method, and when should an assessor prepare Oral Questioning?",
+                modelAnswer: "• Observation is NOT appropriate when: Activities occur rarely (e.g., emergency evacuation), involve high safety risks, require long durations, or involve confidential workplace data.\n• Oral Questioning is prepared when: Observation cannot be used, to verify observations, to check underpinning knowledge, and to explore contingency management/problem-solving skills."
+            },
+            {
+                id: "s1_short_11", set: "set1", type: "short",
+                question: "11. What does 'Free Consent' mean in CBA, and what are the confidentiality responsibilities of an assessor?",
+                modelAnswer: "• Free Consent: Candidates voluntarily agree to participate in the assessment without pressure after fully understanding the purpose, process, standards, and appeal rights.\n• Confidentiality: Assessors must safeguard candidate personal records, evidence, and results, disclosing them only to authorized NSDA/STP officials and the candidate."
+            },
+            {
+                id: "s1_short_12", set: "set1", type: "short",
+                question: "12. How can an assessor create a supportive environment before commencing an assessment?",
+                modelAnswer: "1. Greet candidates warmly and build rapport to ensure they feel relaxed and comfortable.\n2. Clearly explain the context, purpose, and steps of the assessment.\n3. Confirm any reasonable adjustments or special needs.\n4. Encourage questions and clarify doubts prior to starting.\n5. Ensure tools, equipment, and venue meet OSH safety standards."
+            },
+            {
+                id: "s1_short_13", set: "set1", type: "short",
+                question: "13. Explain the Halo Effect and Horn Effect as assessor errors. Why must they be avoided?",
+                modelAnswer: "• Halo Effect: Letting one positive trait or early success favorably bias the entire assessment judgment.\n• Horn Effect: Letting one negative trait or minor mistake unfairly bias the assessor against the candidate.\n• Why avoid: Both distort objectivity and violate the Principle of Fairness."
+            },
+            {
+                id: "s1_short_14", set: "set1", type: "short",
+                question: "14. Under what circumstances must an assessor stop an assessment immediately?",
+                modelAnswer: "1. An immediate safety hazard or unsafe work practice threatens injury to the candidate or others.\n2. Critical equipment or machinery breaks down.\n3. The candidate experiences sudden illness, distress, or severe fatigue.\n4. A breach of assessment rules or academic integrity occurs."
+            },
+            {
+                id: "s1_short_15", set: "set1", type: "short",
+                question: "15. What are the effective ways of providing feedback to a candidate, and why should it be given immediately?",
+                modelAnswer: "• Effective Ways: 1. Start by asking the candidate to self-evaluate how well they performed. 2. Reinforce specific positive aspects (avoid generic 'nice job'). 3. Discuss skill gaps constructively and agree on an action plan/re-assessment.\n• Why Immediate: Delays prolong misconceptions and weaken the connection between performance and feedback while thought processes are still fresh."
+            },
+            {
+                id: "s1_short_16", set: "set1", type: "short",
+                question: "16. Define Competency Assessment Result Summary (CARS) and list the characteristics of a good assessment record.",
+                modelAnswer: "• CARS: A consolidated report summarizing an individual's competency assessment outcomes, units/PCs met, final C/NYC decision, and areas needing improvement.\n• Good Assessment Record Characteristics: Accurate, complete, objective, legible, dated, confidentially stored, and signed by both Assessor and Candidate."
+            },
+            {
+                id: "s1_short_17", set: "set1", type: "short",
+                question: "17. State 4 key principles of Adult Learning and explain how a trainer should consider them in a delivery plan.",
+                modelAnswer: "1. Learner-Centered / Self-Concept: Involve adults in planning and self-directed CBLM activities.\n2. Prior Experience: Link new topics to learners' existing work/life experiences.\n3. Readiness to Learn: Focus on practical tasks immediately relevant to their job.\n4. Internal Motivation: Encourage autonomy, problem-solving, and constructive feedback."
+            },
+            {
+                id: "s1_short_18", set: "set1", type: "short",
+                question: "18. Describe the learning preferences of Visual and Kinesthetic learners.",
+                modelAnswer: "• Visual Learners: Prefer diagrams, flowcharts, infographics, color-coded notes, manuals, and video demonstrations.\n• Kinesthetic Learners: Learn best through hands-on practical exercises, physical manipulation of tools, role plays, and active movement."
+            },
+            {
+                id: "s1_short_19", set: "set1", type: "short",
+                question: "19. List 4 factors to consider when designing a CBT Workshop/Shop Layout.",
+                modelAnswer: "1. OSH & Safety compliance (unobstructed emergency exits, fire extinguishers, hazard signage).\n2. Functional zoning (using plywood partitions for Self-Check/Reading stations separate from wet/noisy practice stations).\n3. Centralized access to Toolroom (Station B) and Manuals (Station D).\n4. Ergonomic spacing and accessibility for candidates with physical disabilities."
+            },
+            {
+                id: "s1_short_20", set: "set1", type: "short",
+                question: "20. What is the importance of the 'Right to Refuse' in Occupational Safety and Health (OSH), and what should a Workplace Emergency Response Plan include?",
+                modelAnswer: "• Right to Refuse: Protects workers by allowing them to decline work they reasonably believe is unsafe without fear of reprisal.\n• Emergency Response Plan Includes: Emergency contact numbers, alarm procedures, evacuation routes, assembly points, fire extinguisher locations, and first-aid procedures."
+            },
+
+            // --- SET-02 SHORT QUESTIONS (21 to 40) ---
+            {
+                id: "s2_short_1", set: "set2", type: "short",
+                question: "21. Define Assessment in the context of CBT&A and state its three main features.",
+                modelAnswer: "• Definition: Assessment is the systematic process of collecting evidence and making judgments on whether competency has been achieved against industry Competency Standards.\n• Three Main Features: 1. Criterion-referenced (judged against CS, not other candidates), 2. Evidence-based, 3. Participatory and transparent."
+            },
+            {
+                id: "s2_short_2", set: "set2", type: "short",
+                question: "22. What are the two main Assessment Pathways in Bangladesh's TVET system? Briefly explain each.",
+                modelAnswer: "1. Training & Assessment Pathway: Candidates undergo structured institution-based or workplace-based Competency-Based Training (CBT) using CBLMs before summative assessment.\n2. Recognition of Prior Learning (RPL) Pathway: Experienced workers without formal certificates submit a portfolio and undergo a Challenge Test/assessment to gain formal recognition of existing skills."
+            },
+            {
+                id: "s2_short_3", set: "set2", type: "short",
+                question: "23. What is Holistic Assessment, and why is it preferred over assessing every Performance Criterion in isolation?",
+                modelAnswer: "• Definition: Holistic assessment integrates knowledge, practical skills, problem-solving, attitudes, and ethics into realistic whole-work tasks rather than testing fragmented items separately.\n• Why Preferred: It mirrors real workplace performance, saves assessment time, avoids repetition, and assesses all four dimensions of competency simultaneously."
+            },
+            {
+                id: "s2_short_4", set: "set2", type: "short",
+                question: "24. List four legal and ethical responsibilities of an NSDA-certified Assessor during an assessment event.",
+                modelAnswer: "1. Ensure OSH compliance and a safe physical assessment environment.\n2. Declare and avoid any Conflict of Interest.\n3. Maintain strict confidentiality of candidate records and results.\n4. Make fair, unbiased, evidence-based decisions free from discrimination and inform candidates of appeal rights."
+            },
+            {
+                id: "s2_short_5", set: "set2", type: "short",
+                question: "25. What is a Conflict of Interest in assessment? Give two practical examples and state how an assessor should resolve it.",
+                modelAnswer: "• Definition: Any personal, financial, or professional relationship that could compromise an assessor's impartiality.\n• Examples: 1. Assessing a family member or close friend. 2. Accepting gifts/payments from an STP or assessing one's own trainees.\n• Resolution: Immediately disclose the conflict to the Assessment Center/NSDA and decline/recuse oneself from conducting that assessment."
+            },
+            {
+                id: "s2_short_6", set: "set2", type: "short",
+                question: "26. What is included in a comprehensive Assessment Plan, and what are the characteristics of an effective assessment plan?",
+                modelAnswer: "• Includes: Target qualification/unit, candidate details, assessment methods & tools, resource requirements, schedule/venue, OSH precautions, and reasonable adjustments.\n• Characteristics: Aligned with CS, clear, feasible, cost-effective, flexible, and agreed upon with candidates."
+            },
+            {
+                id: "s2_short_7", set: "set2", type: "short",
+                question: "27. Differentiate between an Assessment Method and an Evidence Gathering Tool with two examples of each.",
+                modelAnswer: "• Assessment Method: The overarching technique used to collect evidence (e.g., Observation, Oral Questioning, Written Test, Portfolio Review).\n• Evidence Gathering Tool: The specific physical/digital instrument used to record the evidence (e.g., Observation Checklist, Written Question Paper with Answer Key, Oral Questioning Sheet)."
+            },
+            {
+                id: "s2_short_8", set: "set2", type: "short",
+                question: "28. What specific evidence must an assessor observe whilst a candidate is performing a live work activity?",
+                modelAnswer: "1. Adherence to OSH procedures and proper use of PPE.\n2. Correct selection and safe handling of tools, equipment, and materials.\n3. Following step-by-step SOPs and quality specifications.\n4. Time management, communication, and workplace housekeeping."
+            },
+            {
+                id: "s2_short_9", set: "set2", type: "short",
+                question: "29. Outline the sequential steps of conducting a Competency-Based Assessment (CBA) from preparation to reporting.",
+                modelAnswer: "1. Review CS & Assessment Plan -> 2. Prepare venue, tools & OSH -> 3. Welcome candidate & establish supportive environment -> 4. Explain context, purpose & obtain Free Consent -> 5. Confirm Reasonable Adjustments -> 6. Conduct assessment & gather evidence -> 7. Evaluate evidence against Rules of Evidence -> 8. Record C/NYC decision -> 9. Provide constructive feedback -> 10. Complete CARS & submit records."
+            },
+            {
+                id: "s2_short_10", set: "set2", type: "short",
+                question: "30. What are the categories of Reasonable Adjustment, and give three examples of how an assessor can apply them without compromising standards?",
+                modelAnswer: "• Categories: Adjustments for physical disabilities, language/literacy/numeracy (LLN) needs, medical/fatigue conditions, and religious/cultural observances.\n• Examples: 1. Providing oral questioning instead of a written test for a candidate with low literacy. 2. Scheduling flexible rest breaks for medical needs. 3. Providing large-print instructions or wheelchair-accessible workstations."
+            },
+            {
+                id: "s2_short_11", set: "set2", type: "short",
+                question: "31. Describe the Assessment Review Cycle and explain why reviewing assessment processes is vital for continuous quality improvement.",
+                modelAnswer: "• Cycle: Plan Assessment -> Conduct Assessment -> Gather Feedback (from candidates, assessors, industry) -> Evaluate Tools & Decisions (Moderation/Validation) -> Revise & Improve Assessment System.\n• Importance: Identifies flawed questions, eliminates bias, ensures alignment with evolving industry standards, and maintains NSDA quality assurance."
+            },
+            {
+                id: "s2_short_12", set: "set2", type: "short",
+                question: "32. List five essential elements that must be recorded in a good assessment record.",
+                modelAnswer: "1. Candidate's full name and NSDA Registration Number.\n2. Assessor's name, registration ID, and signature.\n3. Unit Code(s) and Unit Title(s) assessed.\n4. Date, time, and accredited venue of assessment.\n5. Evidence summary, reasonable adjustments applied, and final decision (C or NYC)."
+            },
+            {
+                id: "s2_short_13", set: "set2", type: "short",
+                question: "33. Convert the following three Performance Criteria (PCs) into Skill Statements:\nPC-1: 'Personal Protective Equipment (PPE) is selected and worn according to job requirements.'\nPC-2: 'Client design specifications are interpreted and documented prior to layout creation.'\nPC-3: 'Faulty electrical connections are identified, isolated, and reported to the supervisor.'",
+                modelAnswer: "• Skill-1: Select and wear Personal Protective Equipment (PPE) according to job requirements.\n• Skill-2: Interpret and document client design specifications prior to layout creation.\n• Skill-3: Identify, isolate, and report faulty electrical connections to the supervisor."
+            },
+            {
+                id: "s2_short_14", set: "set2", type: "short",
+                question: "34. What are the key characteristics of a well-written Information Sheet in a CBLM?",
+                modelAnswer: "1. Directly aligned with specific Learning Outcomes and Performance Criteria.\n2. Written in clear, simple, concise language suitable for self-paced learning.\n3. Well-structured with headings, bullet points, diagrams, and safety warnings.\n4. Logically sequenced from basic concepts to complex procedures without irrelevant clutter."
+            },
+            {
+                id: "s2_short_15", set: "set2", type: "short",
+                question: "35. Explain the relationship between Information Sheet, Self-Check, and Answer Key in supporting self-paced learning.",
+                modelAnswer: "The Information Sheet provides the essential theoretical knowledge; the Self-Check allows the trainee to immediately test their comprehension independently; and the Answer Key provides instant verification and feedback so the learner knows whether to revise or move to the Job Sheet."
+            },
+            {
+                id: "s2_short_16", set: "set2", type: "short",
+                question: "36. What are the key principles to consider when developing CBLM for diverse adult learners?",
+                modelAnswer: "1. Inclusivity and cultural sensitivity (free from gender or social bias).\n2. Multi-modal appeal (combining text, visuals, and hands-on job sheets for VAK learners).\n3. Clear typography, readable layout, and consistent formatting.\n4. Embedding OSH safety precautions prominently at critical steps."
+            },
+            {
+                id: "s2_short_17", set: "set2", type: "short",
+                question: "37. What does Active Listening involve during training delivery, and how does it improve trainer-trainee interaction?",
+                modelAnswer: "• Involves: Giving full attention, maintaining eye contact, avoiding interruption, paraphrasing/summarizing trainee points, and asking clarifying questions.\n• Benefit: Builds trust, uncovers hidden misconceptions early, encourages shy learners to participate, and creates a respectful adult learning climate."
+            },
+            {
+                id: "s2_short_18", set: "set2", type: "short",
+                question: "38. State four essential criteria for the proper selection, use, and maintenance of PPE.",
+                modelAnswer: "1. Hazard-specific selection (matched to electrical, chemical, or physical risks).\n2. Proper ergonomic fit and comfort so it does not impede work.\n3. Pre-use inspection for cracks, tears, or expiration.\n4. Regular cleaning, sanitizing, and proper storage after use."
+            },
+            {
+                id: "s2_short_19", set: "set2", type: "short",
+                question: "39. How can a TVET trainer identify skills gaps among trainees, and what components should be included in a Personal Professional Skill Development Plan?",
+                modelAnswer: "• Identifying Gaps: Pre-training diagnostic tests, reviewing Self-Checks, practical observation, and comparing performance against Competency Standards.\n• Development Plan Components: Current skill audit, target competencies/goals, required training/PD activities, resource needs, realistic timeline, and review milestones."
+            },
+            {
+                id: "s2_short_20", set: "set2", type: "short",
+                question: "40. Explain how effective time management relates to Task Management Skills in a competency-based workplace.",
+                modelAnswer: "Task Management Skills require planning, prioritizing, and coordinating multiple simultaneous tasks to achieve a complete work outcome. Effective time management ensures each sub-task is allocated realistic duration, bottlenecks are prevented, and the final product meets industry quality standards within client deadlines."
+            }
+        ];
+
+        // =========================================================================
+        // STATE MANAGEMENT
+        // =========================================================================
+        let sessionConfig = {
+            candidateName: "Belayet",
+            scope: "all",
+            shuffle: false,
+            timeMinutes: 60,
+            feedbackMode: "instant" // 'instant' | 'exam'
+        };
+
+        let examData = {
+            items: [],
+            currentIndex: 0,
+            answers: {},           // { itemId: val }
+            matchVerified: {},     // { itemId: true }
+            shortRevealed: {},     // { itemId: true }
+            shortGrades: {},       // { itemId: 'C' | 'NYC' }
+            flagged: {},           // { itemId: true }
+            timerId: null,
+            secondsLeft: 3600,
+            startedAt: null
+        };
+
+        // =========================================================================
+        // PRE-EXAM CONFIGURATION HANDLERS
+        // =========================================================================
+        function handleTimePreset(mins, btn) {
+            sessionConfig.timeMinutes = mins;
+            document.getElementById('customMinutesInput').value = '';
+            document.querySelectorAll('.time-preset-btn').forEach(b => {
+                b.classList.remove('border-nsda-cyan', 'bg-nsda-cyanLight', 'text-nsda-charcoalDark', 'font-bold');
+                b.classList.add('border-slate-200', 'text-slate-700', 'font-semibold');
+            });
+            btn.classList.remove('border-slate-200', 'text-slate-700', 'font-semibold');
+            btn.classList.add('border-nsda-cyan', 'bg-nsda-cyanLight', 'text-nsda-charcoalDark', 'font-bold');
+        }
+
+        function handleCustomMinutes(val) {
+            const parsed = parseInt(val, 10);
+            if (!isNaN(parsed) && parsed > 0) {
+                sessionConfig.timeMinutes = parsed;
+                document.querySelectorAll('.time-preset-btn').forEach(b => {
+                    b.classList.remove('border-nsda-cyan', 'bg-nsda-cyanLight', 'text-nsda-charcoalDark', 'font-bold');
+                    b.classList.add('border-slate-200', 'text-slate-700', 'font-semibold');
+                });
+            }
+        }
+
+        function setFeedbackMode(mode) {
+            sessionConfig.feedbackMode = mode;
+            const cInst = document.getElementById('cardInstantMode');
+            const cExam = document.getElementById('cardExamMode');
+            const dInst = document.getElementById('dotInstant');
+            const dExam = document.getElementById('dotExam');
+
+            if (mode === 'instant') {
+                cInst.className = "cursor-pointer p-4 rounded-2xl border-2 border-nsda-cyan bg-nsda-cyanLight/70 transition flex items-start space-x-3.5";
+                dInst.className = "w-5 h-5 rounded-full border-2 border-nsda-cyan flex items-center justify-center bg-white";
+                dInst.innerHTML = '<div class="w-2.5 h-2.5 rounded-full bg-nsda-cyan"></div>';
+
+                cExam.className = "cursor-pointer p-4 rounded-2xl border-2 border-slate-200 hover:border-slate-300 bg-white transition flex items-start space-x-3.5";
+                dExam.className = "w-5 h-5 rounded-full border-2 border-slate-400 flex items-center justify-center bg-white";
+                dExam.innerHTML = '<div class="w-2.5 h-2.5 rounded-full bg-transparent"></div>';
+            } else {
+                cExam.className = "cursor-pointer p-4 rounded-2xl border-2 border-nsda-cyan bg-nsda-cyanLight/70 transition flex items-start space-x-3.5";
+                dExam.className = "w-5 h-5 rounded-full border-2 border-nsda-cyan flex items-center justify-center bg-white";
+                dExam.innerHTML = '<div class="w-2.5 h-2.5 rounded-full bg-nsda-cyan"></div>';
+
+                cInst.className = "cursor-pointer p-4 rounded-2xl border-2 border-slate-200 hover:border-slate-300 bg-white transition flex items-start space-x-3.5";
+                dInst.className = "w-5 h-5 rounded-full border-2 border-slate-400 flex items-center justify-center bg-white";
+                dInst.innerHTML = '<div class="w-2.5 h-2.5 rounded-full bg-transparent"></div>';
+            }
+        }
+
+        function shuffleArray(arr) {
+            const copy = [...arr];
+            for (let i = copy.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [copy[i], copy[j]] = [copy[j], copy[i]];
+            }
+            return copy;
+        }
+
+        function startAssessment() {
+            const rawName = document.getElementById('candidateNameInput').value.trim();
+            sessionConfig.candidateName = rawName || "Candidate";
+            sessionConfig.scope = document.getElementById('scopeSelector').value;
+            sessionConfig.shuffle = document.getElementById('shuffleToggle').checked;
+
+            let selectedPool = [];
+            if (sessionConfig.scope === 'all') {
+                selectedPool = [...MCQ_BANK, ...MATCHING_BANK, ...SHORT_BANK];
+            } else if (sessionConfig.scope === 'set1') {
+                selectedPool = [
+                    ...MCQ_BANK.filter(i => i.set === 'set1'),
+                    ...MATCHING_BANK.filter(i => i.set === 'set1'),
+                    ...SHORT_BANK.filter(i => i.set === 'set1')
+                ];
+            } else if (sessionConfig.scope === 'set2') {
+                selectedPool = [
+                    ...MCQ_BANK.filter(i => i.set === 'set2'),
+                    ...MATCHING_BANK.filter(i => i.set === 'set2'),
+                    ...SHORT_BANK.filter(i => i.set === 'set2')
+                ];
+            } else if (sessionConfig.scope === 'mcq') {
+                selectedPool = [...MCQ_BANK];
+            } else if (sessionConfig.scope === 'matching') {
+                selectedPool = [...MATCHING_BANK];
+            } else if (sessionConfig.scope === 'short') {
+                selectedPool = [...SHORT_BANK];
+            }
+
+            if (sessionConfig.shuffle) {
+                selectedPool = shuffleArray(selectedPool);
+            }
+
+            examData = {
+                items: selectedPool,
+                currentIndex: 0,
+                answers: {},
+                matchVerified: {},
+                shortRevealed: {},
+                shortGrades: {},
+                flagged: {},
+                timerId: null,
+                secondsLeft: sessionConfig.timeMinutes * 60,
+                startedAt: Date.now()
+            };
+
+            document.getElementById('setupScreen').classList.add('hidden');
+            document.getElementById('resultScreen').classList.add('hidden');
+            document.getElementById('examScreen').classList.remove('hidden');
+            document.getElementById('examHeaderBar').classList.remove('hidden');
+
+            document.getElementById('headerFeedbackLabel').textContent =
+                sessionConfig.feedbackMode === 'instant' ? 'Instant Feedback' : 'Real Exam Mode';
+
+            const scopeEl = document.getElementById('scopeSelector');
+            document.getElementById('scopeBadgeLabel').textContent = scopeEl.options[scopeEl.selectedIndex].text.split('(')[0].trim();
+
+            initTimer();
+            buildSectionTabs();
+            renderActiveQuestion();
+            renderNavigator();
+            updateProgressBar();
+        }
+
+        function initTimer() {
+            if (examData.timerId) clearInterval(examData.timerId);
+            const timerText = document.getElementById('timerText');
+            const timerContainer = document.getElementById('timerContainer');
+
+            if (sessionConfig.timeMinutes === 0) {
+                timerText.textContent = "∞ Unlimited";
+                timerContainer.className = "bg-nsda-charcoalDark border border-slate-600 px-3 py-1.5 rounded-xl flex items-center space-x-2";
+                return;
+            }
+
+            refreshTimerDisplay();
+            examData.timerId = setInterval(() => {
+                examData.secondsLeft--;
+                refreshTimerDisplay();
+                if (examData.secondsLeft <= 0) {
+                    clearInterval(examData.timerId);
+                    notifyToast("⏰ Time expired! Automatically submitting your assessment...");
+                    submitAssessment();
+                }
+            }, 1000);
+        }
+
+        function refreshTimerDisplay() {
+            const m = Math.floor(examData.secondsLeft / 60);
+            const s = examData.secondsLeft % 60;
+            const timerText = document.getElementById('timerText');
+            const timerContainer = document.getElementById('timerContainer');
+
+            timerText.textContent = `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+            if (examData.secondsLeft <= 300) {
+                timerContainer.className = "bg-rose-950 border border-rose-500 px-3 py-1.5 rounded-xl flex items-center space-x-2 animate-pulse";
+                timerText.classList.add('text-rose-300');
+            } else {
+                timerContainer.className = "bg-nsda-charcoalDark border border-slate-600 px-3 py-1.5 rounded-xl flex items-center space-x-2";
+                timerText.classList.remove('text-rose-300');
+            }
+        }
+
+        // =========================================================================
+        // QUESTION RENDERING & INTERACTION
+        // =========================================================================
+        function buildSectionTabs() {
+            const container = document.getElementById('sectionTabsContainer');
+            container.innerHTML = '';
+
+            const types = [
+                { key: 'mcq', label: `Part A: MCQs (${examData.items.filter(x => x.type === 'mcq').length})` },
+                { key: 'matching', label: `Part B: Matching (${examData.items.filter(x => x.type === 'matching').length} Sets)` },
+                { key: 'short', label: `Part C: Short Answer (${examData.items.filter(x => x.type === 'short').length})` }
+            ];
+
+            types.forEach(t => {
+                const idx = examData.items.findIndex(x => x.type === t.key);
+                if (idx !== -1) {
+                    const btn = document.createElement('button');
+                    btn.type = 'button';
+                    btn.dataset.qtype = t.key;
+                    btn.textContent = t.label;
+                    btn.onclick = () => goToQuestion(idx);
+                    btn.className = "sec-pill px-3.5 py-1.5 rounded-xl text-xs font-bold border transition";
+                    container.appendChild(btn);
+                }
+            });
+        }
+
+        function highlightActiveTab(type) {
+            document.querySelectorAll('.sec-pill').forEach(btn => {
+                if (btn.dataset.qtype === type) {
+                    btn.className = "sec-pill px-3.5 py-1.5 rounded-xl text-xs font-bold border border-nsda-cyan bg-nsda-cyanLight text-nsda-charcoalDark transition";
+                } else {
+                    btn.className = "sec-pill px-3.5 py-1.5 rounded-xl text-xs font-bold border border-slate-200 bg-slate-50 text-slate-600 hover:bg-slate-100 transition";
+                }
+            });
+        }
+
+        function renderActiveQuestion() {
+            const item = examData.items[examData.currentIndex];
+            const total = examData.items.length;
+            const card = document.getElementById('questionCard');
+
+            highlightActiveTab(item.type);
+
+            document.getElementById('btnPrev').disabled = examData.currentIndex === 0;
+            document.getElementById('btnNext').textContent = examData.currentIndex === total - 1 ? "Finish & Submit →" : "Next →";
+            document.getElementById('btnFlagLabel').textContent = examData.flagged[item.id] ? "Marked (Unmark)" : "Mark for Review";
+
+            let typeBadge = '';
+            if (item.type === 'mcq') typeBadge = '<span class="px-2.5 py-1 rounded-lg bg-sky-100 text-sky-800 text-xs font-bold">Part A • MCQ</span>';
+            if (item.type === 'matching') typeBadge = '<span class="px-2.5 py-1 rounded-lg bg-purple-100 text-purple-800 text-xs font-bold">Part B • Matching Set (5 Pairs)</span>';
+            if (item.type === 'short') typeBadge = '<span class="px-2.5 py-1 rounded-lg bg-amber-100 text-amber-800 text-xs font-bold">Part C • Short Answer / Task Analysis</span>';
+
+            let html = `
+                <div>
+                    <div class="flex flex-wrap items-center justify-between gap-2 mb-5 pb-3 border-b border-slate-100">
+                        <div class="flex items-center space-x-2">
+                            <span class="text-sm font-extrabold text-nsda-charcoal">Item ${examData.currentIndex + 1} of ${total}</span>
+                            ${typeBadge}
+                        </div>
+                        <span class="text-xs font-bold uppercase text-slate-400">${item.set === 'set1' ? 'Mock Set-01' : 'Mega Set-02'}</span>
+                    </div>
+            `;
+
+            // --- PART A: MCQ ---
+            if (item.type === 'mcq') {
+                const chosen = examData.answers[item.id];
+                const showInstant = sessionConfig.feedbackMode === 'instant' && chosen !== undefined;
+                const letters = ['A', 'B', 'C', 'D'];
+
+                html += `<h3 class="text-lg sm:text-xl font-bold text-slate-900 leading-snug mb-6 whitespace-pre-line">${item.question}</h3>`;
+                html += `<div class="space-y-3">`;
+
+                item.options.forEach((opt, idx) => {
+                    let btnStyle = "border-slate-200 hover:border-nsda-cyan bg-white text-slate-800";
+                    let badgeStyle = "bg-slate-100 text-slate-700 border-slate-300";
+                    let rightTag = "";
+
+                    if (showInstant) {
+                        if (idx === item.answer) {
+                            btnStyle = "border-emerald-500 bg-emerald-50 text-emerald-950 font-semibold";
+                            badgeStyle = "bg-emerald-500 text-white border-emerald-500";
+                            rightTag = '<span class="text-emerald-700 font-bold text-xs ml-auto shrink-0">✓ Correct Answer</span>';
+                        } else if (idx === chosen && idx !== item.answer) {
+                            btnStyle = "border-rose-500 bg-rose-50 text-rose-950 font-semibold";
+                            badgeStyle = "bg-rose-500 text-white border-rose-500";
+                            rightTag = '<span class="text-rose-700 font-bold text-xs ml-auto shrink-0">✕ Your Selection</span>';
+                        } else {
+                            btnStyle = "border-slate-200 bg-slate-50/60 text-slate-400";
+                        }
+                    } else if (chosen === idx) {
+                        btnStyle = "border-nsda-cyan bg-nsda-cyanLight text-nsda-charcoalDark font-semibold";
+                        badgeStyle = "bg-nsda-cyan text-nsda-charcoalDark border-nsda-cyan";
+                    }
+
+                    html += `
+                        <button type="button" onclick="selectMcqOption('${item.id}', ${idx})"
+                            class="w-full text-left p-4 rounded-xl border-2 transition flex items-center space-x-3.5 ${btnStyle}">
+                            <span class="w-8 h-8 rounded-lg border flex items-center justify-center font-bold text-sm shrink-0 ${badgeStyle}">
+                                ${letters[idx]}
+                            </span>
+                            <span class="text-sm sm:text-base">${opt}</span>
+                            ${rightTag}
+                        </button>
+                    `;
+                });
+
+                html += `</div>`;
+
+                if (showInstant) {
+                    const isRight = chosen === item.answer;
+                    html += `
+                        <div class="mt-6 p-4 rounded-xl border ${isRight ? 'bg-emerald-50/80 border-emerald-300 text-emerald-950' : 'bg-rose-50/80 border-rose-300 text-rose-950'}">
+                            <p class="font-bold text-sm mb-1">
+                                ${isRight ? '✓ Correct! Well done.' : `✕ Incorrect. The correct option is ${letters[item.answer]}.`}
+                            </p>
+                            <p class="text-sm leading-relaxed text-slate-800">${item.explanation}</p>
+                        </div>
+                    `;
+                }
+            }
+
+            // --- PART B: MATCHING SET ---
+            if (item.type === 'matching') {
+                const userMap = examData.answers[item.id] || {};
+                const verified = sessionConfig.feedbackMode === 'instant' && examData.matchVerified[item.id];
+
+                html += `
+                    <h3 class="text-lg sm:text-xl font-bold text-slate-900 mb-1.5">${item.title}</h3>
+                    <p class="text-xs sm:text-sm text-slate-500 mb-4">Match each item in Column A with the correct option (A–F) from Column B.</p>
+
+                    <div class="bg-slate-50 border border-slate-200 rounded-xl p-3.5 mb-5">
+                        <p class="text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-2">Column B Options Reference:</p>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-1.5 text-xs sm:text-sm">
+                            ${item.options.map(o => `<div><span class="font-bold text-nsda-charcoal">${o.key})</span> ${o.text}</div>`).join('')}
+                        </div>
+                    </div>
+
+                    <div class="space-y-3">
+                `;
+
+                item.pairs.forEach((pair, pIdx) => {
+                    const val = userMap[pIdx] || "";
+                    let rowStyle = "border-slate-200 bg-white";
+                    let statusLine = "";
+
+                    if (verified) {
+                        if (val === pair.answer) {
+                            rowStyle = "border-emerald-400 bg-emerald-50/70";
+                            statusLine = `<span class="text-xs font-bold text-emerald-700 block mt-1">✓ Correct Match (${pair.answer})</span>`;
+                        } else {
+                            const rightObj = item.options.find(o => o.key === pair.answer);
+                            rowStyle = "border-rose-400 bg-rose-50/70";
+                            statusLine = `<span class="text-xs font-bold text-rose-700 block mt-1">✕ Correct Match: ${pair.answer}) ${rightObj ? rightObj.text : ''}</span>`;
+                        }
+                    }
+
+                    html += `
+                        <div class="p-3.5 rounded-xl border ${rowStyle} flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                            <div class="text-sm text-slate-800 font-medium flex-1">
+                                <span class="font-bold text-slate-500 mr-1.5">${pIdx + 1}.</span>${pair.prompt}
+                                ${statusLine}
+                            </div>
+                            <select onchange="selectMatchingPair('${item.id}', ${pIdx}, this.value)"
+                                class="sm:w-64 px-3 py-2 rounded-lg border border-slate-300 bg-white text-sm font-semibold text-slate-800 focus:ring-2 focus:ring-nsda-cyan outline-none">
+                                <option value="">-- Select Match --</option>
+                                ${item.options.map(o => `<option value="${o.key}" ${val === o.key ? 'selected' : ''}>${o.key}) ${o.text}</option>`).join('')}
+                            </select>
+                        </div>
+                    `;
+                });
+
+                html += `</div>`;
+
+                if (sessionConfig.feedbackMode === 'instant') {
+                    html += `
+                        <div class="mt-5 flex justify-end">
+                            <button type="button" onclick="checkMatchingSet('${item.id}')"
+                                class="px-4 py-2 rounded-xl bg-nsda-cyan hover:bg-nsda-cyanDark text-nsda-charcoalDark font-bold text-xs sm:text-sm shadow-sm transition">
+                                Check Matching Set Answers
+                            </button>
+                        </div>
+                    `;
+                }
+            }
+
+            // --- PART C: SHORT ANSWER & PC-TO-SKILL ---
+            if (item.type === 'short') {
+                const written = examData.answers[item.id] || "";
+                const revealed = examData.shortRevealed[item.id] || false;
+                const grade = examData.shortGrades[item.id] || null;
+
+                html += `
+                    <div class="bg-slate-50 border border-slate-200 rounded-xl p-4 mb-4">
+                        <h3 class="text-base sm:text-lg font-bold text-slate-900 leading-relaxed whitespace-pre-line">${item.question}</h3>
+                    </div>
+                    <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">
+                        Your Written Answer (Write in English, or Bengali with CBT&A technical terms in English):
+                    </label>
+                    <textarea rows="5" oninput="updateShortText('${item.id}', this.value)"
+                        placeholder="Type your response here..."
+                        class="w-full p-4 rounded-xl border border-slate-300 focus:ring-2 focus:ring-nsda-cyan focus:border-nsda-cyan outline-none text-sm sm:text-base text-slate-800">${written}</textarea>
+                `;
+
+                if (sessionConfig.feedbackMode === 'instant') {
+                    html += `
+                        <div class="mt-4 flex flex-wrap items-center justify-between gap-3">
+                            <button type="button" onclick="toggleModelAnswer('${item.id}')"
+                                class="px-4 py-2.5 rounded-xl bg-nsda-charcoal hover:bg-nsda-charcoalDark text-white font-bold text-xs sm:text-sm transition">
+                                ${revealed ? 'Hide Model Answer' : '👁 Reveal Model Answer & Key Points'}
+                            </button>
+                            ${grade ? `<span class="text-xs font-bold px-3 py-1 rounded-full ${grade === 'C' ? 'bg-emerald-100 text-emerald-800' : 'bg-amber-100 text-amber-800'}">Self-Grade: ${grade === 'C' ? 'Competent (1 Mark)' : 'Not Yet Competent (0 Marks)'}</span>` : ''}
+                        </div>
+                    `;
+
+                    if (revealed) {
+                        html += `
+                            <div class="mt-4 p-4 rounded-xl bg-emerald-50/80 border border-emerald-300">
+                                <p class="text-xs font-extrabold uppercase tracking-wider text-emerald-800 mb-1.5">Model Answer & Key Points:</p>
+                                <p class="text-sm text-slate-800 whitespace-pre-line leading-relaxed mb-4">${item.modelAnswer}</p>
+                                <div class="pt-3 border-t border-emerald-200 flex flex-wrap items-center justify-between gap-2">
+                                    <span class="text-xs font-bold text-slate-700">Self-Assessment Marking:</span>
+                                    <div class="flex space-x-2">
+                                        <button type="button" onclick="setShortGrade('${item.id}', 'C')"
+                                            class="px-3.5 py-1.5 rounded-lg text-xs font-bold border transition ${grade === 'C' ? 'bg-emerald-600 text-white border-emerald-600' : 'bg-white text-emerald-700 border-emerald-400 hover:bg-emerald-50'}">
+                                            ✓ Competent (C)
+                                        </button>
+                                        <button type="button" onclick="setShortGrade('${item.id}', 'NYC')"
+                                            class="px-3.5 py-1.5 rounded-lg text-xs font-bold border transition ${grade === 'NYC' ? 'bg-amber-600 text-white border-amber-600' : 'bg-white text-amber-800 border-amber-400 hover:bg-amber-50'}">
+                                            ! Not Yet Competent (NYC)
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    }
+                } else {
+                    html += `
+                        <p class="text-xs text-slate-500 mt-2 italic">
+                            Real Exam Mode active: Model answers and self-assessment grading will unlock right after you submit the exam.
+                        </p>
+                    `;
+                }
+            }
+
+            html += `</div>`;
+            card.innerHTML = html;
+        }
+
+        // =========================================================================
+        // USER INPUT HANDLERS
+        // =========================================================================
+        function selectMcqOption(id, optionIndex) {
+            if (sessionConfig.feedbackMode === 'instant' && examData.answers[id] !== undefined) {
+                return; // Lock first attempt in instant feedback mode
+            }
+            examData.answers[id] = optionIndex;
+            renderActiveQuestion();
+            renderNavigator();
+            updateProgressBar();
+        }
+
+        function selectMatchingPair(id, pairIdx, key) {
+            if (!examData.answers[id]) examData.answers[id] = {};
+            if (key === "") {
+                delete examData.answers[id][pairIdx];
+            } else {
+                examData.answers[id][pairIdx] = key;
+            }
+            renderNavigator();
+            updateProgressBar();
+        }
+
+        function checkMatchingSet(id) {
+            examData.matchVerified[id] = true;
+            renderActiveQuestion();
+        }
+
+        function updateShortText(id, text) {
+            examData.answers[id] = text;
+            renderNavigator();
+            updateProgressBar();
+        }
+
+        function toggleModelAnswer(id) {
+            examData.shortRevealed[id] = !examData.shortRevealed[id];
+            renderActiveQuestion();
+        }
+
+        function setShortGrade(id, status) {
+            examData.shortGrades[id] = status;
+            renderActiveQuestion();
+            renderNavigator();
+            updateProgressBar();
+        }
+
+        // =========================================================================
+        // NAVIGATION & DRAWER
+        // =========================================================================
+        function moveQuestion(delta) {
+            const target = examData.currentIndex + delta;
+            if (target >= examData.items.length) {
+                openSubmitModal();
+                return;
+            }
+            if (target >= 0) {
+                examData.currentIndex = target;
+                renderActiveQuestion();
+                renderNavigator();
+            }
+        }
+
+        function goToQuestion(idx) {
+            examData.currentIndex = idx;
+            renderActiveQuestion();
+            renderNavigator();
+        }
+
+        function toggleFlag() {
+            const item = examData.items[examData.currentIndex];
+            if (examData.flagged[item.id]) delete examData.flagged[item.id];
+            else examData.flagged[item.id] = true;
+            renderActiveQuestion();
+            renderNavigator();
+        }
+
+        function toggleDrawerMobile() {
+            const drawer = document.getElementById('navigatorDrawer');
+            drawer.classList.toggle('hidden');
+        }
+
+        function isItemAnswered(item) {
+            const ans = examData.answers[item.id];
+            if (item.type === 'mcq') return ans !== undefined;
+            if (item.type === 'matching') return ans && Object.keys(ans).length > 0;
+            if (item.type === 'short') return (ans && ans.trim().length > 0) || examData.shortGrades[item.id] !== undefined;
+            return false;
+        }
+
+        function renderNavigator() {
+            const grid = document.getElementById('navigatorGrid');
+            grid.innerHTML = '';
+
+            examData.items.forEach((item, idx) => {
+                const btn = document.createElement('button');
+                btn.type = 'button';
+                btn.textContent = idx + 1;
+                btn.onclick = () => goToQuestion(idx);
+
+                let cls = "h-9 rounded-lg text-xs font-bold border transition ";
+                if (idx === examData.currentIndex) {
+                    cls += "bg-nsda-cyan text-nsda-charcoalDark border-nsda-charcoal ring-2 ring-nsda-cyan/50";
+                } else if (examData.flagged[item.id]) {
+                    cls += "bg-amber-400 text-amber-950 border-amber-500";
+                } else if (isItemAnswered(item)) {
+                    cls += "bg-emerald-500 text-white border-emerald-600";
+                } else {
+                    cls += "bg-slate-100 text-slate-600 border-slate-200 hover:bg-slate-200";
+                }
+
+                btn.className = cls;
+                grid.appendChild(btn);
+            });
+        }
+
+        function updateProgressBar() {
+            const total = examData.items.length;
+            const done = examData.items.filter(isItemAnswered).length;
+            const pct = total > 0 ? Math.round((done / total) * 100) : 0;
+
+            document.getElementById('progressStatsText').textContent = `${done} / ${total} (${pct}%)`;
+            document.getElementById('progressBar').style.width = `${pct}%`;
+        }
+
+        // Keyboard Shortcuts
+        document.addEventListener('keydown', (e) => {
+            if (document.getElementById('examScreen').classList.contains('hidden')) return;
+            if (['TEXTAREA', 'INPUT', 'SELECT'].includes(document.activeElement.tagName)) return;
+
+            const item = examData.items[examData.currentIndex];
+            if (item && item.type === 'mcq') {
+                const k = e.key.toUpperCase();
+                if (k === 'A' || k === '1') selectMcqOption(item.id, 0);
+                if (k === 'B' || k === '2') selectMcqOption(item.id, 1);
+                if (k === 'C' || k === '3') selectMcqOption(item.id, 2);
+                if (k === 'D' || k === '4') selectMcqOption(item.id, 3);
+            }
+            if (e.key === 'ArrowRight') moveQuestion(1);
+            if (e.key === 'ArrowLeft') moveQuestion(-1);
+        });
+
+        // =========================================================================
+        // SUBMISSION & NSDA CARS DASHBOARD
+        // =========================================================================
+        function openSubmitModal() {
+            const total = examData.items.length;
+            const done = examData.items.filter(isItemAnswered).length;
+            document.getElementById('submitModalText').textContent =
+                `You have completed ${done} of ${total} items. Once submitted, your official NSDA Competency Assessment Result Summary (CARS) and all model answers will be displayed.`;
+            document.getElementById('submitModal').classList.remove('hidden');
+        }
+
+        function closeSubmitModal() {
+            document.getElementById('submitModal').classList.add('hidden');
+        }
+
+        function submitAssessment() {
+            closeSubmitModal();
+            if (examData.timerId) clearInterval(examData.timerId);
+
+            const elapsedSecs = Math.max(1, Math.floor((Date.now() - examData.startedAt) / 1000));
+            const mins = Math.floor(elapsedSecs / 60);
+            const secs = elapsedSecs % 60;
+
+            let mcqGot = 0, mcqMax = 0;
+            let matchGot = 0, matchMax = 0;
+            let shortGot = 0, shortMax = 0;
+
+            examData.items.forEach(item => {
+                if (item.type === 'mcq') {
+                    mcqMax++;
+                    if (examData.answers[item.id] === item.answer) mcqGot++;
+                } else if (item.type === 'matching') {
+                    const userMap = examData.answers[item.id] || {};
+                    item.pairs.forEach((p, idx) => {
+                        matchMax++;
+                        if (userMap[idx] === p.answer) matchGot++;
+                    });
+                } else if (item.type === 'short') {
+                    shortMax++;
+                    if (examData.shortGrades[item.id] === 'C') shortGot++;
+                }
+            });
+
+            const totalGot = mcqGot + matchGot + shortGot;
+            const totalMax = mcqMax + matchMax + shortMax;
+            const percent = totalMax > 0 ? Math.round((totalGot / totalMax) * 100) : 0;
+            const isCompetent = percent >= 80;
+
+            document.getElementById('carsCandidateName').textContent = sessionConfig.candidateName;
+            document.getElementById('carsMetaInfo').textContent =
+                `Qualification: CBT&A Methodology Level-4 • Mode: ${sessionConfig.feedbackMode === 'instant' ? 'Instant Feedback' : 'Real Exam'} • Time Taken: ${mins}m ${secs}s`;
+
+            const box = document.getElementById('carsDecisionBox');
+            const text = document.getElementById('carsDecisionText');
+            if (isCompetent) {
+                box.className = "px-6 py-4 rounded-2xl text-center border-2 border-emerald-400 bg-emerald-500/20 text-emerald-300";
+                text.textContent = "COMPETENT (C)";
+            } else {
+                box.className = "px-6 py-4 rounded-2xl text-center border-2 border-amber-400 bg-amber-500/20 text-amber-300";
+                text.textContent = "NOT YET COMPETENT (NYC)";
+            }
+
+            document.getElementById('carsOverallScore').textContent = `${totalGot} / ${totalMax}`;
+            document.getElementById('carsOverallPercent').textContent = `${percent}% (NSDA Benchmark: 80%)`;
+            document.getElementById('carsMcqScore').textContent = `${mcqGot} / ${mcqMax}`;
+            document.getElementById('carsMatchScore').textContent = `${matchGot} / ${matchMax}`;
+            document.getElementById('carsShortScore').textContent = `${shortGot} / ${shortMax}`;
+
+            document.getElementById('examScreen').classList.add('hidden');
+            document.getElementById('examHeaderBar').classList.add('hidden');
+            document.getElementById('resultScreen').classList.remove('hidden');
+
+            renderReviewCards('all');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function applyReviewFilter(filter, btn) {
+            document.querySelectorAll('.rev-filter-btn').forEach(b => {
+                b.className = "rev-filter-btn px-3.5 py-2 rounded-xl text-xs font-bold bg-slate-100 text-slate-700 hover:bg-slate-200";
+            });
+            btn.className = "rev-filter-btn px-3.5 py-2 rounded-xl text-xs font-bold bg-nsda-charcoal text-white";
+            renderReviewCards(filter);
+        }
+
+        function renderReviewCards(filter) {
+            const container = document.getElementById('reviewContainer');
+            container.innerHTML = '';
+            const letters = ['A', 'B', 'C', 'D'];
+
+            examData.items.forEach((item, idx) => {
+                let outcome = 'incorrect'; // 'correct' | 'incorrect'
+
+                if (item.type === 'mcq') {
+                    outcome = examData.answers[item.id] === item.answer ? 'correct' : 'incorrect';
+                } else if (item.type === 'matching') {
+                    const userMap = examData.answers[item.id] || {};
+                    const allMatched = item.pairs.every((p, i) => userMap[i] === p.answer);
+                    outcome = allMatched ? 'correct' : 'incorrect';
+                } else if (item.type === 'short') {
+                    outcome = examData.shortGrades[item.id] === 'C' ? 'correct' : 'incorrect';
+                }
+
+                if (filter === 'correct' && outcome !== 'correct') return;
+                if (filter === 'incorrect' && outcome !== 'incorrect') return;
+
+                const borderCol = outcome === 'correct' ? 'border-emerald-300' : 'border-rose-300';
+                const statusBadge = outcome === 'correct'
+                    ? '<span class="px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-xs font-bold">✓ Competent / Correct</span>'
+                    : '<span class="px-2.5 py-0.5 rounded-full bg-rose-100 text-rose-800 text-xs font-bold">✕ Review / NYC</span>';
+
+                let contentHtml = '';
+
+                if (item.type === 'mcq') {
+                    const userVal = examData.answers[item.id];
+                    contentHtml = `
+                        <p class="font-bold text-slate-900 text-base mb-3">${item.question}</p>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm mb-3">
+                            ${item.options.map((opt, i) => {
+                                let style = "p-2.5 rounded-lg border ";
+                                if (i === item.answer) style += "bg-emerald-50 border-emerald-400 text-emerald-950 font-bold";
+                                else if (i === userVal) style += "bg-rose-50 border-rose-400 text-rose-950 font-semibold";
+                                else style += "bg-slate-50 border-slate-200 text-slate-600";
+                                return `<div class="${style}">${letters[i]}) ${opt}</div>`;
+                            }).join('')}
+                        </div>
+                        <p class="text-xs sm:text-sm text-slate-700 bg-sky-50/70 border border-sky-200 p-3 rounded-xl">
+                            <strong>Explanation:</strong> ${item.explanation}
+                        </p>
+                    `;
+                } else if (item.type === 'matching') {
+                    const userMap = examData.answers[item.id] || {};
+                    contentHtml = `
+                        <p class="font-bold text-slate-900 text-base mb-3">${item.title}</p>
+                        <div class="space-y-2 text-sm">
+                            ${item.pairs.map((p, i) => {
+                                const uKey = userMap[i];
+                                const ok = uKey === p.answer;
+                                const rightOpt = item.options.find(o => o.key === p.answer);
+                                const userOpt = item.options.find(o => o.key === uKey);
+                                return `
+                                    <div class="p-2.5 rounded-lg border ${ok ? 'bg-emerald-50/60 border-emerald-300' : 'bg-rose-50/60 border-rose-300'} flex flex-col sm:flex-row sm:justify-between gap-1">
+                                        <span class="text-slate-800 font-medium">${i + 1}. ${p.prompt}</span>
+                                        <span class="text-xs font-bold ${ok ? 'text-emerald-800' : 'text-rose-800'}">
+                                            ${ok ? `✓ ${p.answer}) ${rightOpt.text}` : `Your: ${uKey ? uKey + ') ' + userOpt.text : 'Unanswered'} | Correct: ${p.answer}) ${rightOpt.text}`}
+                                        </span>
+                                    </div>
+                                `;
+                            }).join('')}
+                        </div>
+                    `;
+                } else if (item.type === 'short') {
+                    const userText = examData.answers[item.id] || "(No written response entered)";
+                    const grade = examData.shortGrades[item.id];
+                    contentHtml = `
+                        <p class="font-bold text-slate-900 text-base mb-3 whitespace-pre-line">${item.question}</p>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
+                            <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200">
+                                <span class="block text-xs font-bold uppercase text-slate-500 mb-1">Your Written Answer:</span>
+                                <p class="text-slate-800 whitespace-pre-line">${userText}</p>
+                            </div>
+                            <div class="p-3.5 rounded-xl bg-emerald-50/80 border border-emerald-300">
+                                <span class="block text-xs font-bold uppercase text-emerald-800 mb-1">Model Answer & Key Points:</span>
+                                <p class="text-slate-800 whitespace-pre-line">${item.modelAnswer}</p>
+                            </div>
+                        </div>
+                        <div class="mt-3 pt-2.5 border-t border-slate-100 flex items-center justify-between flex-wrap gap-2 no-print">
+                            <span class="text-xs text-slate-600 font-bold">Self-Assessment Marking (updates CARS score):</span>
+                            <div class="flex space-x-2">
+                                <button type="button" onclick="regradeShort('${item.id}', 'C')"
+                                    class="px-3 py-1.5 rounded-lg text-xs font-bold border transition ${grade === 'C' ? 'bg-emerald-600 text-white border-emerald-600' : 'bg-white text-emerald-700 border-emerald-300 hover:bg-emerald-50'}">
+                                    ✓ Competent (1 Mark)
+                                </button>
+                                <button type="button" onclick="regradeShort('${item.id}', 'NYC')"
+                                    class="px-3 py-1.5 rounded-lg text-xs font-bold border transition ${grade === 'NYC' ? 'bg-amber-600 text-white border-amber-600' : 'bg-white text-amber-800 border-amber-300 hover:bg-amber-50'}">
+                                    ! Not Yet Competent (0 Marks)
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                }
+
+                const card = document.createElement('div');
+                card.className = `bg-white rounded-2xl shadow-sm border ${borderCol} p-5 print-card`;
+                card.innerHTML = `
+                    <div class="flex items-center justify-between mb-3 pb-2 border-b border-slate-100">
+                        <span class="text-xs font-extrabold uppercase tracking-wider text-slate-500">
+                            Item #${idx + 1} • ${item.type.toUpperCase()} (${item.set === 'set1' ? 'Set-01' : 'Set-02'})
+                        </span>
+                        ${statusBadge}
+                    </div>
+                    ${contentHtml}
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function regradeShort(id, status) {
+            examData.shortGrades[id] = status;
+            submitAssessment();
+        }
+
+        function returnToSetup() {
+            if (examData.timerId) clearInterval(examData.timerId);
+            document.getElementById('resultScreen').classList.add('hidden');
+            document.getElementById('examScreen').classList.add('hidden');
+            document.getElementById('examHeaderBar').classList.add('hidden');
+            document.getElementById('setupScreen').classList.remove('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function notifyToast(message) {
+            const box = document.getElementById('toastBox');
+            box.textContent = message;
+            box.classList.remove('hidden');
+            setTimeout(() => box.classList.add('hidden'), 4000);
+        }
+    </script>
+</body>
+</html>
