@@ -315,20 +315,38 @@
           </div>
         </div>
 
+        <!-- Exam / Module Selector -->
+        <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-5 sm:p-6">
+          <div class="flex flex-wrap items-center justify-between gap-2 mb-3.5">
+            <div>
+              <h2 class="text-sm sm:text-base font-bold text-slate-900">
+                Select Exam / CBLM Module (পরীক্ষা বা মডিউল নির্বাচন করুন)
+              </h2>
+              <p class="text-xs text-slate-500 mt-0.5">
+                Choose an exam below — your selected module and progress auto-save to your active profile.
+              </p>
+            </div>
+            <span id="examCatalogCount" class="text-xs font-semibold text-nsda-cyanText tabular-nums">2 Exams Available · 215 Total Points</span>
+          </div>
+          <div id="examCatalogGrid" class="grid grid-cols-1 md:grid-cols-2 gap-3.5">
+            <!-- Populated dynamically -->
+          </div>
+        </div>
+
         <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
           <!-- Hero Intro -->
           <div class="bg-nsda-charcoalDark p-6 sm:p-8 text-white border-b border-slate-700">
-            <div class="flex flex-wrap items-center gap-2 text-xs text-slate-300 mb-3 tabular-nums">
+            <div id="heroExamMeta" class="flex flex-wrap items-center gap-2 text-xs text-slate-300 mb-3 tabular-nums">
               <span class="font-semibold text-nsda-cyan">NSDA Bangladesh</span>
               <span aria-hidden="true">·</span>
               <span>135 Assessment Points</span>
               <span aria-hidden="true">·</span>
               <span>60 MCQs · 7 Matching Sets (35 Pairs) · 40 Short Answers</span>
             </div>
-            <h1 class="text-2xl sm:text-3xl font-bold tracking-tight text-balance mb-2">
+            <h1 id="heroExamTitle" class="text-2xl sm:text-3xl font-bold tracking-tight text-balance mb-2">
               NSDA CBT&amp;A Methodology Level-4 Assessment Platform
             </h1>
-            <p class="text-slate-300 text-sm sm:text-base font-bengali leading-relaxed max-w-3xl">
+            <p id="heroExamSubtitle" class="text-slate-300 text-sm sm:text-base font-bengali leading-relaxed max-w-3xl">
               জাতীয় দক্ষতা উন্নয়ন কর্তৃপক্ষ (NSDA) CBT&amp;A Level-4 পরীক্ষার প্রস্তুতির জন্য পরীক্ষার্থীর নাম, প্রশ্ন সেট, সময়সীমা এবং উত্তর দেখার মোড নির্বাচন করুন।
             </p>
           </div>
@@ -361,12 +379,6 @@
                   class="w-full min-h-[44px] px-4 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-nsda-cyan focus:border-nsda-cyan outline-none transition text-slate-900 font-medium bg-white"
                 >
                   <option value="all">Full Mega Bank (135 Items: 60 MCQs + 7 Matching Sets [35 Pairs] + 40 Short Answers)</option>
-                  <option value="set1">Set-01 Only (20 MCQs + 3 Matching Sets [15 Pairs] + 20 Short Answers = 55 Pts)</option>
-                  <option value="set2">Set-02 Only (40 MCQs + 4 Matching Sets [20 Pairs] + 20 Short Answers = 80 Pts)</option>
-                  <option value="mcq">Part A: Multiple Choice Questions Only (60 MCQs)</option>
-                  <option value="matching">Part B: Matching Questions Only (7 Sets / 35 Pairs)</option>
-                  <option value="short">Part C: Short Answer &amp; PC-to-Skill Questions Only (40 Questions)</option>
-                  <option value="weak" id="weakScopeOption" disabled>Practice Missed / NYC Items Only (0 Saved)</option>
                 </select>
               </div>
             </div>
@@ -810,7 +822,7 @@
             <div>
               <h2 class="text-2xl font-bold text-slate-900">Study Bank &amp; Interactive Flashcards</h2>
               <p class="text-sm text-slate-600 mt-1">
-                Search all 135 NSDA CBT&amp;A Level-4 items, filter by competency domain, or switch to Flashcard Flip Mode.
+                Search across all NSDA CBT&amp;A Level-4 exam banks (215 assessment points), filter by module or competency domain, or switch to Flashcard Flip Mode.
               </p>
             </div>
             <div class="flex items-center gap-1 p-1 bg-slate-100 rounded-xl shrink-0">
@@ -834,14 +846,26 @@
           </div>
 
           <!-- Search & Filter Controls -->
-          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 pt-5">
-            <div class="sm:col-span-2 lg:col-span-1">
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3 pt-5">
+            <div>
+              <label for="studyExamFilter" class="block text-xs font-bold text-slate-600 mb-1">Exam / Module</label>
+              <select
+                id="studyExamFilter"
+                onchange="renderStudyContent()"
+                class="w-full min-h-[40px] px-3 py-2 rounded-xl border border-slate-300 text-sm bg-white focus:ring-2 focus:ring-nsda-cyan outline-none"
+              >
+                <option value="all">All Exams (215 Pts)</option>
+                <option value="mega">Mega Bank (Set-01 &amp; 02 · 135 Pts)</option>
+                <option value="cblm01">CBLM-01: TVTENV401 (80 Pts)</option>
+              </select>
+            </div>
+            <div>
               <label for="studySearchInput" class="block text-xs font-bold text-slate-600 mb-1">Keyword Search</label>
               <input
                 type="text"
                 id="studySearchInput"
                 oninput="renderStudyContent()"
-                placeholder="e.g. CBLM, BNQF, Station C, LOTO..."
+                placeholder="e.g. TVTENV401, CBLM, NTVQF, RPL..."
                 class="w-full min-h-[40px] px-3 py-2 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-nsda-cyan outline-none"
               />
             </div>
@@ -852,10 +876,10 @@
                 onchange="renderStudyContent()"
                 class="w-full min-h-[40px] px-3 py-2 rounded-xl border border-slate-300 text-sm bg-white focus:ring-2 focus:ring-nsda-cyan outline-none"
               >
-                <option value="all">All Parts (107 Cards)</option>
-                <option value="mcq">Part A · MCQs (60)</option>
-                <option value="matching">Part B · Matching (7 Sets)</option>
-                <option value="short">Part C · Short Answers (40)</option>
+                <option value="all">All Parts (167 Cards)</option>
+                <option value="mcq">Part A · MCQs (95)</option>
+                <option value="matching">Part B · Matching (12 Sets)</option>
+                <option value="short">Part C · Short Answers (60)</option>
               </select>
             </div>
             <div>
@@ -2344,6 +2368,858 @@
       };
 
       // =========================================================================
+      // NEW EXAM: CBLM-01: WORK EFFECTIVELY WITHIN BANGLADESH TVET SECTOR (TVTENV401)
+      // 35 MCQs + 5 Matching Sets (25 Pairs) + 20 Short Answers = 80 Points
+      // =========================================================================
+      const CBLM01_BANK = {
+        mcqs: [
+          {
+            id: 'c1_mcq_1',
+            examId: 'cblm01',
+            set: 'cblm01',
+            type: 'mcq',
+            question: '1. What is the Unit of Competency (UoC) code for the module "Work effectively within Bangladesh TVET sector"?',
+            options: ['TVTENV402', 'TVTENV401', 'TVTENV404', 'TVTENV400'],
+            answer: 1,
+            explanation:
+              'TVTENV401 is the official NTVQF/NSDA Unit of Competency code for "Work effectively within Bangladesh TVET sector" (CBLM-01).',
+          },
+          {
+            id: 'c1_mcq_2',
+            examId: 'cblm01',
+            set: 'cblm01',
+            type: 'mcq',
+            question: '2. Under the NTVQF structure outlined in CBLM-1, which qualification level corresponds to a "Skilled Worker" in the Vocational Education stream?',
+            options: ['NTVQ Level 2', 'NTVQ Level 3', 'NTVQ Level 4', 'NTVQ Level 5'],
+            answer: 2,
+            explanation:
+              'Under the NTVQF table in CBLM-1, NTVQ Level 4 (NSC 4) corresponds to Skilled Worker, while Level 3 is Semi-Skilled Worker and Level 5 is Highly Skilled Worker / Supervisor.',
+          },
+          {
+            id: 'c1_mcq_3',
+            examId: 'cblm01',
+            set: 'cblm01',
+            type: 'mcq',
+            question: '3. What is the primary purpose of including Pre-Voc 1 and Pre-Voc 2 levels in the NTVQF?',
+            options: [
+              'To train mid-level engineers for overseas employment',
+              'To allow easier access to formal TVET for poor or underprivileged groups lacking sufficient formal schooling',
+              'To certify TVET principals and quality auditors',
+              'To replace Diploma in Engineering courses',
+            ],
+            answer: 1,
+            explanation:
+              'Pre-Voc 1 and Pre-Voc 2 provide accessible entry pathways into formal TVET for underprivileged or out-of-school groups who do not meet Class 8 formal schooling prerequisites.',
+          },
+          {
+            id: 'c1_mcq_4',
+            examId: 'cblm01',
+            set: 'cblm01',
+            type: 'mcq',
+            question: '4. Which five industry sectors had Industry Skills Councils (ISCs) established under the TVET Reform Project?',
+            options: [
+              'Construction, light engineering, RMG, informal economy, and agriculture',
+              'Agro-food processing, transport equipment, leather & leather products, IT, and tourism',
+              'Banking, pharmaceuticals, telecommunications, textiles, and fisheries',
+              'Healthcare, hospitality, maritime, aviation, and power',
+            ],
+            answer: 1,
+            explanation:
+              'Under the TVET Reform Project, five initial Industry Skills Councils (ISCs) were established in Agro-food processing, Transport equipment, Leather & leather products, IT, and Tourism.',
+          },
+          {
+            id: 'c1_mcq_5',
+            examId: 'cblm01',
+            set: 'cblm01',
+            type: 'mcq',
+            question: '5. Which body established "Sector Working Groups" for construction, light engineering, readymade garments, and the informal economy?',
+            options: ['BTEB', 'SDP (Skills Development Project)', 'ILO', 'DTE'],
+            answer: 1,
+            explanation:
+              'The Skills Development Project (SDP) established Sector Working Groups covering construction, light engineering, readymade garments (RMG), and the informal economy.',
+          },
+          {
+            id: 'c1_mcq_6',
+            examId: 'cblm01',
+            set: 'cblm01',
+            type: 'mcq',
+            question: '6. What role do Industry Skills Councils (ISCs) play in developing standards and curricula?',
+            options: [
+              'They issue final NSC certificates to trainees',
+              'They recommend technical experts as members on the Standards and Curriculum Development Committees (SCDCs)',
+              'They conduct external quality audits of polytechnic institutes',
+              'They fund private training providers directly',
+            ],
+            answer: 1,
+            explanation:
+              'ISCs ensure industry alignment by recommending sector technical experts to serve on the Standards and Curriculum Development Committees (SCDCs).',
+          },
+          {
+            id: 'c1_mcq_7',
+            examId: 'cblm01',
+            set: 'cblm01',
+            type: 'mcq',
+            question: '7. According to NTVQF Level Descriptors, what level of responsibility does an NTVQ Level-1 worker hold?',
+            options: [
+              'Take overall responsibility for completion of complex tasks',
+              'Work or study under direct supervision in a structured context',
+              'Manage a team of semi-skilled workers independently',
+              'Design new workplace procedures without supervision',
+            ],
+            answer: 1,
+            explanation:
+              'At NTVQ Level-1 (Basic Worker), individuals perform routine, predictable tasks and work or study under direct supervision in a structured context.',
+          },
+          {
+            id: 'c1_mcq_8',
+            examId: 'cblm01',
+            set: 'cblm01',
+            type: 'mcq',
+            question: '8. In the photocopier operator example for Dimensions of Competency, which dimension does "Clear paper jams" represent?',
+            options: ['Task Skills', 'Task Management Skills', 'Contingency Management Skills', 'Job/Role Environment Skills'],
+            answer: 2,
+            explanation:
+              'Contingency Management Skills involve responding effectively to irregularities, breakdowns, or unexpected problems such as clearing paper jams.',
+          },
+          {
+            id: 'c1_mcq_9',
+            examId: 'cblm01',
+            set: 'cblm01',
+            type: 'mcq',
+            question: '9. In the same photocopier operator example, "Select the right paper and functions" falls under which dimension of competency?',
+            options: ['Task Skills', 'Task Management Skills', 'Contingency Management Skills', 'Job/Role Environment Skills'],
+            answer: 1,
+            explanation:
+              'Task Management Skills involve managing and coordinating multiple aspects of a job, such as selecting the appropriate paper stock and machine functions for a print run.',
+          },
+          {
+            id: 'c1_mcq_10',
+            examId: 'cblm01',
+            set: 'cblm01',
+            type: 'mcq',
+            question: '10. Where in a Competency Standard document are "Job/Role Environment Skills" mostly covered?',
+            options: [
+              'Only in the Unit Code and Nominal Hours',
+              'In the key competencies and underpinning skills and knowledge',
+              'Exclusively in the Accreditation Requirements',
+              'Only in the Range Statement',
+            ],
+            answer: 1,
+            explanation:
+              'As outlined in CBLM-1, Job/Role Environment Skills are mostly reflected within the key competencies and underpinning skills and knowledge sections of a Competency Standard.',
+          },
+          {
+            id: 'c1_mcq_11',
+            examId: 'cblm01',
+            set: 'cblm01',
+            type: 'mcq',
+            question: '11. Which of the following is NOT listed as one of the 9 main components of an Industry Competency Standard in CBLM-1?',
+            options: ['Unit code and title', 'Nominal hours', 'Lesson plan and session duration', 'Accreditation requirements'],
+            answer: 2,
+            explanation:
+              'Lesson plans and session durations are delivery/curriculum tools created by trainers, not one of the 9 components of an Industry Competency Standard.',
+          },
+          {
+            id: 'c1_mcq_12',
+            examId: 'cblm01',
+            set: 'cblm01',
+            type: 'mcq',
+            question: '12. In the sample Unit of Competency TVTENV402 (Promote an inclusive learning environment), what are the Nominal Hours?',
+            options: ['12 hours', '16 hours', '20 hours', '24 hours'],
+            answer: 1,
+            explanation: 'In the CBLM-1 sample Competency Standard extract for TVTENV402, the nominal duration is 16 hours.',
+          },
+          {
+            id: 'c1_mcq_13',
+            examId: 'cblm01',
+            set: 'cblm01',
+            type: 'mcq',
+            question: '13. Which organization is responsible for accrediting Training Providers to conduct training and assessment against NTVQF units of competency?',
+            options: [
+              'Ministry of Finance',
+              'Bangladesh Technical Education Board (BTEB) or a body with delegated authority',
+              'Local Chamber of Commerce',
+              'University Grants Commission (UGC)',
+            ],
+            answer: 1,
+            explanation:
+              'CBLM-1 specifies that BTEB (or a body with delegated authority, now aligned with NSDA) accredits training providers to deliver and assess NTVQF units.',
+          },
+          {
+            id: 'c1_mcq_14',
+            examId: 'cblm01',
+            set: 'cblm01',
+            type: 'mcq',
+            question: '14. When carrying out a Task Analysis (such as making a cup of tea), when must safety aspects be discussed?',
+            options: [
+              'After the trainee finishes the entire task',
+              'Only during the final summative assessment',
+              'Before the related hazardous step occurs (e.g., discussing hot water safety before picking up the kettle)',
+              'Only if an accident happens',
+            ],
+            answer: 2,
+            explanation:
+              'Safety precautions must be introduced immediately before the specific hazardous step occurs so trainees apply safe work practices proactively.',
+          },
+          {
+            id: 'c1_mcq_15',
+            examId: 'cblm01',
+            set: 'cblm01',
+            type: 'mcq',
+            question: '15. What happens if a trainer unilaterally decides to skip two learning outcomes from a curriculum document thinking they are less important?',
+            options: [
+              'The session becomes more efficient with no negative impact',
+              'Learners will lack fundamental knowledge required for subsequent modules taught by other trainers',
+              'The trainer receives an award for saving nominal hours',
+              'The curriculum automatically updates to remove those outcomes',
+            ],
+            answer: 1,
+            explanation:
+              'Curriculum learning outcomes are sequenced and interdependent; skipping outcomes leaves critical gaps that undermine learners in subsequent modules.',
+          },
+          {
+            id: 'c1_mcq_16',
+            examId: 'cblm01',
+            set: 'cblm01',
+            type: 'mcq',
+            question: '16. In the CBT Learning Design Process flowchart, what is developed immediately from the "Learning Design Document"?',
+            options: [
+              'Endorsed Competency Standards',
+              'Qualification Accreditation Document',
+              'Competency Based Learning Materials (CBLMs)',
+              'National Skills Development Policy',
+            ],
+            answer: 2,
+            explanation:
+              'In the CBT Learning Design Process flowchart, Competency Based Learning Materials (CBLMs) are produced directly from the Learning Design Document.',
+          },
+          {
+            id: 'c1_mcq_17',
+            examId: 'cblm01',
+            set: 'cblm01',
+            type: 'mcq',
+            question: '17. Which of the following items are packaged together to form "Instructor Guides" rather than "Modules of Instruction for trainees"?',
+            options: [
+              'Only Information Sheets and Self-Checks',
+              'CBLMs, Lesson plans, Handouts, Visual aids, and Assessment Instruments',
+              'Trainee Registration Cards and Certificates',
+              'Only Job Sheets and Specification Sheets',
+            ],
+            answer: 1,
+            explanation:
+              'Instructor Guides bundle CBLMs along with Lesson plans, Handouts, Visual aids, and Assessment Instruments to support structured delivery and assessment.',
+          },
+          {
+            id: 'c1_mcq_18',
+            examId: 'cblm01',
+            set: 'cblm01',
+            type: 'mcq',
+            question: '18. How can a single Element of Competency relate to Curriculum Learning Outcomes?',
+            options: [
+              'An element never relates to learning outcomes',
+              'A single element of competency may equate to one learning outcome or 3 to 4 learning outcomes',
+              'Every element must equal exactly 10 learning outcomes',
+              'Elements are only used in traditional education, not CBT',
+            ],
+            answer: 1,
+            explanation:
+              'Depending on complexity and scope, one Element of Competency may map directly to a single Learning Outcome or be unpacked into 3 to 4 Learning Outcomes.',
+          },
+          {
+            id: 'c1_mcq_19',
+            examId: 'cblm01',
+            set: 'cblm01',
+            type: 'mcq',
+            question: '19. In the TVET Quality Assurance Framework, how is a TVET institution\'s internal self-assessment verified?',
+            options: [
+              "By asking trainees to vote on the principal's performance",
+              'By comparing it with an assessment form completed by an external quality auditor',
+              'By submitting financial tax returns to BTEB',
+              'By checking student attendance logs only',
+            ],
+            answer: 1,
+            explanation:
+              'Institutional self-assessment is validated by comparing it against an independent assessment conducted by an external quality auditor.',
+          },
+          {
+            id: 'c1_mcq_20',
+            examId: 'cblm01',
+            set: 'cblm01',
+            type: 'mcq',
+            question: '20. What is a Registered Training Organisation (RTO) authorized to issue upon successful completion of training?',
+            options: [
+              'National passports and visas',
+              'Nationally recognised qualifications and statements of attainment',
+              'Trade licenses for commercial businesses',
+              'University doctoral degrees',
+            ],
+            answer: 1,
+            explanation:
+              'An accredited/registered RTO is authorized under the NTVQF/QAF to deliver competency-based training and issue nationally recognised qualifications and statements of attainment.',
+          },
+          {
+            id: 'c1_mcq_21',
+            examId: 'cblm01',
+            set: 'cblm01',
+            type: 'mcq',
+            question: '21. Approximately what percentage of a modern Apprenticeship program consists of structured On-the-Job Training?',
+            options: ['50%', '70%', '90%', '100%'],
+            answer: 2,
+            explanation:
+              'Modern structured apprenticeship combines roughly 90% supervised On-the-Job Training in the workplace with related off-the-job technical instruction.',
+          },
+          {
+            id: 'c1_mcq_22',
+            examId: 'cblm01',
+            set: 'cblm01',
+            type: 'mcq',
+            question: '22. Which component of Apprenticeship Training ensures apprentices are paid a predetermined percentage of the skilled wage rate that increases as training progresses?',
+            options: ['Apprenticeship Laws', 'Earn and Learn', 'Apprentice Indenture', 'Supervised Training'],
+            answer: 1,
+            explanation:
+              'Under the "Earn and Learn" component, apprentices earn a progressive percentage of the skilled worker wage rate as their skills and productivity grow.',
+          },
+          {
+            id: 'c1_mcq_23',
+            examId: 'cblm01',
+            set: 'cblm01',
+            type: 'mcq',
+            question: '23. Which three parties sign a formal "Apprentice Contract"?',
+            options: [
+              'The trainer, the trainee, and the BTEB chairman',
+              'The apprentice, the employer, and the state',
+              'The ISC, the RTO, and the parents',
+              'The supervisor, the assessor, and the principal',
+            ],
+            answer: 1,
+            explanation:
+              'A formal Apprentice Contract (Indenture) is a tripartite agreement signed by the apprentice, the employer, and the state.',
+          },
+          {
+            id: 'c1_mcq_24',
+            examId: 'cblm01',
+            set: 'cblm01',
+            type: 'mcq',
+            question: '24. How does Recognition of Prior Learning (RPL) help maximize the value of TVET expenditure?',
+            options: [
+              'By forcing experienced workers to repeat basic courses',
+              'By avoiding duplication of training and targeting only specific skill gaps',
+              'By increasing tuition fees for RPL candidates',
+              'By eliminating all practical assessments',
+            ],
+            answer: 1,
+            explanation:
+              'RPL formally recognizes competencies already acquired through work or life experience, avoiding redundant training and focusing resources strictly on remaining skill gaps.',
+          },
+          {
+            id: 'c1_mcq_25',
+            examId: 'cblm01',
+            set: 'cblm01',
+            type: 'mcq',
+            question: '25. If an applicant is unsuccessful in an RPL assessment, what right do they have?',
+            options: [
+              'No right to appeal',
+              "The right to formally appeal the RPL assessment through the institute's academic appeals process",
+              'The right to demand a certificate without re-assessment',
+              'The right to rewrite the Competency Standard',
+            ],
+            answer: 1,
+            explanation:
+              'Fairness in CBT&A guarantees unsuccessful RPL applicants the right to lodge a formal appeal through the institute\'s academic appeals process.',
+          },
+          {
+            id: 'c1_mcq_26',
+            examId: 'cblm01',
+            set: 'cblm01',
+            type: 'mcq',
+            question: '26. Under which of the 8 Employability Skills does "identifying hazards and assessing risks in the learning environment" fall?',
+            options: ['Communication', 'Teamwork', 'Problem Solving', 'Technology'],
+            answer: 2,
+            explanation:
+              'In CBLM-1\'s Employability Skills framework, identifying hazards and assessing risks in the learning environment is categorized under Problem Solving.',
+          },
+          {
+            id: 'c1_mcq_27',
+            examId: 'cblm01',
+            set: 'cblm01',
+            type: 'mcq',
+            question: '27. Which Employability Skill includes "using student information management systems to record assessments"?',
+            options: ['Initiative and Enterprise', 'Self-management', 'Technology', 'Planning and Organizing'],
+            answer: 2,
+            explanation:
+              'Operating student information management systems and digital tools to record assessment outcomes falls under the Technology employability skill.',
+          },
+          {
+            id: 'c1_mcq_28',
+            examId: 'cblm01',
+            set: 'cblm01',
+            type: 'mcq',
+            question: '28. Under Planning and Organizing Skills, what does "Resource allocation skills" mean?',
+            options: [
+              'Preventing distractions from interfering with work',
+              'Taking advantage of available individuals, processes, departments, and tools to complete tasks efficiently',
+              'Collecting and analyzing research data',
+              'Meeting strict time deadlines',
+            ],
+            answer: 1,
+            explanation:
+              'Resource allocation skills mean effectively mobilizing available people, processes, departments, equipment, and tools to complete tasks efficiently.',
+          },
+          {
+            id: 'c1_mcq_29',
+            examId: 'cblm01',
+            set: 'cblm01',
+            type: 'mcq',
+            question: '29. Which of the following is considered an "operational limit" when meeting client needs in a TVET institution?',
+            options: [
+              'National political elections',
+              'Staffing resource limitations, physical environment limitations, and OHS issues',
+              'International currency exchange rates',
+              'Global weather patterns',
+            ],
+            answer: 1,
+            explanation:
+              'Operational limits in a TVET institute include staffing availability, physical workshop/classroom capacity, budget/resources, and Occupational Health & Safety (OHS) constraints.',
+          },
+          {
+            id: 'c1_mcq_30',
+            examId: 'cblm01',
+            set: 'cblm01',
+            type: 'mcq',
+            question: '30. Which of the following is a "Pre-Training Support" strategy to address individual learner needs?',
+            options: [
+              'Organizing for interpreters to be present during class',
+              'Developing materials in large print and providing advice on financial assistance',
+              'Providing simulated workplaces during practice sessions',
+              'Challenging subtle discrimination during group activities',
+            ],
+            answer: 1,
+            explanation:
+              'Preparing large-print learning materials in advance and advising prospective trainees on financial assistance are Pre-Training Support strategies.',
+          },
+          {
+            id: 'c1_mcq_31',
+            examId: 'cblm01',
+            set: 'cblm01',
+            type: 'mcq',
+            question: '31. Which of the following is an "In-Training Support" strategy for learners with specific needs?',
+            options: [
+              'Providing referrals to language, literacy, numeracy, disability, or counseling support services',
+              'Allowing client representation on curriculum committees before enrollment',
+              'Modifying national NTVQF levels',
+              'Eliminating assessment criteria',
+            ],
+            answer: 0,
+            explanation:
+              'Referring enrolled learners to LLN (language, literacy, numeracy), disability, or counseling services during training is a core In-Training Support strategy.',
+          },
+          {
+            id: 'c1_mcq_32',
+            examId: 'cblm01',
+            set: 'cblm01',
+            type: 'mcq',
+            question: '32. In Specification Sheet 2 (Peer Feedback Pro-forma), which criteria are checked under "Session Plan — Learning outcome statements"?',
+            options: [
+              'Written using active verbs, measurable, and realistic for the time allocated',
+              'Written in passive voice and theoretical only',
+              'Copied directly from textbooks without time limits',
+              'Focused solely on trainer activities',
+            ],
+            answer: 0,
+            explanation:
+              'Specification Sheet 2 checks that Learning Outcome statements use active verbs, are measurable, and are realistic for the allocated session time.',
+          },
+          {
+            id: 'c1_mcq_33',
+            examId: 'cblm01',
+            set: 'cblm01',
+            type: 'mcq',
+            question: '33. According to the Peer Feedback Pro-forma in CBLM-1, how many appropriate evidence guides (assessment tools/instruments) should be provided during a session check?',
+            options: ['1', '2', '4', '5'],
+            answer: 1,
+            explanation:
+              'Specification Sheet 2 (Peer Feedback Pro-forma) requires checking that 2 appropriate evidence guides (assessment tools/instruments) are provided.',
+          },
+          {
+            id: 'c1_mcq_34',
+            examId: 'cblm01',
+            set: 'cblm01',
+            type: 'mcq',
+            question: '34. What is the purpose of the "Review of Competency" sheet on the final page of a CBLM?',
+            options: [
+              'It serves as an official BTEB national certificate',
+              "It is a self-assessment rating for the learner's own information to check readiness for formal assessment",
+              'It is a financial invoice for training fees',
+              "It records the assessor's salary",
+            ],
+            answer: 1,
+            explanation:
+              'The Review of Competency sheet enables the trainee to self-rate their confidence across all performance criteria to gauge readiness before formal assessment.',
+          },
+          {
+            id: 'c1_mcq_35',
+            examId: 'cblm01',
+            set: 'cblm01',
+            type: 'mcq',
+            question: '35. What does "Access and equity" mean according to the Range Statement of TVTENV402?',
+            options: [
+              'Giving free laptops to all trainees',
+              'Ensuring that vocational education and training is responsive to the diverse needs of all clients as outlined in NTVQF Standards',
+              'Allowing only high-scoring students into technical trades',
+              'Conducting all classes exclusively in English',
+            ],
+            answer: 1,
+            explanation:
+              'Access and equity means ensuring TVET programs and services are inclusive and responsive to the diverse needs of all learners and clients per NTVQF Standards.',
+          },
+        ],
+
+        matching: [
+          {
+            id: 'c1_match_1',
+            examId: 'cblm01',
+            set: 'cblm01',
+            type: 'matching',
+            title: 'Set 1: NTVQF Levels & Job Classifications (CBLM-1, Page 8)',
+            options: [
+              { key: 'A', text: 'Skilled Worker (NSC 4)' },
+              { key: 'B', text: 'Middle Level Manager / Sub-Assistant Engineer' },
+              { key: 'C', text: 'Pre-Vocation Trainee (NPVC 1 & 2)' },
+              { key: 'D', text: 'Semi-Skilled Worker (NSC 3)' },
+              { key: 'E', text: 'Basic Worker (NSC 1)' },
+              { key: 'F', text: 'Highly Skilled Worker / Supervisor (NSC 5)' },
+            ],
+            pairs: [
+              { prompt: 'Pre-Voc 1 & Pre-Voc 2', answer: 'C' },
+              { prompt: 'NTVQ Level 1', answer: 'E' },
+              { prompt: 'NTVQ Level 3', answer: 'D' },
+              { prompt: 'NTVQ Level 4', answer: 'A' },
+              { prompt: 'NTVQ Level 6', answer: 'B' },
+            ],
+          },
+          {
+            id: 'c1_match_2',
+            examId: 'cblm01',
+            set: 'cblm01',
+            type: 'matching',
+            title: 'Set 2: Photocopier Operator Example — Dimensions of Competency (CBLM-1, Page 14)',
+            options: [
+              { key: 'A', text: 'Contingency Management Skills' },
+              { key: 'B', text: 'Job/Role Environment Skills' },
+              { key: 'C', text: 'Task Skills' },
+              { key: 'D', text: 'Task Management Skills' },
+              { key: 'E', text: 'Knowledge Competency' },
+              { key: 'F', text: 'Accreditation Requirement' },
+            ],
+            pairs: [
+              { prompt: 'Use a photocopier accurately', answer: 'C' },
+              { prompt: 'Select the right paper and machine functions', answer: 'D' },
+              { prompt: 'Clear paper jams when they occur', answer: 'A' },
+              { prompt: 'Liaise with team members on print job requirements', answer: 'B' },
+              { prompt: 'Understanding why toner and paper specifications matter', answer: 'E' },
+            ],
+          },
+          {
+            id: 'c1_match_3',
+            examId: 'cblm01',
+            set: 'cblm01',
+            type: 'matching',
+            title: 'Set 3: Planning & Organizing Skills (CBLM-1, Pages 41–42)',
+            options: [
+              { key: 'A', text: 'Project Management Skills' },
+              { key: 'B', text: 'Research Skills' },
+              { key: 'C', text: 'Time Management Skills' },
+              { key: 'D', text: 'Resource Allocation Skills' },
+              { key: 'E', text: 'Team Building / Teamwork' },
+              { key: 'F', text: 'Technical Troubleshooting' },
+            ],
+            pairs: [
+              { prompt: 'Identify and adjust high and low priority tasks to meet deadlines', answer: 'C' },
+              { prompt: 'Break project requirements into tasks and identify needed equipment/people', answer: 'A' },
+              { prompt: 'Utilize available individuals, processes, and tools efficiently', answer: 'D' },
+              { prompt: 'Collect, analyze, and organize information to inform work practices', answer: 'B' },
+              { prompt: 'Work collaboratively with colleagues by sharing ideas and trusting team members', answer: 'E' },
+            ],
+          },
+          {
+            id: 'c1_match_4',
+            examId: 'cblm01',
+            set: 'cblm01',
+            type: 'matching',
+            title: 'Set 4: Eight Essential Components of Apprenticeship Training (CBLM-1, Pages 30–32)',
+            options: [
+              { key: 'A', text: 'Earn and Learn' },
+              { key: 'B', text: 'Apprentice Contract' },
+              { key: 'C', text: 'Structured Training' },
+              { key: 'D', text: 'Apprenticeship Laws' },
+              { key: 'E', text: 'Investment in Training' },
+              { key: 'F', text: 'RPL Challenge Test' },
+            ],
+            pairs: [
+              { prompt: 'Combines ~90% supervised on-the-job training with off-the-job related instruction', answer: 'C' },
+              { prompt: 'National legal framework protecting apprentice welfare, ratios, and supervision', answer: 'D' },
+              { prompt: 'Pays apprentices a predetermined wage scale that increases during training', answer: 'A' },
+              { prompt: 'Written agreement signed by the apprentice, employer, and the state', answer: 'B' },
+              { prompt: 'Time invested by the apprentice and wages/training invested by the employer', answer: 'E' },
+            ],
+          },
+          {
+            id: 'c1_match_5',
+            examId: 'cblm01',
+            set: 'cblm01',
+            type: 'matching',
+            title: 'Set 5: Pre-Training vs. In-Training Learner Support (CBLM-1, Page 50)',
+            options: [
+              { key: 'A', text: 'In-Training Support' },
+              { key: 'B', text: 'Pre-Training Support' },
+              { key: 'C', text: 'Pre-Training Support' },
+              { key: 'D', text: 'In-Training Support' },
+              { key: 'E', text: 'In-Training Support' },
+              { key: 'F', text: 'External Quality Audit' },
+            ],
+            pairs: [
+              { prompt: 'Develop learning materials in large print before course commencement', answer: 'B' },
+              { prompt: 'Organize for sign-language or language interpreters during sessions', answer: 'A' },
+              { prompt: 'Provide advice on financial assistance prior to enrollment', answer: 'C' },
+              { prompt: 'Provide simulated workplaces and adaptive technology during practice', answer: 'D' },
+              { prompt: 'Refer trainees to disability, LLN, or counseling support services', answer: 'E' },
+            ],
+          },
+        ],
+
+        short: [
+          {
+            id: 'c1_short_1',
+            examId: 'cblm01',
+            set: 'cblm01',
+            type: 'short',
+            question: '1. List the 9 inter-related outputs of the Bangladesh TVET Reform Agenda mentioned in Information Sheet 1.',
+            modelAnswer:
+              '1. National Skills Development Policy (NSDP) and strengthened National Skills Development Council (NSDC).\n2. National Technical and Vocational Qualifications Framework (NTVQF).\n3. Competency-Based Training and Assessment (CBT&A) system.\n4. TVET Quality Assurance Framework (QAF).\n5. Industry Skills Councils (ISCs) and stronger industry linkages.\n6. Reformed Apprenticeship system.\n7. Recognition of Prior Learning (RPL) system.\n8. Improved TVET instructor training and capacity building.\n9. Enhanced access and equity for underprivileged groups, women, and persons with disabilities.',
+          },
+          {
+            id: 'c1_short_2',
+            examId: 'cblm01',
+            set: 'cblm01',
+            type: 'short',
+            question: '2. State the 10 main features of the National Skills Development Policy (NSDP).',
+            modelAnswer:
+              '1. Demand-driven, flexible, and responsive training provision.\n2. Nationally recognised qualifications under the NTVQF.\n3. Competency-Based Training and Assessment (CBT&A).\n4. Strong industry participation through Industry Skills Councils (ISCs).\n5. Quality assurance through accreditation of training providers and assessors.\n6. Recognition of Prior Learning (RPL) for informal and experienced workers.\n7. Improved access for underrepresented and disadvantaged groups.\n8. Strengthened apprenticeship and workplace training.\n9. Accurate skills data and labor market information system.\n10. Coordinated governance, financing, and monitoring across ministries and private providers.',
+          },
+          {
+            id: 'c1_short_3',
+            examId: 'cblm01',
+            set: 'cblm01',
+            type: 'short',
+            question: '3. What is the NTVQF? Explain how it supports vertical mobility and career progression for learners.',
+            modelAnswer:
+              '• Definition: The National Technical and Vocational Qualifications Framework (NTVQF) is a nationally consistent, outcomes-based 8-tier framework (Pre-Voc 1 & 2 plus NTVQF Levels 1–6) aligned with industry competency standards.\n• Vertical Mobility & Progression: Learners can enter at Pre-Voc or Level 1, earn nationally recognised certificates (NPVC/NSC) step-by-step up to Level 5 (Supervisor) and Level 6 (Diploma/Mid-level Manager), or transfer credits horizontally/vertically into higher technical education without repeating prior learning.',
+          },
+          {
+            id: 'c1_short_4',
+            examId: 'cblm01',
+            set: 'cblm01',
+            type: 'short',
+            question: '4. Why were Pre-Voc 1 and Pre-Voc 2 included in the Bangladesh NTVQF?',
+            modelAnswer:
+              'Pre-Voc 1 and Pre-Voc 2 were introduced to widen access to formal TVET for poor, marginalized, and underprivileged learners who lack the Class 8 formal schooling normally required for NTVQ Level 1. They provide foundational trade and literacy/numeracy skills that bridge directly into mainstream NTVQF qualifications.',
+          },
+          {
+            id: 'c1_short_5',
+            examId: 'cblm01',
+            set: 'cblm01',
+            type: 'short',
+            question: '5. Define Competency and explain the difference between Competency and Skills using the TVET Teacher/Trainer example from CBLM-1.',
+            modelAnswer:
+              '• Competency: The consistent application of knowledge, skills, and attitudes required to perform a workplace job effectively to industry standards.\n• Difference (TVET Trainer Example): A "Skill" is a specific discrete ability (e.g., operating a multimedia projector or writing a lesson plan). "Competency" is much broader—a competent TVET teacher combines technical skills, underpinning pedagogical knowledge, safety awareness, learner support, and professional attitude to deliver and assess an entire training program effectively.',
+          },
+          {
+            id: 'c1_short_6',
+            examId: 'cblm01',
+            set: 'cblm01',
+            type: 'short',
+            question: '6. Explain the 4 Dimensions of Competency with a practical workplace example for each.',
+            modelAnswer:
+              '1. Task Skills: Performing individual technical tasks (e.g., operating a photocopier accurately).\n2. Task Management Skills: Managing and coordinating multiple tasks/requirements to achieve an overall outcome (e.g., selecting the right paper, duplex settings, and functions while prioritizing print orders).\n3. Contingency Management Skills: Responding to breakdowns, faults, or unexpected events (e.g., clearing a paper jam or replacing empty toner safely).\n4. Job/Role Environment Skills: Working within workplace rules, OSH requirements, and team relationships (e.g., liaising with colleagues on print deadlines and maintaining workstation safety).',
+          },
+          {
+            id: 'c1_short_7',
+            examId: 'cblm01',
+            set: 'cblm01',
+            type: 'short',
+            question: '7. List the 9 components of an Industry Competency Standard (CS) and briefly explain Range Statement and Accreditation Requirements.',
+            modelAnswer:
+              '• 9 Components: (1) Unit Code and Title, (2) Unit Descriptor, (3) Nominal Hours, (4) Elements of Competency, (5) Performance Criteria, (6) Range of Variables / Range Statement, (7) Evidence Guide (Critical Aspects, Underpinning Knowledge & Skills, Resource Implications, Methods & Context of Assessment), (8) Key/Employability Competencies, (9) Accreditation Requirements.\n• Range Statement: Defines the workplace context, conditions, tools, equipment, policies, and boundaries under which the Performance Criteria apply.\n• Accreditation Requirements: Specifies the institutional, trainer/assessor qualification, facility, and quality criteria a provider must satisfy to be accredited to deliver and assess the unit.',
+          },
+          {
+            id: 'c1_short_8',
+            examId: 'cblm01',
+            set: 'cblm01',
+            type: 'short',
+            question: '8. What is Task Analysis? List 5 key points a trainer must consider when conducting a task analysis.',
+            modelAnswer:
+              '• Definition: Task Analysis is the systematic breakdown of a workplace task into sequential observable steps, sub-tasks, required tools, underpinning knowledge, and safety precautions.\n• 5 Key Points:\n1. Identify the logical step-by-step sequence from preparation to completion.\n2. Introduce safety/OSH warnings immediately BEFORE any hazardous step.\n3. List exact tools, materials, and equipment needed for each step.\n4. Specify the underpinning knowledge and quality standards ("why" and "how well").\n5. Align steps strictly with the Competency Standard Performance Criteria and avoid skipping critical sub-steps.',
+          },
+          {
+            id: 'c1_short_9',
+            examId: 'cblm01',
+            set: 'cblm01',
+            type: 'short',
+            question: '9. How does a Curriculum Document differ from an Industry Competency Standard? What information does a CBT curriculum document contain?',
+            modelAnswer:
+              '• Difference: An Industry Competency Standard defines WHAT workplace performance outcomes industry requires; a Curriculum Document translates those standards into HOW training will be structured, sequenced, delivered, and assessed.\n• Contents of a CBT Curriculum: Course/Qualification title, Nominal duration, Entry requirements, Module descriptors, Learning Outcomes, Assessment Criteria, Training content/conditions, Delivery methods, Required tools/facilities, and Assessment methodology.',
+          },
+          {
+            id: 'c1_short_10',
+            examId: 'cblm01',
+            set: 'cblm01',
+            type: 'short',
+            question: '10. What is the relationship between Learning Outcomes and Elements of Competency, and between Assessment Criteria and Performance Criteria?',
+            modelAnswer:
+              '• Learning Outcomes vs. Elements of Competency: Learning Outcomes in a CBT curriculum are derived directly from Elements of Competency in the CS (one Element may equate to 1 Learning Outcome, or be broken down into 3–4 Learning Outcomes).\n• Assessment Criteria vs. Performance Criteria: Assessment Criteria in the curriculum correspond directly to Performance Criteria in the CS, specifying the measurable standards learners must demonstrate to prove competency.',
+          },
+          {
+            id: 'c1_short_11',
+            examId: 'cblm01',
+            set: 'cblm01',
+            type: 'short',
+            question: '11. State the 4 major objectives of the TVET Quality Assurance Framework.',
+            modelAnswer:
+              '1. Ensure nationally consistent, industry-relevant training delivery and assessment across all accredited providers.\n2. Build employer, learner, and international confidence in NTVQF qualifications.\n3. Promote continuous improvement through institutional self-assessment and external quality audits.\n4. Guarantee transparency, accountability, and fair access and equity in TVET services.',
+          },
+          {
+            id: 'c1_short_12',
+            examId: 'cblm01',
+            set: 'cblm01',
+            type: 'short',
+            question: '12. What is a Registered Training Organisation (RTO)? Mention 3 key benefits of training with an RTO.',
+            modelAnswer:
+              '• RTO Definition: A training provider formally accredited and registered by BTEB/NSDA under the Quality Assurance Framework to deliver NTVQF courses and issue nationally recognised qualifications and statements of attainment.\n• 3 Key Benefits:\n1. Qualifications are nationally recognised by employers and industry.\n2. Training and assessment meet audited quality, safety, and equipment standards.\n3. Qualified CBT&A trainers/assessors provide structured pathways including RPL and credit transfer.',
+          },
+          {
+            id: 'c1_short_13',
+            examId: 'cblm01',
+            set: 'cblm01',
+            type: 'short',
+            question: '13. List the 8 essential components of Apprenticeship Training.',
+            modelAnswer:
+              '1. Apprenticeship Laws (legal framework for welfare and supervision).\n2. Apprentice Contract / Indenture (signed by apprentice, employer, and state).\n3. Structured Training (~90% supervised on-the-job + off-the-job related instruction).\n4. Earn and Learn (progressive wage scale linked to skilled rate).\n5. Supervised Training (mentoring by qualified workplace supervisors).\n6. Investment in Training (shared investment by employer and apprentice).\n7. Competency-Based Assessment against industry standards.\n8. National Certification / Recognition upon completion.',
+          },
+          {
+            id: 'c1_short_14',
+            examId: 'cblm01',
+            set: 'cblm01',
+            type: 'short',
+            question: '14. Define Recognition of Prior Learning (RPL) and list 5 types of evidence an applicant can submit for RPL assessment.',
+            modelAnswer:
+              '• Definition: RPL is a formal assessment process that recognizes an individual\'s existing competencies acquired through informal, non-formal, or prior workplace/life experience against NTVQF Competency Standards.\n• 5 Types of Evidence:\n1. Previous certificates, transcripts, or training records.\n2. Employer references, job descriptions, or third-party supervisor reports.\n3. Work samples, portfolios, photographs, or completed products.\n4. Logbooks, workplace documents, or project reports.\n5. Practical skill demonstration / challenge test and oral questioning.',
+          },
+          {
+            id: 'c1_short_15',
+            examId: 'cblm01',
+            set: 'cblm01',
+            type: 'short',
+            question: '15. What are the 8 Employability Skills required in the TVET sector? Give two workplace examples for Communication and Self-management.',
+            modelAnswer:
+              '• 8 Employability Skills: (1) Communication, (2) Teamwork, (3) Problem Solving, (4) Initiative and Enterprise, (5) Planning and Organizing, (6) Self-management, (7) Learning, (8) Technology.\n• Communication Examples: Delivering clear, inclusive instructions to diverse trainees; listening actively and giving constructive assessment feedback.\n• Self-management Examples: Arriving punctually and managing session schedules independently; reflecting on own teaching performance to plan professional development.',
+          },
+          {
+            id: 'c1_short_16',
+            examId: 'cblm01',
+            set: 'cblm01',
+            type: 'short',
+            question: '16. List the 4 core workplace issues a TVET teacher must manage to work efficiently, and state 4 key elements of Team Building.',
+            modelAnswer:
+              '• 4 Core Workplace Issues: (1) Time management & workload prioritization, (2) Effective resource/equipment allocation, (3) Workplace health, safety (OHS), and inclusive environment, (4) Professional communication, ethics, and adherence to institutional policies.\n• 4 Key Elements of Team Building: (1) Clear shared goals and roles, (2) Open two-way communication and active listening, (3) Mutual trust, respect, and constructive feedback, (4) Collaborative problem solving and sharing ideas/resources.',
+          },
+          {
+            id: 'c1_short_17',
+            examId: 'cblm01',
+            set: 'cblm01',
+            type: 'short',
+            question: '17. Who are the 5 types of clients in a TVET institute, and what operational limits must a trainer consider when meeting client expectations?',
+            modelAnswer:
+              '• 5 Types of TVET Clients: (1) Trainees/Learners, (2) Employers and Industry Partners, (3) Parents/Guardians and Community, (4) Government / Regulatory Bodies (NSDA/BTEB/Ministries), (5) Colleagues and Institute Management (internal clients).\n• Operational Limits: Staffing resource limitations, physical workshop/classroom space and equipment availability, budget/time constraints, institutional policies, and Occupational Health & Safety (OHS) requirements.',
+          },
+          {
+            id: 'c1_short_18',
+            examId: 'cblm01',
+            set: 'cblm01',
+            type: 'short',
+            question: '18. Distinguish between Pre-Training Support and In-Training Support by listing 4 examples of each.',
+            modelAnswer:
+              '• Pre-Training Support (before enrollment/start):\n1. Developing learning materials in large print or accessible formats.\n2. Providing advice on financial assistance, scholarships, or stipends.\n3. Conducting pre-enrollment counseling, career guidance, and LLN screening.\n4. Ensuring accessible venue entry and inclusive enrollment procedures.\n• In-Training Support (during course delivery):\n1. Organizing sign-language or language interpreters during sessions.\n2. Providing simulated workplaces and adaptive technology during practice.\n3. Referring trainees to disability, LLN, or personal counseling services.\n4. Applying reasonable adjustments in delivery pace, coaching, and assessment methods.',
+          },
+          {
+            id: 'c1_short_19',
+            examId: 'cblm01',
+            set: 'cblm01',
+            type: 'short',
+            question: '19. List 6 key roles/responsibilities of a TVET teacher/assessor in supporting individual learners to address their needs and interests.',
+            modelAnswer:
+              '1. Identify individual learning styles, prior skills, and special needs early.\n2. Maintain an inclusive, respectful, discrimination-free learning environment.\n3. Adapt delivery methods, pace, and CBLM resources to support diverse learners.\n4. Provide timely, constructive formative feedback and mentoring.\n5. Refer learners to specialized LLN, disability, or counseling support when beyond own scope.\n6. Maintain strict learner confidentiality and apply fair reasonable adjustments without lowering competency standards.',
+          },
+          {
+            id: 'c1_short_20',
+            examId: 'cblm01',
+            set: 'cblm01',
+            type: 'short',
+            question:
+              '20. PC-to-Skill Conversion (From CBLM-1 Performance Criteria): Convert the following three Performance Criteria from TVTENV401 into active Skill Statements:\n• PC 1.1: "Relevant policy and curriculum documents are accessed and applied to work practises."\n• PC 3.2: "Feedback from clients and colleagues are obtained, evaluated and acted upon on managing work and professional relationships."\n• PC 4.2: "Learner confidentiality is maintained according organisational policies and procedures."',
+            modelAnswer:
+              '• Skill 1.1: Access and apply relevant policy and curriculum documents to work practices.\n• Skill 3.2: Obtain, evaluate, and act upon feedback from clients and colleagues on managing work and professional relationships.\n• Skill 4.2: Maintain learner confidentiality according to organizational policies and procedures.',
+          },
+        ],
+      };
+
+      const EXAM_CATALOG = {
+        mega: {
+          id: 'mega',
+          code: 'CBT&A-L4',
+          shortName: 'NSDA Mega Bank (Set-01 & Set-02)',
+          title: 'NSDA CBT&A Methodology Level-4 Mega Assessment Bank',
+          subtitleBn:
+            'জাতীয় দক্ষতা উন্নয়ন কর্তৃপক্ষ (NSDA) CBT&A Level-4 পরীক্ষার প্রস্তুতির জন্য পরীক্ষার্থীর নাম, প্রশ্ন সেট, সময়সীমা এবং উত্তর দেখার মোড নির্বাচন করুন।',
+          bank: QUESTION_BANK,
+          defaultMinutes: 60,
+          points: 135,
+          summaryLine: '60 MCQs · 7 Matching Sets (35 Pairs) · 40 Short Answers',
+        },
+        cblm01: {
+          id: 'cblm01',
+          code: 'TVTENV401',
+          shortName: 'CBLM-01 · Bangladesh TVET Sector',
+          title: 'CBLM-01: Work Effectively Within Bangladesh TVET Sector (TVTENV401)',
+          subtitleBn:
+            'CBLM-01 (TVTENV401) মডিউলের ৩৫টি MCQ, ৫টি Matching Set (২৫ জোড়া) এবং ২০টি Short Answer ও PC-to-Skill প্রশ্নসহ পূর্ণাঙ্গ ৮০ নম্বরের অনুশীলন পরীক্ষা।',
+          bank: CBLM01_BANK,
+          defaultMinutes: 60,
+          points: 80,
+          summaryLine: '35 MCQs · 5 Matching Sets (25 Pairs) · 20 Short Answers',
+        },
+      };
+
+      function getExamMeta(examId) {
+        return EXAM_CATALOG[examId] || EXAM_CATALOG.mega;
+      }
+
+      function getItemSetLabel(item) {
+        if (!item) return '';
+        if (item.set === 'set1') return 'Set-01';
+        if (item.set === 'set2') return 'Set-02';
+        if (item.set === 'cblm01') return 'CBLM-01 · TVTENV401';
+        return String(item.set || '').toUpperCase();
+      }
+
+      function isMatchingPairCorrect(item, pair, selectedKey) {
+        if (!selectedKey) return false;
+        if (selectedKey === pair.answer) return true;
+        const userOpt = item.options.find((o) => o.key === selectedKey);
+        const rightOpt = item.options.find((o) => o.key === pair.answer);
+        return Boolean(userOpt && rightOpt && userOpt.text === rightOpt.text);
+      }
+
+      // =========================================================================
       // CONSTANTS, TOPIC MAPPING & WORKSHOP STATIONS
       // =========================================================================
       const STORAGE_KEYS = {
@@ -2468,6 +3344,7 @@
       // STATE & PERSISTENCE
       // =========================================================================
       let sessionConfig = {
+        examId: 'cblm01',
         candidateName: 'MD Belayet Hossain',
         scope: 'all',
         shuffle: false,
@@ -2572,6 +3449,7 @@
             name: 'MD Belayet Hossain',
             regId: 'CBT&A-L4',
             preferences: {
+              examId: 'cblm01',
               scope: 'all',
               shuffle: false,
               timeMinutes: 60,
@@ -2602,6 +3480,108 @@
         }
       }
 
+      function renderExamCatalogCards() {
+        const grid = document.getElementById('examCatalogGrid');
+        if (!grid) return;
+        const exams = Object.values(EXAM_CATALOG);
+        const totalPointsAll = exams.reduce((sum, ex) => sum + ex.points, 0);
+        const countEl = document.getElementById('examCatalogCount');
+        if (countEl) countEl.textContent = `${exams.length} Exams Available · ${totalPointsAll} Total Points`;
+
+        grid.innerHTML = '';
+        exams.forEach((ex) => {
+          const active = sessionConfig.examId === ex.id;
+          const btn = document.createElement('button');
+          btn.type = 'button';
+          btn.onclick = () => selectExam(ex.id);
+          btn.className = active
+            ? 'text-left p-4 rounded-xl border-2 border-nsda-cyan bg-nsda-cyanLight/65 transition shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-nsda-cyan'
+            : 'text-left p-4 rounded-xl border-2 border-slate-200 hover:border-nsda-cyan bg-white transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-nsda-cyan';
+
+          btn.innerHTML = `
+            <div class="flex items-center justify-between gap-2 text-xs font-bold mb-1">
+              <span class="${active ? 'text-nsda-cyanText' : 'text-slate-500'}">${escapeHtml(ex.code)} · ${ex.points} Points</span>
+              <span class="${active ? 'text-emerald-700' : 'text-slate-400'}">${active ? 'Selected' : 'Select'}</span>
+            </div>
+            <p class="text-sm sm:text-base font-bold text-slate-900 leading-snug">${escapeHtml(ex.title)}</p>
+            <p class="text-xs text-slate-600 mt-1 tabular-nums">${escapeHtml(ex.summaryLine)}</p>
+          `;
+          grid.appendChild(btn);
+        });
+      }
+
+      function getExamWeakIds(examId) {
+        const allWeak = readJsonStorage(profileKey(STORAGE_KEYS.weakItems), []);
+        const examItemIds = new Set(getExamItemsFlat(examId).map((x) => x.id));
+        return allWeak.filter((id) => examItemIds.has(id));
+      }
+
+      function populateScopeSelectorForExam(examId, preferredScope = 'all') {
+        const ex = getExamMeta(examId);
+        const scopeEl = document.getElementById('scopeSelector');
+        const weakIds = getExamWeakIds(examId);
+        const mcqs = ex.bank.mcqs.length;
+        const matchSets = ex.bank.matching.length;
+        const matchPairs = ex.bank.matching.reduce((acc, m) => acc + m.pairs.length, 0);
+        const shorts = ex.bank.short.length;
+
+        const options = [];
+        if (examId === 'mega') {
+          options.push({ value: 'all', label: `Full Mega Bank (${ex.points} Pts: ${mcqs} MCQs + ${matchSets} Matching Sets [${matchPairs} Pairs] + ${shorts} Short Answers)` });
+          options.push({ value: 'set1', label: 'Set-01 Only (20 MCQs + 3 Matching Sets [15 Pairs] + 20 Short Answers = 55 Pts)' });
+          options.push({ value: 'set2', label: 'Set-02 Only (40 MCQs + 4 Matching Sets [20 Pairs] + 20 Short Answers = 80 Pts)' });
+        } else {
+          options.push({ value: 'all', label: `Full ${ex.shortName} (${ex.points} Pts: ${mcqs} MCQs + ${matchSets} Matching Sets [${matchPairs} Pairs] + ${shorts} Short Answers)` });
+        }
+        options.push({ value: 'mcq', label: `Part A: Multiple Choice Questions Only (${mcqs} MCQs)` });
+        options.push({ value: 'matching', label: `Part B: Matching Questions Only (${matchSets} Sets / ${matchPairs} Pairs)` });
+        options.push({ value: 'short', label: `Part C: Short Answer & PC-to-Skill Questions Only (${shorts} Questions)` });
+        options.push({
+          value: 'weak',
+          label: `Practice Missed / NYC Items Only (${weakIds.length} Saved)`,
+          disabled: weakIds.length === 0,
+        });
+
+        scopeEl.innerHTML = options
+          .map(
+            (o) =>
+              `<option value="${o.value}" ${o.value === 'weak' ? 'id="weakScopeOption"' : ''} ${o.disabled ? 'disabled' : ''}>${escapeHtml(o.label)}</option>`
+          )
+          .join('');
+
+        const validValues = options.filter((o) => !o.disabled).map((o) => o.value);
+        scopeEl.value = validValues.includes(preferredScope) ? preferredScope : 'all';
+        sessionConfig.scope = scopeEl.value;
+      }
+
+      function updateHeroForExam(examId) {
+        const ex = getExamMeta(examId);
+        const metaEl = document.getElementById('heroExamMeta');
+        const titleEl = document.getElementById('heroExamTitle');
+        const subEl = document.getElementById('heroExamSubtitle');
+        if (metaEl) {
+          metaEl.innerHTML = `
+            <span class="font-semibold text-nsda-cyan">NSDA Bangladesh · ${escapeHtml(ex.code)}</span>
+            <span aria-hidden="true">·</span>
+            <span>${ex.points} Assessment Points</span>
+            <span aria-hidden="true">·</span>
+            <span>${escapeHtml(ex.summaryLine)}</span>
+          `;
+        }
+        if (titleEl) titleEl.textContent = ex.title;
+        if (subEl) subEl.textContent = ex.subtitleBn;
+      }
+
+      function selectExam(examId, skipSave = false) {
+        if (!EXAM_CATALOG[examId]) return;
+        sessionConfig.examId = examId;
+        renderExamCatalogCards();
+        updateHeroForExam(examId);
+        populateScopeSelectorForExam(examId, 'all');
+        updateScopePreview(true);
+        if (!skipSave) saveProfilePreferences();
+      }
+
       function applyProfilePreferencesToSetupUI(profile) {
         if (!profile) return;
         const prefs = profile.preferences || {};
@@ -2609,11 +3589,11 @@
         document.getElementById('candidateNameInput').value = profile.name || 'MD Belayet Hossain';
         sessionConfig.candidateName = profile.name || 'MD Belayet Hossain';
 
-        const scopeEl = document.getElementById('scopeSelector');
-        const targetScope = prefs.scope || 'all';
-        const weakIds = readJsonStorage(profileKey(STORAGE_KEYS.weakItems), []);
-        scopeEl.value = targetScope === 'weak' && weakIds.length === 0 ? 'all' : targetScope;
-        sessionConfig.scope = scopeEl.value;
+        const targetExamId = EXAM_CATALOG[prefs.examId] ? prefs.examId : 'cblm01';
+        sessionConfig.examId = targetExamId;
+        renderExamCatalogCards();
+        updateHeroForExam(targetExamId);
+        populateScopeSelectorForExam(targetExamId, prefs.scope || 'all');
 
         const shuffle = Boolean(prefs.shuffle);
         document.getElementById('shuffleToggle').checked = shuffle;
@@ -2671,6 +3651,7 @@
           sessionConfig.candidateName = rawName;
         }
         list[idx].preferences = {
+          examId: sessionConfig.examId || 'cblm01',
           scope: document.getElementById('scopeSelector').value,
           shuffle: document.getElementById('shuffleToggle').checked,
           timeMinutes: sessionConfig.timeMinutes,
@@ -2756,6 +3737,7 @@
             name,
             regId,
             preferences: {
+              examId: sessionConfig.examId || 'cblm01',
               scope: 'all',
               shuffle: false,
               timeMinutes: 60,
@@ -2893,8 +3875,13 @@
         return copy;
       }
 
+      function getExamItemsFlat(examId) {
+        const ex = getExamMeta(examId);
+        return [...ex.bank.mcqs, ...ex.bank.matching, ...ex.bank.short];
+      }
+
       function getAllCardsFlat() {
-        return [...QUESTION_BANK.mcqs, ...QUESTION_BANK.matching, ...QUESTION_BANK.short];
+        return Object.values(EXAM_CATALOG).flatMap((ex) => [...ex.bank.mcqs, ...ex.bank.matching, ...ex.bank.short]);
       }
 
       function findItemById(id) {
@@ -2927,28 +3914,22 @@
 
       function refreshSetupStatus() {
         renderProfileStrip();
-
-        const weakIds = readJsonStorage(profileKey(STORAGE_KEYS.weakItems), []);
-        const weakOpt = document.getElementById('weakScopeOption');
-        if (weakOpt) {
-          weakOpt.textContent = `Practice Missed / NYC Items Only (${weakIds.length} Saved)`;
-          weakOpt.disabled = weakIds.length === 0;
-          if (weakIds.length === 0 && document.getElementById('scopeSelector').value === 'weak') {
-            document.getElementById('scopeSelector').value = 'all';
-          }
-        }
+        renderExamCatalogCards();
+        updateHeroForExam(sessionConfig.examId);
+        populateScopeSelectorForExam(sessionConfig.examId, document.getElementById('scopeSelector').value || sessionConfig.scope);
         updateScopePreview(true);
 
         const saved = readJsonStorage(profileKey(STORAGE_KEYS.activeSession), null);
         const banner = document.getElementById('resumeBanner');
         if (saved && Array.isArray(saved.itemIds) && saved.itemIds.length > 0) {
           const answeredCount = Object.keys(saved.answers || {}).length;
+          const examMeta = getExamMeta(saved.sessionConfig && saved.sessionConfig.examId);
           const timeNote =
             saved.sessionConfig && saved.sessionConfig.timeMinutes === 0
               ? 'Unlimited time'
               : `${Math.floor((saved.secondsLeft || 0) / 60)}m ${(saved.secondsLeft || 0) % 60}s remaining`;
           document.getElementById('resumeBannerInfo').textContent =
-            `${saved.sessionConfig ? saved.sessionConfig.candidateName : 'Candidate'} · ${answeredCount} of ${saved.itemIds.length} items touched · ${timeNote}`;
+            `${examMeta.code} · ${saved.sessionConfig ? saved.sessionConfig.candidateName : 'Candidate'} · ${answeredCount} of ${saved.itemIds.length} items touched · ${timeNote}`;
           banner.classList.remove('hidden');
         } else {
           banner.classList.add('hidden');
@@ -2966,7 +3947,11 @@
           return;
         }
 
-        sessionConfig = saved.sessionConfig || sessionConfig;
+        const restoredExamId =
+          (saved.sessionConfig && saved.sessionConfig.examId) ||
+          (restoredItems[0] && restoredItems[0].examId) ||
+          'mega';
+        sessionConfig = { ...sessionConfig, ...(saved.sessionConfig || {}), examId: restoredExamId };
         examData = {
           items: restoredItems,
           currentIndex: Math.min(saved.currentIndex || 0, restoredItems.length - 1),
@@ -2999,15 +3984,21 @@
       function updateScopePreview(skipSave = false) {
         const scope = document.getElementById('scopeSelector').value;
         const summary = document.getElementById('setupSummaryLine');
-        const weakIds = readJsonStorage(profileKey(STORAGE_KEYS.weakItems), []);
+        const ex = getExamMeta(sessionConfig.examId);
+        const weakIds = getExamWeakIds(ex.id);
+        const mcqs = ex.bank.mcqs.length;
+        const matchSets = ex.bank.matching.length;
+        const matchPairs = ex.bank.matching.reduce((acc, m) => acc + m.pairs.length, 0);
+        const shorts = ex.bank.short.length;
+
         const map = {
-          all: 'Selected Scope: 135 Total Points (60 MCQs · 7 Matching Sets [35 Pairs] · 40 Short Answers)',
-          set1: 'Selected Scope: 55 Total Points (20 MCQs · 3 Matching Sets [15 Pairs] · 20 Short Answers)',
-          set2: 'Selected Scope: 80 Total Points (40 MCQs · 4 Matching Sets [20 Pairs] · 20 Short Answers)',
-          mcq: 'Selected Scope: 60 Total Points (Part A: 60 MCQs)',
-          matching: 'Selected Scope: 35 Total Points (Part B: 7 Matching Sets / 35 Pairs)',
-          short: 'Selected Scope: 40 Total Points (Part C: 40 Short Answer & PC-to-Skill Questions)',
-          weak: `Selected Scope: ${weakIds.length} Missed / NYC Review Items from prior attempts`,
+          all: `Selected Exam: ${ex.shortName} · ${ex.points} Total Points (${ex.summaryLine})`,
+          set1: 'Selected Scope: Set-01 · 55 Total Points (20 MCQs · 3 Matching Sets [15 Pairs] · 20 Short Answers)',
+          set2: 'Selected Scope: Set-02 · 80 Total Points (40 MCQs · 4 Matching Sets [20 Pairs] · 20 Short Answers)',
+          mcq: `Selected Scope: ${ex.code} · ${mcqs} Total Points (Part A: ${mcqs} MCQs)`,
+          matching: `Selected Scope: ${ex.code} · ${matchPairs} Total Points (Part B: ${matchSets} Matching Sets / ${matchPairs} Pairs)`,
+          short: `Selected Scope: ${ex.code} · ${shorts} Total Points (Part C: ${shorts} Short Answer & PC-to-Skill Questions)`,
+          weak: `Selected Scope: ${ex.code} · ${weakIds.length} Missed / NYC Review Items from prior attempts`,
         };
         summary.textContent = map[scope] || map.all;
         if (!skipSave) saveProfilePreferences();
@@ -3130,6 +4121,9 @@
         sessionConfig.scope = customIds ? 'weak' : document.getElementById('scopeSelector').value;
         sessionConfig.shuffle = document.getElementById('shuffleToggle').checked;
 
+        const ex = getExamMeta(sessionConfig.examId);
+        const bank = ex.bank;
+
         let partA = [];
         let partB = [];
         let partC = [];
@@ -3140,28 +4134,28 @@
           partB = picked.filter((i) => i.type === 'matching');
           partC = picked.filter((i) => i.type === 'short');
         } else if (sessionConfig.scope === 'all') {
-          partA = [...QUESTION_BANK.mcqs];
-          partB = [...QUESTION_BANK.matching];
-          partC = [...QUESTION_BANK.short];
+          partA = [...bank.mcqs];
+          partB = [...bank.matching];
+          partC = [...bank.short];
         } else if (sessionConfig.scope === 'set1') {
-          partA = QUESTION_BANK.mcqs.filter((i) => i.set === 'set1');
-          partB = QUESTION_BANK.matching.filter((i) => i.set === 'set1');
-          partC = QUESTION_BANK.short.filter((i) => i.set === 'set1');
+          partA = bank.mcqs.filter((i) => i.set === 'set1');
+          partB = bank.matching.filter((i) => i.set === 'set1');
+          partC = bank.short.filter((i) => i.set === 'set1');
         } else if (sessionConfig.scope === 'set2') {
-          partA = QUESTION_BANK.mcqs.filter((i) => i.set === 'set2');
-          partB = QUESTION_BANK.matching.filter((i) => i.set === 'set2');
-          partC = QUESTION_BANK.short.filter((i) => i.set === 'set2');
+          partA = bank.mcqs.filter((i) => i.set === 'set2');
+          partB = bank.matching.filter((i) => i.set === 'set2');
+          partC = bank.short.filter((i) => i.set === 'set2');
         } else if (sessionConfig.scope === 'mcq') {
-          partA = [...QUESTION_BANK.mcqs];
+          partA = [...bank.mcqs];
         } else if (sessionConfig.scope === 'matching') {
-          partB = [...QUESTION_BANK.matching];
+          partB = [...bank.matching];
         } else if (sessionConfig.scope === 'short') {
-          partC = [...QUESTION_BANK.short];
+          partC = [...bank.short];
         } else if (sessionConfig.scope === 'weak') {
-          const weakIds = readJsonStorage(profileKey(STORAGE_KEYS.weakItems), []);
+          const weakIds = getExamWeakIds(ex.id);
           const picked = weakIds.map(findItemById).filter(Boolean);
           if (picked.length === 0) {
-            notifyToast('No missed items saved yet. Select another scope to start.');
+            notifyToast('No missed items saved for this exam yet. Select another scope to start.');
             return;
           }
           partA = picked.filter((i) => i.type === 'mcq');
@@ -3204,19 +4198,20 @@
       function enterExamWorkspaceUI() {
         switchView('exam');
 
+        const ex = getExamMeta(sessionConfig.examId);
         document.getElementById('headerFeedbackLabel').textContent =
-          sessionConfig.feedbackMode === 'instant' ? 'Instant Feedback' : 'Real Exam Mode';
+          `${ex.code} · ${sessionConfig.feedbackMode === 'instant' ? 'Instant Feedback' : 'Real Exam Mode'}`;
 
         const scopeLabels = {
-          all: 'Full Mega Bank',
+          all: ex.shortName,
           set1: 'Set-01 Only',
           set2: 'Set-02 Only',
-          mcq: 'Part A · MCQs',
-          matching: 'Part B · Matching',
-          short: 'Part C · Short Answer',
-          weak: 'Missed / NYC Drill',
+          mcq: `${ex.code} · Part A`,
+          matching: `${ex.code} · Part B`,
+          short: `${ex.code} · Part C`,
+          weak: `${ex.code} · Missed Drill`,
         };
-        document.getElementById('scopeBadgeLabel').textContent = scopeLabels[sessionConfig.scope] || 'Assessment';
+        document.getElementById('scopeBadgeLabel').textContent = scopeLabels[sessionConfig.scope] || ex.shortName;
 
         const pauseBtn = document.getElementById('btnPauseTimer');
         if (sessionConfig.timeMinutes > 0 && sessionConfig.feedbackMode === 'instant') {
@@ -3366,7 +4361,7 @@
             : item.type === 'matching'
               ? 'Part B · Matching Set (5 Pairs)'
               : 'Part C · Short Answer & PC-to-Skill';
-        const setLabel = item.set === 'set1' ? 'Set-01' : 'Set-02';
+        const setLabel = getItemSetLabel(item);
         const topicLabel = TOPIC_META[classifyTopic(item)] || 'General CBT&A';
         const hasSpeech = 'speechSynthesis' in window;
 
@@ -3491,9 +4486,9 @@
             let statusLine = '';
 
             if (verified) {
-              if (val === pair.answer) {
+              if (isMatchingPairCorrect(item, pair, val)) {
                 rowStyle = 'border-emerald-400 bg-emerald-50/70';
-                statusLine = `<span class="text-xs font-bold text-emerald-700 block mt-1">Correct Match (${pair.answer}) · 1 pt</span>`;
+                statusLine = `<span class="text-xs font-bold text-emerald-700 block mt-1">Correct Match (${val}) · 1 pt</span>`;
               } else {
                 const rightObj = item.options.find((o) => o.key === pair.answer);
                 rowStyle = 'border-rose-400 bg-rose-50/70';
@@ -3911,7 +4906,7 @@
             item.pairs.forEach((p, idx) => {
               matchMax++;
               topicStats[topic].max++;
-              if (userMap[idx] === p.answer) {
+              if (isMatchingPairCorrect(item, p, userMap[idx])) {
                 matchGot++;
                 topicStats[topic].got++;
               } else {
@@ -3954,10 +4949,11 @@
       function updateCarsScorecardDOM(mins, secs) {
         const stats = computeScoreSummary();
 
+        const ex = getExamMeta(sessionConfig.examId);
         document.getElementById('carsCandidateName').textContent = sessionConfig.candidateName;
         document.getElementById('printCandidateSigName').textContent = sessionConfig.candidateName;
         document.getElementById('carsMetaInfo').textContent =
-          `CBT&A Methodology Level-4 · ${sessionConfig.feedbackMode === 'instant' ? 'Instant Feedback' : 'Real Exam Mode'} · Time Taken: ${mins}m ${secs}s`;
+          `${ex.title} · ${sessionConfig.feedbackMode === 'instant' ? 'Instant Feedback' : 'Real Exam Mode'} · Time Taken: ${mins}m ${secs}s`;
 
         const box = document.getElementById('carsDecisionBox');
         const text = document.getElementById('carsDecisionText');
@@ -4019,10 +5015,13 @@
 
         // Save or update current attempt in active profile history
         const history = readJsonStorage(profileKey(STORAGE_KEYS.history), []);
+        const ex = getExamMeta(sessionConfig.examId);
         const entry = {
           attemptId: examData.attemptRecordId || `att_${Date.now()}`,
           dateIso: new Date().toISOString(),
           candidateName: sessionConfig.candidateName,
+          examId: ex.id,
+          examLabel: ex.code,
           scope: sessionConfig.scope,
           mode: sessionConfig.feedbackMode,
           got: stats.totalGot,
@@ -4067,15 +5066,17 @@
 
       function exportCarsCsv() {
         const stats = computeScoreSummary();
+        const ex = getExamMeta(sessionConfig.examId);
         const rows = [
           ['NSDA CBT&A Level-4 CARS Report'],
+          ['Exam', ex.title],
           ['Candidate Name', sessionConfig.candidateName],
           ['Scope', sessionConfig.scope],
           ['Feedback Mode', sessionConfig.feedbackMode],
           ['Overall Score', `${stats.totalGot}/${stats.totalMax} (${stats.percent}%)`],
           ['Official Outcome', stats.isCompetent ? 'COMPETENT (C)' : 'NOT YET COMPETENT (NYC)'],
           [],
-          ['Item #', 'ID', 'Type', 'Set', 'Topic', 'Flagged', 'Status'],
+          ['Item #', 'ID', 'Type', 'Module/Set', 'Topic', 'Flagged', 'Status'],
         ];
 
         examData.items.forEach((item, idx) => {
@@ -4083,7 +5084,7 @@
           if (item.type === 'mcq' && examData.answers[item.id] === item.answer) status = 'Correct';
           else if (item.type === 'matching') {
             const u = examData.answers[item.id] || {};
-            const ok = item.pairs.filter((p, i) => u[i] === p.answer).length;
+            const ok = item.pairs.filter((p, i) => isMatchingPairCorrect(item, p, u[i])).length;
             status = `${ok}/${item.pairs.length} Matched`;
           } else if (item.type === 'short') {
             status = examData.shortGrades[item.id] === 'C' ? 'Competent (1)' : 'NYC (0)';
@@ -4092,7 +5093,7 @@
             idx + 1,
             item.id,
             item.type.toUpperCase(),
-            item.set,
+            getItemSetLabel(item),
             TOPIC_META[classifyTopic(item)] || '',
             examData.flagged[item.id] ? 'Yes' : 'No',
             status,
@@ -4139,7 +5140,7 @@
             outcome = examData.answers[item.id] === item.answer ? 'correct' : 'incorrect';
           } else if (item.type === 'matching') {
             const userMap = examData.answers[item.id] || {};
-            const allMatched = item.pairs.every((p, i) => userMap[i] === p.answer);
+            const allMatched = item.pairs.every((p, i) => isMatchingPairCorrect(item, p, userMap[i]));
             outcome = allMatched ? 'correct' : 'incorrect';
           } else if (item.type === 'short') {
             outcome = examData.shortGrades[item.id] === 'C' ? 'correct' : 'incorrect';
@@ -4182,7 +5183,7 @@
             `;
           } else if (item.type === 'matching') {
             const userMap = examData.answers[item.id] || {};
-            const setScore = item.pairs.filter((p, i) => userMap[i] === p.answer).length;
+            const setScore = item.pairs.filter((p, i) => isMatchingPairCorrect(item, p, userMap[i])).length;
             contentHtml = `
               <div class="flex items-center justify-between gap-2 mb-3">
                 <p class="font-bold text-slate-900 text-base">${escapeHtml(item.title)}</p>
@@ -4192,7 +5193,7 @@
                 ${item.pairs
                   .map((p, i) => {
                     const uKey = userMap[i];
-                    const ok = uKey === p.answer;
+                    const ok = isMatchingPairCorrect(item, p, uKey);
                     const rightOpt = item.options.find((o) => o.key === p.answer);
                     const userOpt = item.options.find((o) => o.key === uKey);
                     return `
@@ -4201,7 +5202,7 @@
                         <span class="text-xs font-bold ${ok ? 'text-emerald-800' : 'text-rose-800'} shrink-0">
                           ${
                             ok
-                              ? `Correct: ${p.answer}) ${escapeHtml(rightOpt ? rightOpt.text : '')}`
+                              ? `Correct: ${uKey}) ${escapeHtml(userOpt ? userOpt.text : rightOpt ? rightOpt.text : '')}`
                               : `Your: ${uKey ? uKey + ') ' + escapeHtml(userOpt ? userOpt.text : '') : 'Unanswered'} | Correct: ${p.answer}) ${escapeHtml(rightOpt ? rightOpt.text : '')}`
                           }
                         </span>
@@ -4265,7 +5266,7 @@
                 <span aria-hidden="true">·</span>
                 <span>${item.type.toUpperCase()}</span>
                 <span aria-hidden="true">·</span>
-                <span>${item.set === 'set1' ? 'Set-01' : 'Set-02'}</span>
+                <span>${getItemSetLabel(item)}</span>
                 <span aria-hidden="true">·</span>
                 <span>${TOPIC_META[classifyTopic(item)] || ''}</span>
                 ${isFlagged ? '<span aria-hidden="true">·</span><span class="text-amber-700">Flagged</span>' : ''}
@@ -4304,6 +5305,7 @@
       // STUDY BANK & FLASHCARDS
       // =========================================================================
       function getFilteredStudyItems() {
+        const examFilter = document.getElementById('studyExamFilter') ? document.getElementById('studyExamFilter').value : 'all';
         const q = (document.getElementById('studySearchInput').value || '').trim().toLowerCase();
         const part = document.getElementById('studyPartFilter').value;
         const topic = document.getElementById('studyTopicFilter').value;
@@ -4312,7 +5314,9 @@
         const weakSet = new Set(readJsonStorage(profileKey(STORAGE_KEYS.weakItems), []));
         const masteredSet = new Set(readJsonStorage(profileKey(STORAGE_KEYS.masteredItems), []));
 
-        return getAllCardsFlat().filter((item) => {
+        const pool = examFilter === 'all' ? getAllCardsFlat() : getExamItemsFlat(examFilter);
+
+        return pool.filter((item) => {
           if (part !== 'all' && item.type !== part) return false;
           if (topic !== 'all' && classifyTopic(item) !== topic) return false;
           if (mastery === 'weak' && !weakSet.has(item.id)) return false;
@@ -4432,7 +5436,7 @@
                   <span aria-hidden="true">·</span>
                   <span>${item.type.toUpperCase()}</span>
                   <span aria-hidden="true">·</span>
-                  <span>${item.set === 'set1' ? 'Set-01' : 'Set-02'}</span>
+                  <span>${getItemSetLabel(item)}</span>
                   <span aria-hidden="true">·</span>
                   <span class="text-nsda-cyanText">${TOPIC_META[classifyTopic(item)] || ''}</span>
                 </div>
@@ -4641,7 +5645,7 @@
               <tr class="border-b border-slate-200 text-xs font-bold text-slate-500">
                 <th class="py-3 pr-4">Date</th>
                 <th class="py-3 pr-4">Candidate</th>
-                <th class="py-3 pr-4">Scope</th>
+                <th class="py-3 pr-4">Exam / Scope</th>
                 <th class="py-3 pr-4">Score</th>
                 <th class="py-3 pr-4">Duration</th>
                 <th class="py-3">NSDA Outcome</th>
@@ -4653,11 +5657,12 @@
                   const dt = new Date(h.dateIso);
                   const dateStr = isNaN(dt.getTime()) ? '' : dt.toLocaleString();
                   const ok = h.percent >= 80;
+                  const examPrefix = h.examLabel ? `${h.examLabel} · ` : '';
                   return `
                     <tr>
                       <td class="py-3 pr-4 text-xs text-slate-600">${escapeHtml(dateStr)}</td>
                       <td class="py-3 pr-4 font-semibold text-slate-900">${escapeHtml(h.candidateName)}</td>
-                      <td class="py-3 pr-4 text-slate-700 uppercase text-xs font-bold">${escapeHtml(h.scope)}</td>
+                      <td class="py-3 pr-4 text-slate-700 uppercase text-xs font-bold">${escapeHtml(examPrefix + h.scope)}</td>
                       <td class="py-3 pr-4 font-bold text-slate-900">${h.got} / ${h.max} (${h.percent}%)</td>
                       <td class="py-3 pr-4 text-slate-600">${escapeHtml(h.durationText)}</td>
                       <td class="py-3 font-bold ${ok ? 'text-emerald-700' : 'text-rose-700'}">${escapeHtml(h.decision)}</td>
